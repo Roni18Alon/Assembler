@@ -69,7 +69,6 @@ void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,
     {
         Bool labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
         if (labelBeforeDirective == False) return ; /*if False - return false and get the next row, else continue*/
-
     }
     /*not a label only directive */
     addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveNum, directiveType, vars);
