@@ -3,11 +3,11 @@
 //
 
 #include "directiveAnalyzed.h"
-#include "instructionAnalyzed.h"
 
-Bool isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel,WordNodePtr currentWord) {
+/*This function analyzes Directive command in the first pass */
+void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel,WordNodePtr currentWord) {
 
-    int directiveNum , ValidLabelName;
+    int directiveNum;
     Bool validDirectiveParam;
     Bool validAsciz,labelBeforeDirective;
     directiveNum = isValidDirectiveName(before); /*find if it's a valid directive and the num*/
@@ -19,42 +19,60 @@ Bool isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables
         if (directiveNum == DIRECTIVE_BYTE || directiveNum == DIRECTIVE_HALF_WORD || directiveNum == DIRECTIVE_WORD) { /*dw,db,dh*/
             long validInput[LINE_LENGTH] = {0};
             validDirectiveParam = dataAnalysis(after, before, after, vars, validInput,directiveNum);/*analyzed the operands of directive row*/
-            if (validDirectiveParam == False) return False;
+            if (validDirectiveParam == False) return;
             if (hasLabel == True)
                 /*we have a label and a data - add to symbol table the value is the DC before insert the numbers to the list*/
             {
                 labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
-                if (labelBeforeDirective == False) return False; /*if False - return false and get the next row, else continue*/
+                if (labelBeforeDirective == False) return ; /*if False - return false and get the next row, else continue*/
 
             }
             /*not a label only directive */
             addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveNum, directiveType, vars);
-            return True;
+            return;
         }
         if (directiveNum == DIRECTIVE_ASCIZ) {
             validAsciz = ascizAnalysis(after, vars);
-            if (validAsciz == False) return False;
+            if (validAsciz == False) return;
+
             /*a valid param to asciz directive a valid string starts and ends with " */
 
             if (hasLabel == True) { /*if the label flag is on - we have label*/
                 labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
-                if (labelBeforeDirective == False) return False; /*if False - return false and get the next row, else continue*/
+                if (labelBeforeDirective == False) return; /*if False - return false and get the next row, else continue*/
             }
             /*no label just a directive - add to word table*/
             addDirectiveAsciz(after, &(vars->headWordList), directiveType, vars);
-            return True;
+            return;
         }
         /*not a db,dw,dh,asciz - check if an entry or extern or non=invalid directive*/
         labelAndEntryOrExtern(hasLabel, directiveNum,vars); /*if we have a label before entry or extern - it's not an error just ignore- don't insert label to label list*/
         if (directiveNum == DIRECTIVE_EXTERN) {
             Bool externFirstPass = externDirectiveFirstPass(after, vars, currentLabel);
-            if (externFirstPass == False)return False;
-            else { return True; }
+            if (externFirstPass == False)return;
         }
         /*directiveNum == DIRECTIVE_ENTRY -in the first pass if we see an entry label - don't do nothing just continue to the next row**/
-        return True;
     }
-    return False; /*it's not a valid directive*/
+    else{ /*it's not a valid directive*/
+        vars->type=InvalidDirective;
+        vars->errorFound=True;
+    }
+}
+
+void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,globalVariables *vars,int directiveNum,DirectiveWordType directiveType,labelListPtr currentLabel)
+{
+    long validInput[LINE_LENGTH] = {0};
+    Bool validDirectiveParam = dataAnalysis(after, before, after, vars, validInput,directiveNum);/*analyzed the operands of directive row*/
+    if (validDirectiveParam == False) return;
+    if (hasLabel == True)
+        /*we have a label and a data - add to symbol table the value is the DC before insert the numbers to the list*/
+    {
+        Bool labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
+        if (labelBeforeDirective == False) return ; /*if False - return false and get the next row, else continue*/
+
+    }
+    /*not a label only directive */
+    addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveNum, directiveType, vars);
 }
 
 
@@ -76,7 +94,8 @@ int isValidDirectiveName(char *str)
         return DIRECTIVE_EXTERN; /*5*/
     if(strcmp(str,".entry")==0)
         return DIRECTIVE_ENTRY; /*6*/
-    else return DIRECTIVE_ERROR;/*-1*/
+    else {return DIRECTIVE_ERROR;}  /*-1*/
+
 }
 
 DirectiveWordType getDirectiveType(int directiveNum)
@@ -121,14 +140,13 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
 
         if (delimiter == VALID_SPLIT) {
             strip(before);
-            if (strlen(before) == 0 && i == 0) /*the first num starts without a comma before - ,3,4,...*/
+            if ((strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) && i == 0) /*the first num starts without a comma before - ,3,4,...*/
             {
                 vars->type = CommaBeforeFirstParam;
-                /* printf("\n%s:Line %d:Illegal comma before the first param\n", vars->filename,  vars->currentLine); */
                 vars->errorFound = True;
                 return False;
             }
-            if (strlen(before) == 0 && i != 0) /*+65,,7...*/
+            if ((strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) && i != 0) /*+65,,7...*/
             {
                 vars->type = CommaBetweenParams;
                 // printf("\n%s:Line %d:Illegal comma between param\n", vars->filename,vars->currentLine); */
@@ -152,10 +170,9 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
             }
 
         } else {/*we couldn't find a comma*/
-            if (strcmp(before, "") == 0) /*if we couldn't find a comma, by split function before gets line value,if empty- missing operands*/
+            if (strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*if we couldn't find a comma, by split function before gets line value,if empty- missing operands*/
             {
                 vars->type = MissingOperand;
-                /* printf("\n%s:Line %d:Missing Operand\n", vars->filename,vars->currentLine);*/
                 vars->errorFound = True;
                 return False;
             } else {/*not an empty string check if it's a valid operand*/
@@ -172,7 +189,7 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
             }
         }
     }
-    /*block the int array*/
+    /*block the operands long array*/
     validInput[counter]=LONG_MAX;
     return True;
 }
@@ -248,14 +265,32 @@ Bool externDirectiveFirstPass(char *after ,globalVariables *vars,labelListPtr cu
     /*else- a valid label check if already exists without external type or with */
     ValidLabelName = labelNameCompare(&(vars->headLabelTable), after, vars);
     labelWithExtern = isLabelExternal(&(vars->headLabelTable), after, vars);
+
     if (ValidLabelName == VALID_LABEL || labelWithExtern ==True) {
         /*label is not exists or if exists with external label and add to label table*/
+
         strcpy(currentLabel->labelName,after); /*update the label we want to add name*/
         updateLabel(currentLabel,0,NoCodeOrData,Extern);
         addLabelToList(&(vars->headLabelTable), currentLabel);/*add to label list*/
-
         return True;
     } else {
         return False;
+    }
+}
+
+
+/*this function handle in the second pass on entry directive commands*/
+void entryDirectiveSecondPass(globalVariables *vars,char *str)
+{
+    Bool EntryLabel;
+
+    EntryLabel=isLabelEntry(&(vars->headLabelTable),str,vars); /*check if the given entry label exists and add to the label list the attribute to this label as -entry*/
+    if(EntryLabel==True) /*add to entry list*/
+    {
+        long entryValue=EntryValueAfterSecondPass(&(vars->headLabelTable),str);
+        if(entryValue!=LABEL_ERROR)
+        {
+            createEntryNode(str,entryValue,&(vars->headEntryList));/*add to entry list*/
+        }
     }
 }

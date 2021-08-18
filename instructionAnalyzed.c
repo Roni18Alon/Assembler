@@ -6,63 +6,74 @@
 
 #include "instructionAnalyzed.h"
 
-Bool isInstructionFirstPass(char *before, char *after,char *label,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel,WordNodePtr currentWord, int instructionNum) {
+void isInstructionFirstPass(char *before, char *after,char *label,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel,WordNodePtr currentWord, int instructionNum) {
 
-    int numOfOperands;
-    Bool validRCommand, validICommand,labelBeforeInstruction;
+
+    Bool labelBeforeInstruction;
 
     currentWord->word.wordType = Instruction;
 
-
     if (hasLabel == True) {
         labelBeforeInstruction=labelBeforeInstructionCommand(label,vars,currentLabel);
-        if(labelBeforeInstruction==False) return False; /*and get the next row, else continue */
+        if(labelBeforeInstruction==False) return; /*and get the next row, else continue */
     }
 
     if (instructionNum < ADD || instructionNum > STOP) {
         vars->type = IllegalInstruction;
-        // printf("\n%s:Line %d: Instruction name is illegal \n", vars->filename,vars->currentLine);
         vars->errorFound = True;
-        return False;
+        return ;
     }
     strip(before);
     InstructionWordType commandType = commandGroup(instructionNum);
     if (commandType == R_WORD) {
-        currentWord->word.instruction.wordType = R_WORD;
-        numOfOperands = numberOfOperands(commandType, instructionNum);
-        strip(after);
-        validRCommand = R_commandAnalyzed(after, before, after, instructionNum, numOfOperands, vars, currentWord);
-        if (validRCommand == True) {
-            /*need to add the word node to the list*/
-            addWordToList(&(vars->headWordList),currentWord); /*it's a valid R command - add to word list*/
-            return True;
-        } else { return False; }/*not valid R Command*/
-
+        RCommandFirstPass(before,after,commandType,instructionNum,vars,currentWord);
     }
     if (commandType == I_WORD) {
-        currentWord->word.instruction.wordType = I_WORD;
-        int type = numberOfOperands(commandType, instructionNum);
-        strip(after);
-        validICommand = I_commandAnalyzed(after, before, after, instructionNum, type, vars, currentWord);
-        if (validICommand == True) {
-            /*need to add the word node to the list*/
-            addWordToList(&(vars->headWordList),currentWord); /*it's a valid I command - add to word list*/
-            return True;
-        } else {
-            return False; /*not valid I Command*/
-        }
+        ICommandFirstPass(before,after,commandType,instructionNum,vars,currentWord);
     }
     if (commandType == J_WORD) {
-        currentWord->word.instruction.wordType = J_WORD;
-        int type = numberOfOperands(commandType, instructionNum);
-        strip(after);
-        validICommand = J_commandAnalyzed(after, instructionNum, vars, currentWord);
-        if (validICommand == True) {
-            /*need to add the word node to the list*/
-            addWordToList(&(vars->headWordList),currentWord); /*it's a valid J command - add to word list*/
-            return True;
-        } else { return False;} /*not valid J Command*/
+        JCommandFirstPass(after,instructionNum,vars,currentWord);
     }
+}
+
+
+/*analyzed the second pass Instructions*/
+void isInstructionSecondPass(char *str,InstructionWordType commandType,int instructionNum,globalVariables *vars)
+{
+
+    if(commandType==R_WORD) return;
+    if(commandType==I_WORD){ /*need to analyzed I Branch commands */
+
+        if((instructionNum>=BNE && instructionNum<=BGT)) /*an I - Branch instruction - calculate the sub between*/
+        {
+            secondPassI(str,vars,commandType);
+        }
+        /*other I commands*/
+    }
+    if(commandType==J_WORD)
+    {
+        if ((instructionNum >= JMP && instructionNum <= CALL)) /*an J - Branch instruction*/
+        {
+            secondPassJ(str,vars,commandType);
+        }
+        /*other J commands*/
+    }
+
+}
+
+void RCommandFirstPass(char *before,char *after,InstructionWordType commandType,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
+{
+    int numOfOperands;
+
+    currentWord->word.instruction.wordType = R_WORD;
+    numOfOperands = numberOfOperands(commandType, instructionNum);
+    strip(after);
+    Bool validRCommand = R_commandAnalyzed(after, before, after, instructionNum, numOfOperands, vars, currentWord);
+    if (validRCommand == True) {
+        /*need to add the word node to the list*/
+        addWordToList(&(vars->headWordList),currentWord); /*it's a valid R command - add to word list*/
+    }
+    /*not valid R Command*/
 }
 
 
@@ -75,7 +86,6 @@ Bool R_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,i
     validOperandLine=validROperandLine(str,before,after,instructionNum,numOfOperands,vars,currentWord);
     if(validOperandLine==True) /*the R command line is valid update the word node and add to word list*/
     {
-        currentWord->word.instruction.wordType= R_WORD;
         currentWord->word.instruction.rWord.opcode =0;
         currentWord->word.instruction.rWord.unused =0;
         currentWord->word.instruction.address = vars->IC;
@@ -100,10 +110,9 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
     if (firstDelimiter==VALID_SPLIT) /*we found he first comma*/
     {
         strip(before);
-        if(strlen(before)==0) /*the first operand is without a comma*/
+        if(strlen(before)==0 ||strcmp(before," ")==0||strcmp(before,"\t")==0  ) /*the first operand is without a comma*/
         {
             vars->type=CommaBeforeFirstParam;
-            // printf("\n%s:Line %d:Illegal comma before the first param\n", vars->filename, vars->currentLine);
             vars->errorFound = True;
             return False;
         }
@@ -112,18 +121,17 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
     }
     else { /*wwe couldn't find the first comma*/
         vars->type=IllegalOperandNoComma;
-        // printf("\n%s:Line %d:Illegal operand no comma\n", vars->filename, vars->currentLine);
         vars->errorFound = True;
         return False;
     }
     /*if we haven't returned so we fount the comma and its valid one, check if a valid register*/
     validReg=isValidRegister(before,vars);
-    if(validReg>=0) {
+    if(validReg>=VALID_REGISTER) {
         firstReg = validReg;
-        if(numOfOperands==3) {
+        if(numOfOperands==THREE_REGISTERS) {
             currentWord->word.instruction.rWord.rd = firstReg;
         }
-        if(numOfOperands==2)
+        if(numOfOperands==TWO_REGISTERS)
         {
             currentWord->word.instruction.rWord.rs = firstReg;
         }
@@ -136,36 +144,31 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
     strip(after);
     if(secondDelimiter==VALID_SPLIT) /*we found the second comma */
     {
-        if(strcmp(before,"")==0) /*$3,,7...*/
+        if(strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0 ) /*$3,,7...*/
         {
             vars->type=CommaBetweenParams;
-            // printf("\n%s:Line %d:Illegal comma between param\n", vars->filename,
-            //      vars->currentLine);
             vars->errorFound = True;
             return False;
         }
 
         if(numOfOperands==TWO_REGISTERS)
         {
-            if(strcmp(after,"")==0)/*after is an empty string, we just have a comma*/
+            if(strlen(after)==0||strcmp(after," ")==0||strcmp(after,"\t")==0 )/*after is an empty string, we just have a comma*/
             {
                 vars->type=ExtraneousComma;
-                //printf("\n%s:Line %d:Extraneous Comma\n", vars->filename,vars->currentLine);
                 vars->errorFound = True;
                 return False;
             }
             else{ /*after isn't an empty string - check if a valid operand*/
                 validReg=isValidRegister(after,vars);
-                if(validReg>=0) /*we found a valid reg so we have more operands*/
+                if(validReg>=VALID_REGISTER) /*we found a valid reg so we have more operands*/
                 {
                     vars->type=ExtraneousOperand;
-                    //printf("\n%s:Line %d:Extraneous operand \n", vars->filename, vars->currentLine);
                     vars->errorFound = True;
                     return False;
                 }
                 else{ /*if its not a valid reg - Extraneous Text*/
                     vars->type=ExtraneousText;
-                    //printf("\n%s:Line %d:Extraneous Text\n", vars->filename,vars->currentLine);
                     vars->errorFound = True;
 
                 }
@@ -213,7 +216,7 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
     strip(after);
     if(thirdDelimiter==VALID_SPLIT) /*if we found the third comma*/
     {
-        if(strcmp(before,"")==0) /*$3,$2,,$4...*/
+        if(strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*$3,$2,,$4...*/
         {
             vars->type=CommaBetweenParams;
             // printf("\n%s:Line %d:Illegal comma between param\n", vars->filename,
@@ -222,10 +225,9 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
             return False;
         }
 
-        if(strcmp(after,"")==0)/*after is an empty string, we just have a comma*/
+        if(strlen(after)==0||strcmp(after," ")==0||strcmp(after,"\t")==0)/*after is an empty string, we just have a comma*/
         {
             vars->type=ExtraneousComma;
-            //printf("\n%s:Line %d:Extraneous Comma\n", vars->filename,vars->currentLine);
             vars->errorFound = True;
             return False;
         }
@@ -260,6 +262,18 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
 
 }
 
+void ICommandFirstPass(char *before,char *after,InstructionWordType commandType,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
+{
+    currentWord->word.instruction.wordType = I_WORD;
+    int type = numberOfOperands(commandType, instructionNum);
+    strip(after);
+    Bool validICommand = I_commandAnalyzed(after, before, after, instructionNum, type, vars, currentWord);
+    if (validICommand == True) {
+        /*need to add the word node to the list*/
+        addWordToList(&(vars->headWordList),currentWord); /*it's a valid I command - add to word list*/
+    }
+    /*not valid I Command*/
+}
 
 
 Bool I_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,int type,globalVariables *vars, WordNodePtr currentWord)
@@ -291,7 +305,7 @@ Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,i
     {
         if(firstDelimiter==VALID_SPLIT) /*we found a comma check if valid operand*/
         {
-            if(strlen(before)==0) /*the first operand is without a comma*/
+            if(strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*the first operand is without a comma*/
             {
                 vars->type=CommaBeforeFirstParam;
                 // printf("\n%s:Line %d:Illegal comma before the first param\n", vars->filename,
@@ -334,7 +348,7 @@ Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,i
     strip(after);
     if(secondDelimiter==VALID_SPLIT) /*we found the second comma*/
     {
-        if (strcmp(before, "") == 0) /*$3,,7...*/
+        if (strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*$3,,7...*/
         {
             vars->type = CommaBetweenParams;
             // printf("\n%s:Line %d:Illegal comma between param\n", vars->filename,
@@ -390,7 +404,7 @@ Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,i
     strip(after);
     if(thirdDelimiter==VALID_SPLIT) /*if we found the third comma*/
     {
-        if(strcmp(before,"")==0) /*$3,$2,,$4...*/
+        if(strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*$3,$2,,$4...*/
         {
             vars->type=CommaBetweenParams;
             // printf("\n%s:Line %d:Illegal comma between param\n", vars->filename,
@@ -399,7 +413,7 @@ Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,i
             return False;
         }
 
-        if(strcmp(after,"")==0)/*after is an empty string, we just have a comma $3,12,$6,  */
+        if(strlen(after)==0||strcmp(after," ")==0||strcmp(after,"\t")==0)/*after is an empty string, we just have a comma $3,12,$6,  */
         {
             vars->type=ExtraneousComma;
             //printf("\n%s:Line %d:Extraneous Comma\n", vars->filename,vars->currentLine);
@@ -459,6 +473,18 @@ Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,i
             }
         }
     }
+}
+
+void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
+{
+    currentWord->word.instruction.wordType = J_WORD;
+    strip(after);
+    Bool validICommand = J_commandAnalyzed(after, instructionNum, vars, currentWord);
+    if (validICommand == True) {
+        /*need to add the word node to the list*/
+        addWordToList(&(vars->headWordList),currentWord); /*it's a valid J command - add to word list*/
+    }
+    /*not valid J Command*/
 }
 
 
@@ -568,7 +594,7 @@ Bool labelJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
 }
 
 
-Bool secondPassJ(char *str,globalVariables *vars, InstructionWordType commandType)
+void secondPassJ(char *str,globalVariables *vars, InstructionWordType commandType)
 {
     int validRegister;
     long labelAddress;
@@ -582,21 +608,20 @@ Bool secondPassJ(char *str,globalVariables *vars, InstructionWordType commandTyp
         /*we need to find the label in label list and update the address*/
         labelAddress= findLabel(&(vars->headLabelTable),str,vars,commandType);
         if (labelAddress==LABEL_ERROR) /*couldn't find the label*/
-            return False;
+            return;
         isExtern= existsLabelExternalJ(&(vars->headLabelTable),str,vars); /*check if the operand label is external or not*/
         addLabelAddress(&(vars->headWordList),vars,labelAddress,commandType,isExtern);
         if (isExtern==True) /*if it is a J command and the label is extern add to extern list*/
         {
             createExternalNode(str,vars,(&(vars->headExternList)));
         }
-        return True;
     }
-    return False;
+
 }
 
 
 
-Bool secondPassI(char *str,globalVariables *vars, InstructionWordType commandType) {
+void secondPassI(char *str,globalVariables *vars, InstructionWordType commandType) {
     int firstSplit, secondSplit;
     long currentLabelAddress;
     Bool isExternal;
@@ -608,7 +633,7 @@ Bool secondPassI(char *str,globalVariables *vars, InstructionWordType commandTyp
 
     firstSplit = split(str, ",", before, after);
     if (firstSplit == INVALID_SPLIT) {
-        return False;
+        return;
     }
     memset(operandLine,0,LINE_LENGTH);
     strcpy(operandLine,after);
@@ -616,19 +641,18 @@ Bool secondPassI(char *str,globalVariables *vars, InstructionWordType commandTyp
     secondSplit = split(operandLine, ",", before, after);
     if (secondSplit == INVALID_SPLIT) /*after second split the label will be in after string*/
     {
-        return False;
+        return;
     }
     /*after second split the label will be in after string*/
     strip(after);
     /*look for branch label in label list*/
     currentLabelAddress = findLabel(&(vars->headLabelTable), after, vars, commandType);
     if (currentLabelAddress == LABEL_ERROR) /*couldn't find the label*/
-        return False;
+        return ;
     isExternal = existsLabelExternalIBranch(&(vars->headLabelTable), after, vars);
     if (isExternal == False) /*the I Branch label is external - error*/
-        return False;
+        return;
     addLabelAddress(&(vars->headWordList),vars , currentLabelAddress, commandType,isExternal);
-    return True;
 
 }
 
@@ -648,29 +672,3 @@ Bool labelBeforeInstructionCommand(char *labelName, globalVariables *vars, label
     else{ return False; } /*we found the label in the label table*/
 }
 
-Bool isInstructionSecondPass(char *str,InstructionWordType commandType,int instructionNum,globalVariables *vars)
-{
-    Bool instructionSecondPass;
-    if(commandType==R_WORD)return True;
-    if(commandType==I_WORD){ /*need to analyzed I Branch commands */
-
-        if((instructionNum>=BNE && instructionNum<=BGT)) /*an I - Branch instruction - calculate the sub between*/
-        {
-            instructionSecondPass=secondPassI(str,vars,commandType);
-            if(instructionSecondPass==True)return True;
-            else{return False;}
-        }
-        else{return True;/*other I commands*/}
-    }
-    if(commandType==J_WORD)
-    {
-        if ((instructionNum >= JMP && instructionNum <= CALL)) /*an J - Branch instruction*/
-        {
-            instructionSecondPass = secondPassJ(str,vars,commandType);
-            if(instructionSecondPass==True)return True;
-            else{return False;}
-        }
-        else{return True;/*other J commands*/}
-
-    }
-}

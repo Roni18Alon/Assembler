@@ -188,7 +188,7 @@ void  updateLabelTableICF(labelListPtr *head,globalVariables *vars)
 }
 
 
-int EntryValueAfterSecondPass(labelListPtr *head, char *str)
+long EntryValueAfterSecondPass(labelListPtr *head, char *str)
 {
     labelListPtr temp = *head;
     int res;

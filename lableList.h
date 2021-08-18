@@ -18,6 +18,6 @@ void  updateLabelTableICF(labelListPtr *head,globalVariables *vars);
 long findLabel(labelListPtr *head, char *str,globalVariables *vars,InstructionWordType commandType);
 Bool existsLabelExternalIBranch(labelListPtr *head, char *str,globalVariables *vars);
 Bool existsLabelExternalJ(labelListPtr *head, char *str,globalVariables *vars);
-int EntryValueAfterSecondPass(labelListPtr *head, char *str);
+long EntryValueAfterSecondPass(labelListPtr *head, char *str);
 
 #endif //RONIPROJECT_LABLELIST_H

@@ -10,6 +10,10 @@ CMakeFiles/RoniProject.dir/WordList.c.obj: ../default.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../directiveAnalyzed.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../inputAnalyzed.h
 
+CMakeFiles/RoniProject.dir/createOutput.c.obj: ../createOutput.c
+CMakeFiles/RoniProject.dir/createOutput.c.obj: ../createOutput.h
+CMakeFiles/RoniProject.dir/createOutput.c.obj: ../default.h
+
 CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../default.h

@@ -5,23 +5,6 @@
 #include "firstPass.h"
 
 
-void readLine(char *[]);
-
-void getToNextLine(FILE *f);
-
-void readLine(char *line[]) {
-    fgets(*line, LINE_LENGTH, stdin);
-
-    size_t len;
-    len = strlen(*line);
-
-    /* check if the length of the line length is valid (80 chars exclude \n\0), if invalid go to the next line */
-    if (len == LINE_LENGTH - 1 && (*line)[len - 1] != '\0' && (*line)[len - 1] != '\n') {
-        getToNextLine(stdin);
-    }
-
-}
-
 void firstPass(globalVariables *vars) {
 
     char line[LINE_LENGTH] = {0};
@@ -36,8 +19,6 @@ void firstPass(globalVariables *vars) {
 
 
     Bool hasLabel,validLineLength;
-    Bool directiveFirstPass;
-    Bool instructionFirstPass;
     WordType word;
 
 
@@ -50,7 +31,7 @@ void firstPass(globalVariables *vars) {
 
         resetStrings(line,lineCpy,before,after,lineCpyAfterLabel,label);
 
-        fgets(line, LINE_LENGTH, vars->file); /*vars->file*/
+        fgets(line, LINE_LENGTH, stdin); /*vars->file*/
 
         validLineLength=getLine(line,lineCpy,vars);
         vars->currentLine++;
@@ -87,23 +68,17 @@ void firstPass(globalVariables *vars) {
         strip(lineCpyAfterLabel);
         word = directiveOrInstruction(lineCpyAfterLabel, before, after, vars); /*check if Directive or Instruction or none*/
         if (word == Directive) {
-            directiveFirstPass = isDirectiveFirstPass(before, after,label ,vars, hasLabel, currentLabel, currentWord);
-            if (directiveFirstPass == False) {
-                printErrors(vars);
-            }
-
-        } else {
+            isDirectiveFirstPass(before, after,label ,vars, hasLabel, currentLabel, currentWord);
+        }
+        else {
             if (word == Instruction) {
                 instructionNum = instructionValidName(before); /*get the instruction number*/
-                instructionFirstPass = isInstructionFirstPass(before, after,label, vars, hasLabel, currentLabel, currentWord, instructionNum);
+                isInstructionFirstPass(before, after,label, vars, hasLabel, currentLabel, currentWord, instructionNum);
                 vars->IC+=4;
-                if (instructionFirstPass == False )
-                    printErrors(vars); /* we found an error -  print and continue to the next line not a valid instruction line*/
-            } else { /*not a directive and not an instruction than - None - error*/
+            }
+            else { /*not a directive and not an instruction than - None - error*/
                 vars->type = notDirectiveOrInstruction;
-                /* printf("\n%s:Line %d:Illegal we couldn't find an Instruction or Directive\n", vars->filename, vars->currentLine);*/
                 vars->errorFound = True;
-                printErrors(vars);
             }
         }
 
@@ -117,6 +92,9 @@ void firstPass(globalVariables *vars) {
 
         updateLabelTableICF(&(vars->headLabelTable),vars); /*update the value of data labels with final IC*/
         addDirectiveICF(&(vars->headWordList),vars); /*add the final IC value to the directive values in Word list*/
+    }
+    else{ /*we found an error*/
+        printErrors(vars);
     }
 
 }

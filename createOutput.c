@@ -19,8 +19,8 @@ void outputObject(globalVariables *vars) {
 
     //vars->DC
     // iterate over labelListPtr for labels and headWordList for memory data
-    labelListPtr headLabelTable = &vars->headLabelTable;
-    WordNodePtr headWordList = &vars->headWordList;
+    labelListPtr headLabelTable = vars->headLabelTable;
+    WordNodePtr headWordList = vars->headWordList;
 
     while (headLabelTable) {
         printf("%ld", headLabelTable->address); // print label address

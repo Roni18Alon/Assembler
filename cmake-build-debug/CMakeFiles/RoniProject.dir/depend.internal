@@ -10,6 +10,10 @@ CMakeFiles/RoniProject.dir/WordList.c.obj
  C:/Users/ronia/CLionProjects/assmbler90/default.h
  C:/Users/ronia/CLionProjects/assmbler90/directiveAnalyzed.h
  C:/Users/ronia/CLionProjects/assmbler90/inputAnalyzed.h
+CMakeFiles/RoniProject.dir/createOutput.c.obj
+ C:/Users/ronia/CLionProjects/assmbler90/createOutput.c
+ C:/Users/ronia/CLionProjects/assmbler90/createOutput.h
+ C:/Users/ronia/CLionProjects/assmbler90/default.h
 CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj
  C:/Users/ronia/CLionProjects/assmbler90/EntryAndExtern.h
  C:/Users/ronia/CLionProjects/assmbler90/WordList.h

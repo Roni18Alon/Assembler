@@ -8,11 +8,9 @@
 void secondPass(globalVariables *vars) {
 
     int lineAnalyzed,instructionNum;
-    Bool hasLabel,EntryLabel;
+    Bool hasLabel;
     WordType word;
     Bool directiveSecondPass;
-    Bool instructionSecondPass;
-
 
 
     char line[LINE_LENGTH] = {0};
@@ -54,7 +52,8 @@ void secondPass(globalVariables *vars) {
         if (hasLabel == True) { /*we found a label*/
             strcpy(label, before);
             strcpy(lineCpyAfterLabel, after);
-        } else { /*we couldn't fina d label, by split fun before=line*/
+        }
+        else { /*we couldn't fina d label, by split fun before=line*/
             strcpy(lineCpyAfterLabel, lineCpy);
         }
 
@@ -66,31 +65,23 @@ void secondPass(globalVariables *vars) {
                 continue; /* not an ENTRY directive - continue to the next line*/
             if(directiveSecondPass ==True) /*it's an Entry Directive*/
             {
-                EntryLabel=isLabelEntry(&(vars->headLabelTable),after,vars); /*check if the given entry label exists and add to the label list the attribute to this label as -entry*/
-                if(EntryLabel==True) /*add to entry list*/
-                {
-                    int entryValue=EntryValueAfterSecondPass(&(vars->headLabelTable),after);
-                    if(entryValue!=LABEL_ERROR)
-                    {
-                        createEntryNode(after,entryValue,&(vars->headEntryList));/*add to entry list*/
-                    }
-                }
-                if(EntryLabel==False) /*not a valid label*/
-                    printErrors(vars);
+                entryDirectiveSecondPass(vars,after);
             }
         }
         else{ /*if it is not a directive it must be an instruction*/
+
             instructionNum = instructionValidName(before); /*get the instruction number*/
             InstructionWordType commandType = commandGroup(instructionNum);
-            instructionSecondPass=isInstructionSecondPass(after,commandType,instructionNum,vars);
-            if(instructionSecondPass==False)
-            {
-                printErrors(vars);
-            }
-            vars->IC = (vars->IC + 4);
+            isInstructionSecondPass(after,commandType,instructionNum,vars);
+            vars->IC += 4;
         }
-
     }
+   /*we passed on the file for the second time*/
+
+   if(vars->type!=NoError) /*we found an error-print*/
+   {
+       printErrors(vars);
+   }
 }
 
 

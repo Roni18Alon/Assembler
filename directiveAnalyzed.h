@@ -7,20 +7,20 @@
 
 #include "default.h"
 #include "inputAnalyzed.h"
+#include "instructionAnalyzed.h"
 
-Bool isDirectiveFirstPass(char* before,char* after,char* label,globalVariables *vars,Bool hasLabel,labelListPtr currentLabel,WordNodePtr currentWord) ;
-Bool isDirectiveSecondPass(char *before,char* after ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel);
-
-Bool isDirectiveCommand(char command[LINE_LENGTH]);
-int isValidDirectiveName(char *str);
-
-
-DirectiveWordType getDirectiveType(int directiveNum);
-Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long validInput [LINE_LENGTH],int directive);
+void isDirectiveFirstPass(char* ,char* ,char* ,globalVariables *,Bool ,labelListPtr ,WordNodePtr ) ;
+Bool isDirectiveSecondPass(char *,char*  ,globalVariables *, Bool , labelListPtr );
+Bool isDirectiveCommand(char []);
+int isValidDirectiveName(char *);
+DirectiveWordType getDirectiveType(int);
+Bool dataAnalysis(char *,char *,char *,globalVariables *,long [],int );
 Bool ascizAnalysis(char *str,globalVariables *vars);
-Bool externDirectiveFirstPass(char *after, globalVariables *vars,labelListPtr currentLabel);
-Bool labelBeforeDirectiveCommand(char *labelName, globalVariables *vars, labelListPtr currentLabel);
+Bool externDirectiveFirstPass(char *, globalVariables *,labelListPtr );
+Bool labelBeforeDirectiveCommand(char *, globalVariables *, labelListPtr );
+void labelAndEntryOrExtern(Bool ,int ,globalVariables *);
+void entryDirectiveSecondPass(globalVariables *,char *);
 
-void labelAndEntryOrExtern(Bool hasLabel,int directiveNum,globalVariables *vars);
+
 
 #endif //RONIPROJECT_DIRECTIVEANALYZED_H

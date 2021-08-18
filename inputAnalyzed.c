@@ -207,7 +207,9 @@ int instructionValidName(char command[LINE_LENGTH]) {
     if (strcmp(command, "call") == 0) return CALL;
     if (strcmp(command, "stop") == 0) return STOP;
     else return INSTRUCTION_ERROR;
+
 }
+
 /*returns the funct of a given R command*/
 int Rfunct(int instructionNum)
 {
@@ -426,7 +428,7 @@ WordType directiveOrInstruction(char *str,char *before,char *after,globalVariabl
     WordType word;
     int lineAnalyzed,directiveName,instructionNum;
     Bool isDirective;
-    strip(after);
+   strip(after);
     instructionNum=instructionValidName(after);
     lineAnalyzed = split(str, " \t", before, after);
     if (lineAnalyzed == VALID_SPLIT) { /*we found a tab*/

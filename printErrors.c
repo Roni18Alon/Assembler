@@ -146,6 +146,9 @@ void printErrors(globalVariables *vars)
     {
         printf("\n%s:Line %d:Illegal we couldn't find an Instruction or Directive\n", vars->filename, vars->currentLine);
     }
-
+    if(vars->type==InvalidDirective)
+    {
+        printf("\n%s:Line %d:Illegal Directive name\n", vars->filename, vars->currentLine);
+    }
 
 }
