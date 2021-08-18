@@ -4,17 +4,17 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/ronia/CLionProjects/assmbler90/EntryAndExtern.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/WordList.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/WordList.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/createOutput.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/createOutput.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/directiveAnalyzed.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/firstPass.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/firstPass.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/inputAnalyzed.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/instructionAnalyzed.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/lableList.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/lableList.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/main.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/main.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/printErrors.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/printErrors.c.obj"
-  "C:/Users/ronia/CLionProjects/assmbler90/secondPass.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/secondPass.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/WordList.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/WordList.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/createOutput.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/firstPass.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/lableList.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/lableList.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/main.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/main.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/printErrors.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/secondPass.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
