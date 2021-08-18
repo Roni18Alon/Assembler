@@ -86,6 +86,12 @@
 		<Unit filename="C:/Users/ronia/CLionProjects/assmbler90/WordList.h">
 			<Option target="RoniProject"/>
 		</Unit>
+		<Unit filename="C:/Users/ronia/CLionProjects/assmbler90/createOutput.c">
+			<Option target="RoniProject"/>
+		</Unit>
+		<Unit filename="C:/Users/ronia/CLionProjects/assmbler90/createOutput.h">
+			<Option target="RoniProject"/>
+		</Unit>
 		<Unit filename="C:/Users/ronia/CLionProjects/assmbler90/default.h">
 			<Option target="RoniProject"/>
 		</Unit>

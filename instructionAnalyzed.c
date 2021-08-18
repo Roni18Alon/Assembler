@@ -34,13 +34,10 @@ Bool isInstructionFirstPass(char *before, char *after,char *label,globalVariable
         validRCommand = R_commandAnalyzed(after, before, after, instructionNum, numOfOperands, vars, currentWord);
         if (validRCommand == True) {
             /*need to add the word node to the list*/
-            currentWord->word.instruction.address = vars->IC;
             addWordToList(&(vars->headWordList),currentWord); /*it's a valid R command - add to word list*/
-            vars->IC = (vars->IC + 4);
             return True;
-        } else {
-            return False; /*not valid R Command*/
-        }
+        } else { return False; }/*not valid R Command*/
+
     }
     if (commandType == I_WORD) {
         currentWord->word.instruction.wordType = I_WORD;
@@ -49,10 +46,7 @@ Bool isInstructionFirstPass(char *before, char *after,char *label,globalVariable
         validICommand = I_commandAnalyzed(after, before, after, instructionNum, type, vars, currentWord);
         if (validICommand == True) {
             /*need to add the word node to the list*/
-            currentWord->word.instruction.address = vars->IC;
             addWordToList(&(vars->headWordList),currentWord); /*it's a valid I command - add to word list*/
-            vars->IC = (vars->IC + 4);
-
             return True;
         } else {
             return False; /*not valid I Command*/
@@ -65,13 +59,9 @@ Bool isInstructionFirstPass(char *before, char *after,char *label,globalVariable
         validICommand = J_commandAnalyzed(after, instructionNum, vars, currentWord);
         if (validICommand == True) {
             /*need to add the word node to the list*/
-            currentWord->word.instruction.address = vars->IC;
             addWordToList(&(vars->headWordList),currentWord); /*it's a valid J command - add to word list*/
-            vars->IC = (vars->IC + 4);
             return True;
-        } else {
-            return False; /*not valid J Command*/
-        }
+        } else { return False;} /*not valid J Command*/
     }
 }
 
@@ -482,6 +472,7 @@ Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, Word
 
     if(validOperandLine==True)
     {
+        currentWord->word.instruction.address = vars->IC;
         return True;
     }
     else {return False; }/*not a valid J command line*/
@@ -577,25 +568,26 @@ Bool labelJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
 }
 
 
-Bool secondPassJ(char *str,globalVariables *vars,int ICcounter, InstructionWordType commandType)
+Bool secondPassJ(char *str,globalVariables *vars, InstructionWordType commandType)
 {
     int validRegister;
     long labelAddress;
     Bool isExtern;
     /*all J instructions (beside stop) have one operand*/
     strip(str);
-    validRegister=isValidRegister(str,vars); /*jmp can get a register*/
+
+    validRegister= validJRegister(str,vars); /*jmp can get a register*/
     if (validRegister==REGISTER_ERROR) /*not a register so it's a label*/
     {
         /*we need to find the label in label list and update the address*/
         labelAddress= findLabel(&(vars->headLabelTable),str,vars,commandType);
         if (labelAddress==LABEL_ERROR) /*couldn't find the label*/
             return False;
-        isExtern= existsLabelExternalJ(&(vars->headLabelTable),str,vars);
-        addLabelAddress(&(vars->headWordList),ICcounter,labelAddress,commandType,isExtern);
+        isExtern= existsLabelExternalJ(&(vars->headLabelTable),str,vars); /*check if the operand label is external or not*/
+        addLabelAddress(&(vars->headWordList),vars,labelAddress,commandType,isExtern);
         if (isExtern==True) /*if it is a J command and the label is extern add to extern list*/
         {
-            createExternalNode(str,ICcounter,(&(vars->headExternList)));
+            createExternalNode(str,vars,(&(vars->headExternList)));
         }
         return True;
     }
@@ -604,7 +596,7 @@ Bool secondPassJ(char *str,globalVariables *vars,int ICcounter, InstructionWordT
 
 
 
-Bool secondPassI(char *str,globalVariables *vars,int ICcounter, InstructionWordType commandType) {
+Bool secondPassI(char *str,globalVariables *vars, InstructionWordType commandType) {
     int firstSplit, secondSplit;
     long currentLabelAddress;
     Bool isExternal;
@@ -612,13 +604,16 @@ Bool secondPassI(char *str,globalVariables *vars,int ICcounter, InstructionWordT
     strip(str);
     char before[LINE_LENGTH] = {0};
     char after[LINE_LENGTH] = {0};
+    char operandLine[LINE_LENGTH] = {0};
 
     firstSplit = split(str, ",", before, after);
     if (firstSplit == INVALID_SPLIT) {
         return False;
     }
+    memset(operandLine,0,LINE_LENGTH);
+    strcpy(operandLine,after);
 
-    secondSplit = split(after, ",", before, after);
+    secondSplit = split(operandLine, ",", before, after);
     if (secondSplit == INVALID_SPLIT) /*after second split the label will be in after string*/
     {
         return False;
@@ -626,13 +621,13 @@ Bool secondPassI(char *str,globalVariables *vars,int ICcounter, InstructionWordT
     /*after second split the label will be in after string*/
     strip(after);
     /*look for branch label in label list*/
-    currentLabelAddress = findLabel(&(vars->headLabelTable), str, vars, commandType);
+    currentLabelAddress = findLabel(&(vars->headLabelTable), after, vars, commandType);
     if (currentLabelAddress == LABEL_ERROR) /*couldn't find the label*/
         return False;
     isExternal = existsLabelExternalIBranch(&(vars->headLabelTable), after, vars);
     if (isExternal == False) /*the I Branch label is external - error*/
         return False;
-    addLabelAddress(&(vars->headWordList), ICcounter, currentLabelAddress, commandType,isExternal);
+    addLabelAddress(&(vars->headWordList),vars , currentLabelAddress, commandType,isExternal);
     return True;
 
 }
@@ -651,4 +646,31 @@ Bool labelBeforeInstructionCommand(char *labelName, globalVariables *vars, label
     }
 
     else{ return False; } /*we found the label in the label table*/
+}
+
+Bool isInstructionSecondPass(char *str,InstructionWordType commandType,int instructionNum,globalVariables *vars)
+{
+    Bool instructionSecondPass;
+    if(commandType==R_WORD)return True;
+    if(commandType==I_WORD){ /*need to analyzed I Branch commands */
+
+        if((instructionNum>=BNE && instructionNum<=BGT)) /*an I - Branch instruction - calculate the sub between*/
+        {
+            instructionSecondPass=secondPassI(str,vars,commandType);
+            if(instructionSecondPass==True)return True;
+            else{return False;}
+        }
+        else{return True;/*other I commands*/}
+    }
+    if(commandType==J_WORD)
+    {
+        if ((instructionNum >= JMP && instructionNum <= CALL)) /*an J - Branch instruction*/
+        {
+            instructionSecondPass = secondPassJ(str,vars,commandType);
+            if(instructionSecondPass==True)return True;
+            else{return False;}
+        }
+        else{return True;/*other J commands*/}
+
+    }
 }

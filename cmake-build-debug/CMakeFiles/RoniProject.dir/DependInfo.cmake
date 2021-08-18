@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "C:/Users/ronia/CLionProjects/assmbler90/EntryAndExtern.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj"
   "C:/Users/ronia/CLionProjects/assmbler90/WordList.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/WordList.c.obj"
+  "C:/Users/ronia/CLionProjects/assmbler90/createOutput.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/createOutput.c.obj"
   "C:/Users/ronia/CLionProjects/assmbler90/directiveAnalyzed.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj"
   "C:/Users/ronia/CLionProjects/assmbler90/firstPass.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/firstPass.c.obj"
   "C:/Users/ronia/CLionProjects/assmbler90/inputAnalyzed.c" "C:/Users/ronia/CLionProjects/assmbler90/cmake-build-debug/CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj"

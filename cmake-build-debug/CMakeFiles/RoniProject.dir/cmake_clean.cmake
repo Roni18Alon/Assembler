@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj"
   "CMakeFiles/RoniProject.dir/WordList.c.obj"
+  "CMakeFiles/RoniProject.dir/createOutput.c.obj"
   "CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj"
   "CMakeFiles/RoniProject.dir/firstPass.c.obj"
   "CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj"

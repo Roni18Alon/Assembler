@@ -14,6 +14,7 @@ InstructionWordType commandGroup (int instructionNum);
 
 
 Bool isInstructionFirstPass(char *before, char *after,char *labelName, globalVariables *vars, Bool hasLabel, labelListPtr currentLabel, WordNodePtr currentWord, int instructionNum);
+Bool isInstructionSecondPass(char *str,InstructionWordType commandType,int instructionNum,globalVariables *vars);
 Bool labelBeforeInstructionCommand(char *labelName, globalVariables *vars, labelListPtr currentLabel);
 
 Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,int numOfOperands,globalVariables *vars, WordNodePtr currentWord);
@@ -29,7 +30,7 @@ Bool labelJCommand(char *str,globalVariables *vars, WordNodePtr currentWord);
 
 int opcodeJ(int instructionNum);
 
-Bool secondPassJ(char *str,globalVariables *vars,int ICcounter, InstructionWordType commandType);
-Bool secondPassI(char *str,globalVariables *vars,int ICcounter, InstructionWordType commandType);
+Bool secondPassJ(char *str,globalVariables *vars, InstructionWordType commandType);
+Bool secondPassI(char *str,globalVariables *vars, InstructionWordType commandType);
 
 #endif //RONIPROJECT_INSTRUCTIONANALYZED_H

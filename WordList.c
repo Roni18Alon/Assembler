@@ -99,13 +99,13 @@ void addDirectiveICF(WordNodePtr *head,globalVariables *vars)
 
 }
 
-void addLabelAddress(WordNodePtr *head,int ICcounter,long labelAddress,InstructionWordType commandType, Bool isExtern)
+void addLabelAddress(WordNodePtr *head,globalVariables *vars,long labelAddress,InstructionWordType commandType, Bool isExtern)
 {
     long finalIAddress;
     WordNodePtr temp = *head;
     while (temp != NULL)
     {
-        if(temp->word.instruction.address == ICcounter) /*find the right node */
+        if(temp->word.instruction.address == vars->IC) /*find the right node */
         {
             if(commandType==J_WORD)  /*if it's a J - just update the address from label list*/
             {
@@ -121,7 +121,7 @@ void addLabelAddress(WordNodePtr *head,int ICcounter,long labelAddress,Instructi
                     temp->word.instruction.iWord.immed=finalIAddress;
                 }
             }
-
+            return;
         }
         temp = temp->next;
     }

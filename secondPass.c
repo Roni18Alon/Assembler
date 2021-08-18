@@ -12,7 +12,7 @@ void secondPass(globalVariables *vars) {
     WordType word;
     Bool directiveSecondPass;
     Bool instructionSecondPass;
-    int ICcounter=100;
+
 
 
     char line[LINE_LENGTH] = {0};
@@ -33,6 +33,7 @@ void secondPass(globalVariables *vars) {
         resetStrings(line,lineCpy,before,after,lineCpyAfterLabel,label);
 
         fgets(line, LINE_LENGTH,vars->file);
+       vars->currentLine++;
 
         strcpy(lineCpy,line);
         strip(lineCpy); /*strip white chars*/
@@ -81,19 +82,12 @@ void secondPass(globalVariables *vars) {
         else{ /*if it is not a directive it must be an instruction*/
             instructionNum = instructionValidName(before); /*get the instruction number*/
             InstructionWordType commandType = commandGroup(instructionNum);
-            if((instructionNum>=BNE && instructionNum<=BGT)) /*an I - Branch instruction - calculate the sub between*/
-            {
-                instructionSecondPass=secondPassI(after,vars,ICcounter,commandType);
-            }
-            else {
-                if ((instructionNum >= JMP && instructionNum <= CALL)) /*an J - Branch instruction*/
-                {
-                    instructionSecondPass = secondPassJ(after, vars, ICcounter, commandType);
-                }
-            }
+            instructionSecondPass=isInstructionSecondPass(after,commandType,instructionNum,vars);
             if(instructionSecondPass==False)
+            {
                 printErrors(vars);
-            ICcounter+=4;
+            }
+            vars->IC = (vars->IC + 4);
         }
 
     }

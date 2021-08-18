@@ -186,7 +186,7 @@ typedef struct labelList{
 typedef struct externalList *externalListPtr;
 typedef struct externalList{
     char labelName[LABEL_LENGTH];
-    int value;
+    long value;
     externalListPtr next;
 }externalList;
 
@@ -194,7 +194,7 @@ typedef struct externalList{
 typedef struct entryList *entryListPtr;
 typedef struct entryList{
     char labelName[LABEL_LENGTH];
-    int value;
+    long value;
     entryListPtr next;
 }entryList;
 

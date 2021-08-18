@@ -13,7 +13,7 @@ void addWordToList(WordNodePtr *head, WordNodePtr nodeToAdd);
 void addDirectiveByteToWordList(long validInput[LINE_LENGTH], WordNodePtr *head, int directive, DirectiveWordType givenWordType,globalVariables *vars);
 void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWordType, globalVariables *vars);
 void addDirectiveICF(WordNodePtr *head,globalVariables *vars);
-void addLabelAddress(WordNodePtr *head,int ICcounter,long labelAddress,InstructionWordType commandType,Bool isExtern);
+void addLabelAddress(WordNodePtr *head,globalVariables *vars,long labelAddress,InstructionWordType commandType,Bool isExtern);
 
 
 #endif //RONIPROJECT_WORDLIST_H

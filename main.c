@@ -57,7 +57,7 @@ void resetVars(globalVariables *vars) {
     vars->DCF = 0;
     vars->ICF = 0;
     vars->errorFound = False;
-    vars->currentLine = 1;
+    vars->currentLine = 0;
     vars->headLabelTable = NULL;
     vars->headWordList = NULL;
     vars->headExternList = NULL;

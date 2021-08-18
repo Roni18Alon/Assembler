@@ -195,6 +195,33 @@ WordList.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/WordList.c.s
 .PHONY : WordList.c.s
 
+createOutput.obj: createOutput.c.obj
+
+.PHONY : createOutput.obj
+
+# target to build an object file
+createOutput.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/createOutput.c.obj
+.PHONY : createOutput.c.obj
+
+createOutput.i: createOutput.c.i
+
+.PHONY : createOutput.i
+
+# target to preprocess a source file
+createOutput.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/createOutput.c.i
+.PHONY : createOutput.c.i
+
+createOutput.s: createOutput.c.s
+
+.PHONY : createOutput.s
+
+# target to generate assembly for a file
+createOutput.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/createOutput.c.s
+.PHONY : createOutput.c.s
+
 directiveAnalyzed.obj: directiveAnalyzed.c.obj
 
 .PHONY : directiveAnalyzed.obj
@@ -426,6 +453,9 @@ help:
 	@echo ... WordList.obj
 	@echo ... WordList.i
 	@echo ... WordList.s
+	@echo ... createOutput.obj
+	@echo ... createOutput.i
+	@echo ... createOutput.s
 	@echo ... directiveAnalyzed.obj
 	@echo ... directiveAnalyzed.i
 	@echo ... directiveAnalyzed.s

@@ -53,13 +53,13 @@ void firstPass(globalVariables *vars) {
         fgets(line, LINE_LENGTH, vars->file); /*vars->file*/
 
         validLineLength=getLine(line,lineCpy,vars);
+        vars->currentLine++;
         if (validLineLength==False)continue; /*get the next line*/
 
 
         strip(lineCpy); /*strip white chars*/
         lineAnalyzed = isEmptyOrCommandLine(lineCpy);
         if (lineAnalyzed == 1) continue; /*if the line is an empty line or command line - the assembler ignores*/
-        vars->currentLine++;
         /*analyze if its a directive or instruction*/
 
         /*create a new word node*/
@@ -96,6 +96,7 @@ void firstPass(globalVariables *vars) {
             if (word == Instruction) {
                 instructionNum = instructionValidName(before); /*get the instruction number*/
                 instructionFirstPass = isInstructionFirstPass(before, after,label, vars, hasLabel, currentLabel, currentWord, instructionNum);
+                vars->IC+=4;
                 if (instructionFirstPass == False )
                     printErrors(vars); /* we found an error -  print and continue to the next line not a valid instruction line*/
             } else { /*not a directive and not an instruction than - None - error*/
