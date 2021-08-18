@@ -34,7 +34,6 @@ void firstPass(globalVariables *vars) {
         fgets(line, LINE_LENGTH, stdin); /*vars->file*/
 
         validLineLength=getLine(line,lineCpy,vars);
-        vars->currentLine++;
         if (validLineLength==False)continue; /*get the next line*/
 
 
@@ -81,7 +80,7 @@ void firstPass(globalVariables *vars) {
                 vars->errorFound = True;
             }
         }
-
+        vars->currentLine++;
     }
     /*we finished to read the file*/
     if(vars->errorFound == False) /*we found errors - don't continue to second Pass */

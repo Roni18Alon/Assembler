@@ -150,5 +150,8 @@ void printErrors(globalVariables *vars)
     {
         printf("\n%s:Line %d:Illegal Directive name\n", vars->filename, vars->currentLine);
     }
-
+    if(vars->type==DirectiveOperandWrongSign)
+    {
+        printf("\n%s:Line %d: Given Operand  start with invalid sign\n", vars->filename,vars->currentLine);
+    }
 }

@@ -8,8 +8,6 @@
 void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel,WordNodePtr currentWord) {
 
     int directiveNum;
-    Bool validDirectiveParam;
-    Bool validAsciz,labelBeforeDirective;
     directiveNum = isValidDirectiveName(before); /*find if it's a valid directive and the num*/
 
     /* first pass step 6 */
@@ -17,48 +15,31 @@ void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables
         DirectiveWordType directiveType = getDirectiveType(directiveNum); /*find the directive word type*/
 
         if (directiveNum == DIRECTIVE_BYTE || directiveNum == DIRECTIVE_HALF_WORD || directiveNum == DIRECTIVE_WORD) { /*dw,db,dh*/
-            long validInput[LINE_LENGTH] = {0};
-            validDirectiveParam = dataAnalysis(after, before, after, vars, validInput,directiveNum);/*analyzed the operands of directive row*/
-            if (validDirectiveParam == False) return;
-            if (hasLabel == True)
-                /*we have a label and a data - add to symbol table the value is the DC before insert the numbers to the list*/
-            {
-                labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
-                if (labelBeforeDirective == False) return ; /*if False - return false and get the next row, else continue*/
 
+            byteDirectiveFirstPass(before,after,label,hasLabel,vars,directiveNum,directiveType, currentLabel); /*dw,db,dh command analysis*/
+        }
+        else{
+            if (directiveNum == DIRECTIVE_ASCIZ) { /*asciz command analysis*/
+                ascizDirectiveFirstPass(after,label, hasLabel,vars,directiveType,currentLabel);
             }
-            /*not a label only directive */
-            addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveNum, directiveType, vars);
-            return;
-        }
-        if (directiveNum == DIRECTIVE_ASCIZ) {
-            validAsciz = ascizAnalysis(after, vars);
-            if (validAsciz == False) return;
-
-            /*a valid param to asciz directive a valid string starts and ends with " */
-
-            if (hasLabel == True) { /*if the label flag is on - we have label*/
-                labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
-                if (labelBeforeDirective == False) return; /*if False - return false and get the next row, else continue*/
+            /*not a db,dw,dh,asciz - check if an entry or extern or non=invalid directive*/
+            else{
+                if (directiveNum == DIRECTIVE_EXTERN) {
+                    Bool externFirstPass = externDirectiveFirstPass(after, vars, currentLabel);
+                    if (externFirstPass == False)return;
+                    }
+                /*directiveNum == DIRECTIVE_ENTRY -in the first pass if we see an entry label - don't do nothing just continue to the next row**/
+                }
             }
-            /*no label just a directive - add to word table*/
-            addDirectiveAsciz(after, &(vars->headWordList), directiveType, vars);
-            return;
         }
-        /*not a db,dw,dh,asciz - check if an entry or extern or non=invalid directive*/
-        labelAndEntryOrExtern(hasLabel, directiveNum,vars); /*if we have a label before entry or extern - it's not an error just ignore- don't insert label to label list*/
-        if (directiveNum == DIRECTIVE_EXTERN) {
-            Bool externFirstPass = externDirectiveFirstPass(after, vars, currentLabel);
-            if (externFirstPass == False)return;
-        }
-        /*directiveNum == DIRECTIVE_ENTRY -in the first pass if we see an entry label - don't do nothing just continue to the next row**/
-    }
+
     else{ /*it's not a valid directive*/
         vars->type=InvalidDirective;
         vars->errorFound=True;
     }
 }
 
+/*This function analyzes dw,db,dh command in First Pass*/
 void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,globalVariables *vars,int directiveNum,DirectiveWordType directiveType,labelListPtr currentLabel)
 {
     long validInput[LINE_LENGTH] = {0};
@@ -73,6 +54,24 @@ void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,
     /*not a label only directive */
     addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveNum, directiveType, vars);
 }
+
+/*This function analyzes asciz command in First Pass*/
+void ascizDirectiveFirstPass(char *after,char *label,Bool hasLabel,globalVariables *vars,DirectiveWordType directiveType,labelListPtr currentLabel)
+{
+   Bool validAsciz,labelBeforeDirective;
+    validAsciz = ascizAnalysis(after, vars);
+    if (validAsciz == False) return;
+
+    /*a valid param to asciz directive a valid string starts and ends with " */
+
+    if (hasLabel == True) { /*if the label flag is on - we have label*/
+        labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
+        if (labelBeforeDirective == False) return; /*if False - return false and get the next row, else continue*/
+    }
+    /*no label just a directive - add to word table*/
+    addDirectiveAsciz(after, &(vars->headWordList), directiveType, vars);
+}
+
 
 
 Bool isDirectiveCommand(char command[LINE_LENGTH]) {
@@ -117,7 +116,7 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
     strcpy(line, after);
     lastChar = strlen(line);
 
-    if (line[lastChar] == ',') /* 3,4,5,7, situation*/
+    if (line[lastChar-1] == ',') /* 3,4,5,7, situation*/
     {
         vars->type = ExtraneousComma;
         vars->errorFound = True;
@@ -148,7 +147,6 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
             if ((strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) && i != 0) /*+65,,7...*/
             {
                 vars->type = CommaBetweenParams;
-                // printf("\n%s:Line %d:Illegal comma between param\n", vars->filename,vars->currentLine); */
                 vars->errorFound = True;
                 return False;
             }
@@ -163,7 +161,6 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
                 continue;
             } else {
                 vars->type = ParamNotInBitRange;
-                /* printf("\n%s:Line %d:number %d is not in bit range\n", vars->filename, vars->currentLine,number);*/
                 vars->errorFound = True;
                 return False;
             }

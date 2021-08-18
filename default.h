@@ -114,7 +114,7 @@ typedef enum {NoError,LineTooLong,IllegalCharInLabel,TooLongLabel,firstCharInLab
               IllegalInstruction,IllegalOperandNoComma,RegisterLength,RegisterSign,RegisterNegative,RegisterNotAnInt,RegisterNotInRange,ExtraneousComma,ExtraneousText,
               ExtraneousOperand,MissingOperand,ImmediateNotAnInt,ImmediateNotValid,ImmediateNotInRange,InvalidOperand,ExtraneousImmediate,DirectiveOperandNotAnInt,StringNotValid,
               LabelExistsWithoutExternal,LabelExistsInTable,InvalidTextAfterStop,EntryLabelDontExists,JCommandLabelDontExists,IBranchLabelIsExternal,IBranchLabelDontExists
-              ,InvalidDirective} errorType; /*add error each time, at the end of firstPass - print*/
+              ,InvalidDirective,DirectiveOperandWrongSign} errorType; /*add error each time, at the end of firstPass - print*/
 
 
 typedef struct Rfunc {

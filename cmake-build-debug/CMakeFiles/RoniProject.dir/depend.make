@@ -4,11 +4,16 @@
 CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj: ../EntryAndExtern.c
 CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj: ../default.h
 
+CMakeFiles/RoniProject.dir/WordList.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../WordList.c
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../default.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/WordList.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../inputAnalyzed.h
+CMakeFiles/RoniProject.dir/WordList.c.obj: ../instructionAnalyzed.h
+CMakeFiles/RoniProject.dir/WordList.c.obj: ../lableList.h
+CMakeFiles/RoniProject.dir/WordList.c.obj: ../printErrors.h
 
 CMakeFiles/RoniProject.dir/createOutput.c.obj: ../createOutput.c
 CMakeFiles/RoniProject.dir/createOutput.c.obj: ../createOutput.h
@@ -36,10 +41,16 @@ CMakeFiles/RoniProject.dir/firstPass.c.obj: ../instructionAnalyzed.h
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../lableList.h
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../printErrors.h
 
+CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../EntryAndExtern.h
+CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../default.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../inputAnalyzed.c
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../inputAnalyzed.h
+CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../instructionAnalyzed.h
+CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../lableList.h
+CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../printErrors.h
 
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../WordList.h
@@ -52,11 +63,16 @@ CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../instructionAnalyzed.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../lableList.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../printErrors.h
 
+CMakeFiles/RoniProject.dir/lableList.c.obj: ../EntryAndExtern.h
+CMakeFiles/RoniProject.dir/lableList.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../default.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/lableList.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../inputAnalyzed.h
+CMakeFiles/RoniProject.dir/lableList.c.obj: ../instructionAnalyzed.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../lableList.c
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../lableList.h
+CMakeFiles/RoniProject.dir/lableList.c.obj: ../printErrors.h
 
 CMakeFiles/RoniProject.dir/main.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../WordList.h

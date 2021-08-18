@@ -31,7 +31,6 @@ void secondPass(globalVariables *vars) {
         resetStrings(line,lineCpy,before,after,lineCpyAfterLabel,label);
 
         fgets(line, LINE_LENGTH,vars->file);
-       vars->currentLine++;
 
         strcpy(lineCpy,line);
         strip(lineCpy); /*strip white chars*/
@@ -75,6 +74,7 @@ void secondPass(globalVariables *vars) {
             isInstructionSecondPass(after,commandType,instructionNum,vars);
             vars->IC += 4;
         }
+       vars->currentLine++;
     }
    /*we passed on the file for the second time*/
 

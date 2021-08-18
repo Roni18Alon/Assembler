@@ -95,15 +95,8 @@ int isValidNumberDirective(char *str,globalVariables *vars)
     int i;
     int number;
     char num[LINE_LENGTH]={0};
-    if((isdigit((int)(str[0]))==0)) /*doesnt start with a digit*/
-    {
-        if(str[0]=='+')sign=1;/*positive num*/
-        if(str[0]=='-')sign=-1;/*negative num*/
-        strcpy(num,str+1);
-    }
-    else {strcpy(num,str);} /*start with a digit*/
 
-    for(i=0;i< strlen(num);i++)
+    for(i=1;i< strlen(str);i++)
     {
         int Digit=(int)(num[i]);
         if(isdigit(Digit)==0)
@@ -114,6 +107,22 @@ int isValidNumberDirective(char *str,globalVariables *vars)
             return INT_MIN;/*error- not an integer*/
         }
     }
+
+    if((isdigit((int)(str[0]))==0)) /*doesnt start with a digit*/
+    {
+       if(str[0]!='+' && str[0]!='-') /*operand start with a sign but not with + or - , it's an error*/
+       {
+           vars->type=DirectiveOperandWrongSign;
+           vars->errorFound = True;
+           return INT_MIN;/*error- not an integer*/
+       }else{
+           if(str[0]=='+')sign=1;/*positive num*/
+           if(str[0]=='-')sign=-1;/*negative num*/
+           strcpy(num,str+1);
+       }
+    }
+    else {strcpy(num,str);} /*start with a digit*/
+
     if (strcmp(num,"0")==0)
         number=0; /*atoi doesn't recognize 0 */
     else{

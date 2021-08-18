@@ -45,7 +45,10 @@ int main(int argc, char *argv[]) {
 
         printf("Completed Second Pass!\n");
         // createOutput(vars);
+        freeLists(vars);
+        freeExternList(&vars->headExternList);
         freeVars(vars);
+
         printf("\n");
     }
     return 0;
@@ -57,7 +60,7 @@ void resetVars(globalVariables *vars) {
     vars->DCF = 0;
     vars->ICF = 0;
     vars->errorFound = False;
-    vars->currentLine = 0;
+    vars->currentLine = 1;
     vars->headLabelTable = NULL;
     vars->headWordList = NULL;
     vars->headExternList = NULL;
@@ -68,4 +71,60 @@ void freeVars(globalVariables *vars) {
     free(vars);
 }
 
+void freeLists(globalVariables *vars)
+{
+    freeExternList(&vars->headExternList);
+    freeEntryList(&vars->headEntryList);
+    freeWordList(&vars->headWordList);
+    freeLabelList(&vars->headLabelTable);
+    freeVars(vars);
+}
 
+
+void freeExternList(externalListPtr *head)
+{
+    externalListPtr temp = *head;
+
+    while(temp)
+    {
+        temp = (temp)->next;
+        free(*head);
+        *head=temp;
+    }
+}
+
+
+void freeEntryList(entryListPtr *head)
+{
+    entryListPtr temp = *head;
+
+    while(temp)
+    {
+        temp = (temp)->next;
+        free(*head);
+        *head=temp;
+    }
+}
+
+void freeWordList(WordNodePtr *head)
+{
+    WordNodePtr temp = *head;
+
+    while(temp)
+    {
+        temp = (temp)->next;
+        free(*head);
+        *head=temp;
+    }
+}
+void freeLabelList (labelListPtr *head)
+{
+    labelListPtr temp = *head;
+
+    while(temp)
+    {
+        temp = (temp)->next;
+        free(*head);
+        *head=temp;
+    }
+}

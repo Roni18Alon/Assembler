@@ -39,6 +39,10 @@ void addDirectiveByteToWordList(long validInput[LINE_LENGTH], WordNodePtr *head,
             {
                 for (i = 0; i < LINE_LENGTH && validInput[i]!=LONG_MAX; i++) {
                     WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+                    if(!newNode)
+                    {
+                        exit(0);
+                    }
                     newNode->word.wordType = Directive;
                     newNode->word.directive.wordType = givenWordType;
                     newNode->word.directive.address = vars->DC+=2;
@@ -50,6 +54,10 @@ void addDirectiveByteToWordList(long validInput[LINE_LENGTH], WordNodePtr *head,
             /* givenWordType==D_WORD WORD=4 Bytes */
             for (i = 0; i < LINE_LENGTH && validInput[i]!=LONG_MAX; i++) {
                 WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+                if(!newNode)
+                {
+                    exit(0);
+                }
                 newNode->word.wordType = Directive;
                 newNode->word.directive.wordType = givenWordType;
                 newNode->word.directive.address = vars->DC+=4;
@@ -68,6 +76,10 @@ void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWord
     for (i = 0; i < strlen(str); i++)
     {
         WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+        if(!newNode)
+        {
+            exit(0);
+        }
         newNode->word.wordType = Directive;
         newNode->word.directive.wordType = givenWordType;
         newNode->word.directive.address = vars->DC++;
@@ -77,6 +89,10 @@ void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWord
 
     /*add the \0 char to end the string*/
     WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+    if(!newNode)
+    {
+        exit(0);
+    }
     newNode->word.wordType = Directive;
     newNode->word.directive.wordType = givenWordType;
     newNode->word.directive.address = vars->DC++;

@@ -11,6 +11,8 @@
 
 void isDirectiveFirstPass(char* ,char* ,char* ,globalVariables *,Bool ,labelListPtr ,WordNodePtr ) ;
 Bool isDirectiveSecondPass(char *,char*  ,globalVariables *, Bool , labelListPtr );
+void byteDirectiveFirstPass(char *, char *,char *,Bool ,globalVariables *,int , DirectiveWordType, labelListPtr);
+void ascizDirectiveFirstPass(char *,char *,Bool ,globalVariables *,DirectiveWordType ,labelListPtr);
 Bool isDirectiveCommand(char []);
 int isValidDirectiveName(char *);
 DirectiveWordType getDirectiveType(int);
