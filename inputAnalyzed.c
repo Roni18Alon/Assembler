@@ -98,7 +98,7 @@ int isValidNumberDirective(char *str,globalVariables *vars)
 
     for(i=1;i< strlen(str);i++)
     {
-        int Digit=(int)(num[i]);
+        int Digit=(int)(str[i]);
         if(isdigit(Digit)==0)
         {
             vars->type=DirectiveOperandNotAnInt;

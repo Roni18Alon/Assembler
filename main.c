@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
         }
 
         printf("Completed Second Pass!\n");
-        // createOutput(vars);
+        createOutput(vars);
         freeLists(vars);
         freeExternList(&vars->headExternList);
         freeVars(vars);

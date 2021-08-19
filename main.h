@@ -4,6 +4,7 @@
 #include "default.h"
 #include "firstPass.h"
 #include "secondPass.h"
+#include "createOutput.h"
 
 void resetVars(globalVariables *);
 void freeVars(globalVariables *);

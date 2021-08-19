@@ -31,7 +31,7 @@ void firstPass(globalVariables *vars) {
 
         resetStrings(line,lineCpy,before,after,lineCpyAfterLabel,label);
 
-        fgets(line, LINE_LENGTH, stdin); /*vars->file*/
+        fgets(line, LINE_LENGTH, vars->file); /*vars->file*/
 
         validLineLength=getLine(line,lineCpy,vars);
         if (validLineLength==False)continue; /*get the next line*/
@@ -39,7 +39,11 @@ void firstPass(globalVariables *vars) {
 
         strip(lineCpy); /*strip white chars*/
         lineAnalyzed = isEmptyOrCommandLine(lineCpy);
-        if (lineAnalyzed == 1) continue; /*if the line is an empty line or command line - the assembler ignores*/
+        if (lineAnalyzed == 1) {
+            vars->currentLine++;
+            continue; /*if the line is an empty line or command line - the assembler ignores*/
+        }
+
         /*analyze if its a directive or instruction*/
 
         /*create a new word node*/
