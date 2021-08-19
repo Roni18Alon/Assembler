@@ -86,6 +86,13 @@ void firstPass(globalVariables *vars) {
         }
         vars->currentLine++;
     }
+
+    int finalMemory=vars->IC+vars->DC;
+    if(finalMemory>=MAX_MEMORY)
+    {
+        vars->type = MaxMemory;
+        vars->errorFound = True;
+    }
     /*we finished to read the file*/
     if(vars->errorFound == False) /*we found errors - don't continue to second Pass */
     {

@@ -154,4 +154,8 @@ void printErrors(globalVariables *vars)
     {
         printf("\n%s:Line %d: Given Operand  start with invalid sign\n", vars->filename,vars->currentLine);
     }
+    if(vars->type==MaxMemory)
+    {
+        printf("\n%s:Line %d:We reached the maximum capacity of memory \n", vars->filename,vars->currentLine);
+    }
 }

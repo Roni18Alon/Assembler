@@ -100,7 +100,7 @@
 #define ONE_LABEL 1
 #define NONE 0
 
-
+#define MAX_MEMORY 33554432 /*wh have 2^25 volume of memory*/
 
 
 typedef enum {Instruction, Directive,None} WordType;
@@ -114,7 +114,7 @@ typedef enum {NoError,LineTooLong,IllegalCharInLabel,TooLongLabel,firstCharInLab
               IllegalInstruction,IllegalOperandNoComma,RegisterLength,RegisterSign,RegisterNegative,RegisterNotAnInt,RegisterNotInRange,ExtraneousComma,ExtraneousText,
               ExtraneousOperand,MissingOperand,ImmediateNotAnInt,ImmediateNotValid,ImmediateNotInRange,InvalidOperand,ExtraneousImmediate,DirectiveOperandNotAnInt,StringNotValid,
               LabelExistsWithoutExternal,LabelExistsInTable,InvalidTextAfterStop,EntryLabelDontExists,JCommandLabelDontExists,IBranchLabelIsExternal,IBranchLabelDontExists
-              ,InvalidDirective,DirectiveOperandWrongSign} errorType; /*add error each time, at the end of firstPass - print*/
+              ,InvalidDirective,DirectiveOperandWrongSign,MaxMemory} errorType; /*add error each time, at the end of firstPass - print*/
 
 
 typedef struct Rfunc {
