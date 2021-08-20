@@ -14,7 +14,7 @@
 #include "directiveAnalysis.h"
 #include "firstPass.h"
 
-void printErrors(globalVariables *vars);
-void foundError(globalVariables *vars,errorType type,char *str);
+void printErrors(globalVariables *);
+void foundError(globalVariables *,errorType ,char *);
 
 #endif
