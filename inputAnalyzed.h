@@ -29,7 +29,7 @@ int isValidRegisterNum(char *,globalVariables *);
 int isValidRegister(char *,globalVariables *);
 int isValidImmediate(char *,globalVariables *);
 InstructionWordType commandGroup (int );
-Bool foundLabel(char *,char *,char *,globalVariables *,labelListPtr );
+Bool foundLabel(char *,char *,char *,globalVariables *);
 int validJRegister(char *str,globalVariables *vars);
 void resetStrings(char *,char *,char * , char *, char *,char *);
 

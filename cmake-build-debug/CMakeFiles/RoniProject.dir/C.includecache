@@ -14,10 +14,6 @@ C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 inputAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
 
-C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.h
-default.h
-C:/Users/ronia/CLionProjects/AssemblerProj/default.h
-
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 stdio.h
 -
@@ -37,6 +33,10 @@ inputAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
 instructionAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.c
+firstPass.h
+C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.h
 
 C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.h
 default.h
@@ -76,20 +76,6 @@ C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 inputAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
 
-C:/Users/ronia/CLionProjects/AssemblerProj/main.c
-main.h
-C:/Users/ronia/CLionProjects/AssemblerProj/main.h
-
-C:/Users/ronia/CLionProjects/AssemblerProj/main.h
-default.h
-C:/Users/ronia/CLionProjects/AssemblerProj/default.h
-firstPass.h
-C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.h
-secondPass.h
-C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
-createOutput.h
-C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.h
-
 C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
 default.h
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
@@ -105,24 +91,4 @@ directiveAnalysis.h
 C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
 firstPass.h
 C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.h
-
-C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.c
-secondPass.h
-C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
-
-C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
-default.h
-C:/Users/ronia/CLionProjects/AssemblerProj/default.h
-lableList.h
-C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
-WordList.h
-C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
-inputAnalyzed.h
-C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
-instructionAnalyzed.h
-C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
-directiveAnalysis.h
-C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
-printErrors.h
-C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
 

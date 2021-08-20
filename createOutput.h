@@ -10,6 +10,7 @@
 #include "default.h"
 
 
-void createOutput(globalVariables *vars);
+void createOutput(globalVariables *);
+
 
 #endif

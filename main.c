@@ -1,8 +1,9 @@
 #include "main.h"
-
+//#include "memleaks.h"
 
 int main(int argc, char *argv[]) {
     int i;
+   // INIT_MEMLEAKS;
     for (i = 1; i < argc; i++) {
         globalVariables *vars;
         char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
@@ -48,7 +49,7 @@ int main(int argc, char *argv[]) {
 
         printf("Completed Second Pass!\n");
         createOutput(vars);
-        freeLists(vars);
+        freeVars(vars);
         printf("\n");
     }
     return 0;
@@ -68,6 +69,8 @@ void resetVars(globalVariables *vars) {
 }
 
 void freeVars(globalVariables *vars) {
+    freeLists(vars);
+    fclose(vars->file);
     free(vars);
 }
 
@@ -77,14 +80,12 @@ void freeLists(globalVariables *vars)
     freeEntryList(&vars->headEntryList);
     freeWordList(&vars->headWordList);
     freeLabelList(&vars->headLabelTable);
-    freeVars(vars);
 }
 
 
 void freeExternList(externalListPtr *head)
 {
     externalListPtr temp = *head;
-
 
     while(temp) /*free all except head*/
     {
@@ -98,7 +99,6 @@ void freeExternList(externalListPtr *head)
 void freeEntryList(entryListPtr *head)
 {
     entryListPtr temp = *head;
-    temp = (temp)->next;
 
     while(temp)
     {
@@ -111,7 +111,7 @@ void freeEntryList(entryListPtr *head)
 void freeWordList(WordNodePtr *head)
 {
     WordNodePtr temp = *head;
-    temp = (temp)->next;
+
 
     while(temp)
     {
@@ -123,7 +123,7 @@ void freeWordList(WordNodePtr *head)
 void freeLabelList (labelListPtr *head)
 {
     labelListPtr temp = *head;
-    temp = (temp)->next;
+
 
     while(temp)
     {

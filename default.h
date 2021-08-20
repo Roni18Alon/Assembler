@@ -130,25 +130,32 @@ typedef enum {NoError,LineTooLong,IllegalCharInLabel,TooLongLabel,firstCharInLab
 
 
 typedef struct Rfunc {
+
     unsigned int unused:6;
     unsigned int funct:5;
     unsigned int rd:5;
     unsigned int rt:5;
     unsigned int rs:5;
     unsigned int opcode:6;
+
 } R_cmd;
 
 typedef struct Ifunc {
-    unsigned int immed:16;
+
+
+    int immed:16;
     unsigned int rt:5;
     unsigned int rs:5;
     unsigned int opcode:6;
+
 } I_cmd;
 
 typedef struct Jfunc {
+
     unsigned long int address:25;
     unsigned int reg:1;
     unsigned int opcode:6;
+
 } J_cmd;
 
 typedef struct InstructionWord {
@@ -158,6 +165,7 @@ typedef struct InstructionWord {
         R_cmd rWord;
         I_cmd iWord;
         J_cmd jWord;
+        unsigned long bytes:32;
     };
 } InstructionWord;
 

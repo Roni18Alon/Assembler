@@ -72,7 +72,7 @@ void RCommandFirstPass(char *before,char *after,InstructionWordType commandType,
     Bool validRCommand = R_commandAnalyzed(after, before, after, instructionNum, numOfOperands, vars, currentWord);
     if (validRCommand == True) {
         /*need to add the word node to the list*/
-        addWordToList(&(vars->headWordList),currentWord); /*it's a valid R command - add to word list*/
+        createWordNode(currentWord,vars); /*it's a valid R command -create a copy and add to list*/
     }
     /*not valid R Command*/
 }
@@ -81,7 +81,7 @@ void RCommandFirstPass(char *before,char *after,InstructionWordType commandType,
 Bool R_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,int numOfOperands,globalVariables *vars, WordNodePtr currentWord)
 {
     Bool validOperandLine;
-    int funct= Rfunct(numOfOperands);
+    int funct= Rfunct(instructionNum);
     currentWord->word.instruction.rWord.funct =funct; /*add funct to current word*/
 
     validOperandLine=validROperandLine(str,before,after,instructionNum,numOfOperands,vars,currentWord);
@@ -128,7 +128,7 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
     if(validReg>=VALID_REGISTER) {
         firstReg = validReg;
         if(numOfOperands==THREE_REGISTERS) {
-            currentWord->word.instruction.rWord.rd = firstReg;
+            currentWord->word.instruction.rWord.rs = firstReg;
         }
         if(numOfOperands==TWO_REGISTERS)
         {
@@ -176,7 +176,7 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
             validReg=isValidRegister(before,vars);
             if(validReg>=VALID_REGISTER) {
                 secondReg = validReg;
-                currentWord->word.instruction.rWord.rs = secondReg;
+                currentWord->word.instruction.rWord.rt = secondReg;
             }
             else{ /*not a valid register*/
                 return False; /*error type already been checked*/
@@ -244,7 +244,7 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
         validReg=isValidRegister(before,vars);
         if(validReg>=VALID_REGISTER) {
             thirdReg = validReg;
-            currentWord->word.instruction.rWord.rt = thirdReg;
+            currentWord->word.instruction.rWord.rd = thirdReg;
             return True;
         }
         else{ /*not a valid register*/
@@ -262,7 +262,7 @@ void ICommandFirstPass(char *before,char *after,InstructionWordType commandType,
     Bool validICommand = I_commandAnalyzed(after, before, after, instructionNum, type, vars, currentWord);
     if (validICommand == True) {
         /*need to add the word node to the list*/
-        addWordToList(&(vars->headWordList),currentWord); /*it's a valid I command - add to word list*/
+        createWordNode(currentWord,vars); /*it's a valid I command - create a copy and add to word list*/
     }
     /*not valid I Command*/
 }
@@ -313,7 +313,7 @@ Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,i
                 }
                 if(type==REG_IM_REG_ARI_LOG)
                 {
-                    currentWord->word.instruction.iWord.rt = firstReg;
+                    currentWord->word.instruction.iWord.rs = firstReg;
                 }
             }
             else{   return False; }/*not a valid register*/
@@ -421,7 +421,7 @@ Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,i
                     return True;
                 }
                 else{ /*type == REG_IM_REG_ARI_LOG*/
-                    currentWord->word.instruction.iWord.rs = thirdReg;
+                    currentWord->word.instruction.iWord.rt = thirdReg;
                     return True;
                 }
             }
@@ -447,7 +447,7 @@ void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,Word
     Bool validICommand = J_commandAnalyzed(after, instructionNum, vars, currentWord);
     if (validICommand == True) {
         /*need to add the word node to the list*/
-        addWordToList(&(vars->headWordList),currentWord); /*it's a valid J command - add to word list*/
+        createWordNode(currentWord,vars); /*it's a valid J command - create a copy and add to word list*/
     }
     /*not valid J Command*/
 }
@@ -624,7 +624,7 @@ Bool labelBeforeInstructionCommand(char *labelName, globalVariables *vars, label
     ValidLabelName = labelNameCompare(&(vars->headLabelTable),labelName,vars); /*check if the label name wasn't shown in the table already*/
     if (ValidLabelName == VALID_LABEL) { /* a label isn't in the table*/
         updateLabel(currentLabel,vars->IC,Code,NoEntryExtern); /*update the current label node*/
-        addLabelToList((&vars->headLabelTable), currentLabel);/*add the label to table*/
+        createLabelNode(currentLabel,vars); /*create copy of label and add to label list*/
         return True;
     }
 

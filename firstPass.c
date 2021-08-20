@@ -116,6 +116,8 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
             foundError(vars,notDirectiveOrInstruction,before);
         }
     }
+    free(currentLabel);
+    free(currentWord);
 }
 
 

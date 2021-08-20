@@ -44,11 +44,12 @@ int split(char *str, char *delimiter, char *before, char *after) {
 Bool labelAnalysis(char *lineCpy,char *before, char *after,char *label,char *lineCpyAfterLabel,globalVariables *vars ,labelListPtr currentLabel)
 {
    Bool hasLabel;
-    hasLabel = foundLabel(lineCpy, before, after, vars, currentLabel); /*look for a label and the checks if it's a valid label*/
+    hasLabel = foundLabel(lineCpy, before, after, vars); /*look for a label and the checks if it's a valid label*/
 
     if (hasLabel == True) { /*we found a label*/
 
         strcpy(label, before);
+        strcpy(currentLabel->labelName, before);
         strcpy(lineCpyAfterLabel, after);
         return True;
     } else {
@@ -71,7 +72,7 @@ int isLegalLabel(char *str, globalVariables *vars) {
     if (!isspace(str[length-1]))/*a legal label*/
     {
         strip(str);
-        if (length <= LABEL_LENGTH) {
+        if (length < LABEL_LENGTH) {
             int first = (int) str[0];
             if (isalpha(first)) //*a legal label starts with an alphabet */
             {
@@ -365,7 +366,7 @@ int isValidImmediate(char *str,globalVariables *vars) {
     }
 }
 
-Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars,labelListPtr currentLabel) {
+Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars) {
 
     int labelDelimiter, validLabel;
     labelDelimiter = split(lineCpy, ":", before, after);
@@ -375,7 +376,6 @@ Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars,lab
         /*to find if we have a label*/
         if (validLabel == VALID_LABEL) {
             strip(before);
-            strcpy(currentLabel->labelName, before);
             return True; /*label flag*/
         }
         else return False; /*we found a label but it's not valid*/

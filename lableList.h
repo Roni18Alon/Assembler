@@ -23,5 +23,6 @@ long findLabel(labelListPtr *, char *,globalVariables *,InstructionWordType );
 Bool existsLabelExternalIBranch(labelListPtr *, char *,globalVariables *);
 Bool existsLabelExternalJ(labelListPtr *, char *,globalVariables *);
 long EntryValueAfterSecondPass(labelListPtr *, char *);
+void createLabelNode(labelListPtr labelToAdd, globalVariables *vars);
 
 #endif

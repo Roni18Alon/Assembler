@@ -55,14 +55,8 @@ void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *
     WordType word;
     int instructionNum;
 
-    /*create a new label node*/
-    labelListPtr currentLabel = (labelListPtr) calloc(1, sizeof(labelListPtr));
-    if (!currentLabel) {
-        exit(0);
-    }
-
     /*add bool function to check if we have a label*/
-    hasLabel = foundLabel(lineCpy, before, after, vars, currentLabel);
+    hasLabel = foundLabel(lineCpy, before, after, vars);
 
     if (hasLabel == True) { /*we found a label*/
         strcpy(label, before);
@@ -86,6 +80,7 @@ void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *
         isInstructionSecondPass(after, commandType, instructionNum, vars);
         vars->IC += 4;
     }
+
 }
 
 

@@ -231,7 +231,7 @@ Bool labelBeforeDirectiveCommand(char *labelName, globalVariables *vars, labelLi
     ValidLabelName = labelNameCompare(&(vars->headLabelTable),labelName,vars); /*check if the label name wasn't shown in the table already*/
     if (ValidLabelName == VALID_LABEL) { /* a label isn't in the table*/
         updateLabel(currentLabel,vars->DC,Data,NoEntryExtern); /*update the current label node*/
-        addLabelToList((&vars->headLabelTable), currentLabel);/*add the label to table*/
+        createLabelNode(currentLabel,vars); /*create a copy and add to label list*/
         return True;
     }
 
@@ -258,7 +258,7 @@ Bool externDirectiveFirstPass(char *after ,globalVariables *vars,labelListPtr cu
 
         strcpy(currentLabel->labelName,after); /*update the label we want to add name*/
         updateLabel(currentLabel,0,NoCodeOrData,Extern);
-        addLabelToList(&(vars->headLabelTable), currentLabel);/*add to label list*/
+        createLabelNode(currentLabel,vars); /* create a copy and add to label list*/
         return True;
     } else {
         return False;

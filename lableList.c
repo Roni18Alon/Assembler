@@ -22,6 +22,24 @@ void addLabelToList(labelListPtr *head, labelListPtr labelToAdd) {
     labelToAdd->next=NULL;
 }
 
+
+
+/*This function create an external label by given params - label name and address (value)*/
+void createLabelNode(labelListPtr labelToAdd, globalVariables *vars)
+{
+    labelListPtr labelCpy = (labelListPtr) calloc(1, sizeof(labelList));
+    if(!labelCpy)
+    {
+        exit(0);
+    }
+
+    strcpy(labelCpy->labelName,labelToAdd->labelName);
+    labelCpy->address=labelToAdd->address;
+    labelCpy->codeOrData=labelToAdd->codeOrData;
+    labelCpy->entryOrExtern=labelToAdd->entryOrExtern;
+    addLabelToList(&(vars->headLabelTable), labelCpy);
+}
+
 /*to identify if we already have this label in this label table*/
 int labelNameCompare(labelListPtr *head,char *labelName,globalVariables *vars)
 {
