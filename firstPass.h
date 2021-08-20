@@ -1,6 +1,8 @@
-//
-// Created by ronia on 24/07/2021.
-//
+/* Name: firstPass.h
+ * Author: Roni Alon & Noa Even
+ * Description: in this function we will pass on the file for the first time and Start to analyzed it
+ *
+*/
 
 #ifndef RONIPROJ_FIRSTPASS_H
 #define RONIPROJ_FIRSTPASS_H
@@ -15,6 +17,6 @@
 
 void firstPass(globalVariables *);
 void firstPassAnalysis(globalVariables *,char *,char *, char * , char *,char *);
-Bool getLine(char *line,char *lineCpy,globalVariables *vars);
-#endif //RONIPROJ_FIRSTPASS_H
+Bool getLine(char *,char *,globalVariables *);
+#endif
 

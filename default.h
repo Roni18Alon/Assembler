@@ -36,8 +36,6 @@
 #define D_BYTE_MAX_VALUE  127 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
 #define D_HALF_MIN_VALUE -32768 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
 #define D_HALF_MAX_VALUE  32767 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
-#define D_WORD_MIN_VALUE -2147483648 /*4 byte=32 bits the range is [-2^31...2^31-1]=[-2147483648,2147483647]*/
-#define D_WORD_MAX_VALUE  2147483647 /*4 byte=32 bits the range is [-2^31...2^31-1]=[-2147483648,2147483647]*/
 
 #define STRING_ERROR -1
 #define VALID_STRING 1

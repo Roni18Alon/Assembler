@@ -14,4 +14,5 @@ void createExternalNode(char *, globalVariables *);
 
 void addEntryToList(entryListPtr *, entryListPtr );
 void createEntryNode(char *, long ,globalVariables *);
+
 #endif

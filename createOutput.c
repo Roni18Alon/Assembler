@@ -51,14 +51,14 @@
 
        char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
        FILE *file;
-       // /* create object file with the title the lengths */
+       /* create object file with the title the lengths */
        sprintf(filename, "%s.ent", vars->filename);
 
        file = fopen(filename, "w");
        entryListPtr entryLabel = vars->headEntryList;
         while (entryLabel)
         {
-            //(stdout, 0);
+
             fprintf( file,"%s %04lu\n", entryLabel->labelName, entryLabel->value);
             entryLabel=entryLabel->next;
         }

@@ -27,4 +27,4 @@ void entryDirectiveSecondPass(globalVariables *,char *);
 
 
 
-#endif //RONIPROJECT_DIRECTIVEANALYSIS_H
+#endif

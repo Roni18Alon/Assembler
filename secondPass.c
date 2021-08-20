@@ -1,7 +1,8 @@
-//
-// Created by ronia on 08/08/2021.
-//
-
+/* Name: secondPass.c
+ * Author: Roni Alon & Noa Even
+ * Description: in this function we will pass on the file for the second time and complete the missing data in the code Instructions
+ *
+*/
 #include "secondPass.h"
 
 

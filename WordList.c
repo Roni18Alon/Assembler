@@ -1,10 +1,9 @@
-//
-// Created by ronia on 30/07/2021.
-//
-
+/* Name: WordList.c
+ * Author: Roni Alon & Noa Even
+ * Description: Include supporting functions to analyze and handle  the word list like add, search for a node in the word list
+ *
+*/
 #include "WordList.h"
-#include "default.h"
-
 
 
 /*this functions adds a word node to word list*/
@@ -30,7 +29,7 @@ void addDirectiveByteToWordList(long validInput[LINE_LENGTH], WordNodePtr *head,
             newNode->word.wordType = Directive;
             newNode->word.directive.wordType = givenWordType;
             newNode->word.directive.address = vars->DC++;
-            newNode->word.directive.db = (long) validInput[i];
+            newNode->word.directive.db = validInput[i];
             addWordToList(head, newNode);
         }
 
@@ -45,8 +44,8 @@ void addDirectiveByteToWordList(long validInput[LINE_LENGTH], WordNodePtr *head,
                     }
                     newNode->word.wordType = Directive;
                     newNode->word.directive.wordType = givenWordType;
-                    newNode->word.directive.address = vars->DC+=2;
-                    newNode->word.directive.dh = (long) validInput[i];
+                    newNode->word.directive.address = (vars->DC+=2);
+                    newNode->word.directive.dh =validInput[i];
                     addWordToList(head, newNode);
                 }
             }
@@ -60,8 +59,8 @@ void addDirectiveByteToWordList(long validInput[LINE_LENGTH], WordNodePtr *head,
                 }
                 newNode->word.wordType = Directive;
                 newNode->word.directive.wordType = givenWordType;
-                newNode->word.directive.address = vars->DC+=4;
-                newNode->word.directive.dw = (long) validInput[i];
+                newNode->word.directive.address = (vars->DC+=4);
+                newNode->word.directive.dw = validInput[i];
                 addWordToList(head, newNode);
             }
         }

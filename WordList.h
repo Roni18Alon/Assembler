@@ -1,6 +1,8 @@
-//
-// Created by ronia on 30/07/2021.
-//
+/* Name: WordList.h
+ * Author: Roni Alon & Noa Even
+ * Description: Include supporting functions to analyze and handle  the word list like add, search for a node in the word list
+ *
+*/
 
 #ifndef RONIPROJECT_WORDLIST_H
 #define RONIPROJECT_WORDLIST_H
@@ -9,11 +11,11 @@
 #include "inputAnalyzed.h"
 
 
-void addWordToList(WordNodePtr *head, WordNodePtr nodeToAdd);
-void addDirectiveByteToWordList(long validInput[LINE_LENGTH], WordNodePtr *head, int directive, DirectiveWordType givenWordType,globalVariables *vars);
-void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWordType, globalVariables *vars);
-void addDirectiveICF(WordNodePtr *head,globalVariables *vars);
-void addLabelAddress(WordNodePtr *head,globalVariables *vars,long labelAddress,InstructionWordType commandType,Bool isExtern);
+void addWordToList(WordNodePtr *, WordNodePtr );
+void addDirectiveByteToWordList(long [], WordNodePtr *, int , DirectiveWordType ,globalVariables *);
+void addDirectiveAsciz(char *, WordNodePtr *, DirectiveWordType , globalVariables *);
+void addDirectiveICF(WordNodePtr *,globalVariables *);
+void addLabelAddress(WordNodePtr *,globalVariables *,long ,InstructionWordType ,Bool );
 
 
-#endif //RONIPROJECT_WORDLIST_H
+#endif

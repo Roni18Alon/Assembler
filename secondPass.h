@@ -1,7 +1,8 @@
-//
-// Created by ronia on 08/08/2021.
-//
-
+/* Name: secondPass.h
+ * Author: Roni Alon & Noa Even
+ * Description: in this function we will pass on the file for the second time and complete the missing data in the code Instructions
+ *
+*/
 #ifndef RONIPROJECT_SECONDPASS_H
 #define RONIPROJECT_SECONDPASS_H
 
@@ -17,8 +18,8 @@
 
 
 
-void secondPass(globalVariables *vars);
-void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *after , char *label,char *lineCpyAfterLabel);
-void varsResetForSecondPass(globalVariables *vars);
+void secondPass(globalVariables *);
+void secondPassAnalysis(globalVariables *,char *,char *, char *, char *,char *);
+void varsResetForSecondPass(globalVariables *);
 
-#endif //RONIPROJECT_SECONDPASS_H
+#endif

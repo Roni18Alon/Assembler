@@ -55,6 +55,7 @@ void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,
     addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveNum, directiveType, vars);
 }
 
+
 /*This function analyzes asciz command in First Pass*/
 void ascizDirectiveFirstPass(char *after,char *label,Bool hasLabel,globalVariables *vars,DirectiveWordType directiveType,labelListPtr currentLabel)
 {

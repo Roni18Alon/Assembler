@@ -1,6 +1,8 @@
-//
-// Created by Raz on 26/07/2021.
-//
+/* Name: firstPass.c
+ * Author: Roni Alon & Noa Even
+ * Description: in this function we will pass on the file for the first time and Start to analyzed it
+ *
+*/
 
 #include "firstPass.h"
 
@@ -120,7 +122,7 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
 
 
 
-
+/*if we got line with more than 80 chars, "empty" the line*/
 void getToNextLine(FILE *f) {
     int c;
     while ((c = fgetc(f)) != EOF) {

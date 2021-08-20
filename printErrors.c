@@ -1,6 +1,8 @@
-//
-// Created by ronia on 12/08/2021.
-//
+/* Name: printErrors.c
+ * Author: Roni Alon & Noa Even
+ * Description: Print the errors we found in the FIRST PASS OR SECOND PASS
+ *
+*/
 
 #include "printErrors.h"
 

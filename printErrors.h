@@ -1,7 +1,8 @@
-//
-// Created by ronia on 12/08/2021.
-//
-
+/* Name: printErrors.h
+ * Author: Roni Alon & Noa Even
+ * Description: Print the errors we found in the FIRST PASS OR SECOND PASS
+ *
+*/
 #ifndef RONIPROJECT_PRINTERRORS_H
 #define RONIPROJECT_PRINTERRORS_H
 
@@ -16,4 +17,4 @@
 void printErrors(globalVariables *vars);
 void foundError(globalVariables *vars,errorType type,char *str);
 
-#endif //RONIPROJECT_PRINTERRORS_H
+#endif
