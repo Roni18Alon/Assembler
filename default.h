@@ -1,3 +1,9 @@
+/* Name: defalut.h
+ * Author: Roni Alon & Noa Even
+ * Description: Include the definition of structs ,data structures , enum and define macros for the use of the rest project
+*/
+
+
 #ifndef DEFAULT_H
 #define DEFAULT_H
 
@@ -12,7 +18,11 @@
 #define FILE_NAME_LENGTH 30
 #define LABEL_LENGTH 31
 #define AS_EXTENSION_LENGTH 3
+#define EMPTY_OR_COMMENT 1
+#define NOT_EMPTY_OR_COMMENT -1
 
+#define NEGATIVE_NUM -1
+#define POSITIVE_NUM 1
 
 #define DIRECTIVE_WORD 4
 #define DIRECTIVE_HALF_WORD 2
@@ -21,6 +31,13 @@
 #define DIRECTIVE_EXTERN 5
 #define DIRECTIVE_ENTRY 6
 #define DIRECTIVE_ERROR -1
+
+#define D_BYTE_MIN_VALUE -128 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
+#define D_BYTE_MAX_VALUE  127 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
+#define D_HALF_MIN_VALUE -32768 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
+#define D_HALF_MAX_VALUE  32767 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
+#define D_WORD_MIN_VALUE -2147483648 /*4 byte=32 bits the range is [-2^31...2^31-1]=[-2147483648,2147483647]*/
+#define D_WORD_MAX_VALUE  2147483647 /*4 byte=32 bits the range is [-2^31...2^31-1]=[-2147483648,2147483647]*/
 
 #define STRING_ERROR -1
 #define VALID_STRING 1
@@ -33,14 +50,11 @@
 #define INVALID_SPLIT -1
 
 #define REGISTER_ERROR -1
+#define VALID_REGISTER 0
+#define REG_MAX_LENGTH 3 /*the max register is $31*/
 
 
-#define VALID_REG_NUM 0
-#define VALID_REGISTER 1
-#define IMMEDIATE_NOT_INT -1
 
-#define NUMBER_BITS 32
-#define NUMBER_BITS_IN_BYTE 8
 #define VALID_BIT_RANGE 1
 #define INVALID_BIT_RANGE -1
 
@@ -114,7 +128,7 @@ typedef enum {NoError,LineTooLong,IllegalCharInLabel,TooLongLabel,firstCharInLab
               IllegalInstruction,IllegalOperandNoComma,RegisterLength,RegisterSign,RegisterNegative,RegisterNotAnInt,RegisterNotInRange,ExtraneousComma,ExtraneousText,
               ExtraneousOperand,MissingOperand,ImmediateNotAnInt,ImmediateNotValid,ImmediateNotInRange,InvalidOperand,ExtraneousImmediate,DirectiveOperandNotAnInt,StringNotValid,
               LabelExistsWithoutExternal,LabelExistsInTable,InvalidTextAfterStop,EntryLabelDontExists,JCommandLabelDontExists,IBranchLabelIsExternal,IBranchLabelDontExists
-              ,InvalidDirective,DirectiveOperandWrongSign,MaxMemory} errorType; /*add error each time, at the end of firstPass - print*/
+              ,InvalidDirective,DirectiveOperandWrongSign,MaxMemory,InvalidWhiteChar,LabelIsKnownWord} errorType; /*add error each time, at the end of firstPass - print*/
 
 
 typedef struct Rfunc {
@@ -134,7 +148,7 @@ typedef struct Ifunc {
 } I_cmd;
 
 typedef struct Jfunc {
-    unsigned long address:25;
+    unsigned long int address:25;
     unsigned int reg:1;
     unsigned int opcode:6;
 } J_cmd;
@@ -208,6 +222,7 @@ typedef struct globalVariables{
     int ICF;
     int currentLine;
     char filename[FILE_NAME_LENGTH];
+    char error[FILE_NAME_LENGTH];
     FILE *file;
     labelListPtr headLabelTable;
     WordNodePtr headWordList;

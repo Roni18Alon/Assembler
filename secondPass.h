@@ -12,12 +12,13 @@
 #include "WordList.h"
 #include "inputAnalyzed.h"
 #include "instructionAnalyzed.h"
-#include "directiveAnalyzed.h"
+#include "directiveAnalysis.h"
 #include "printErrors.h"
 
 
 
 void secondPass(globalVariables *vars);
+void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *after , char *label,char *lineCpyAfterLabel);
 void varsResetForSecondPass(globalVariables *vars);
 
 #endif //RONIPROJECT_SECONDPASS_H

@@ -1,6 +1,8 @@
-//
-// Created by ronia on 30/07/2021.
-//
+/* Name: labelList.c
+ * Author: Roni Alon & Noa Even
+ * Description: Include supporting functions to analyze and handle  the label list like add, search for a label in the list
+ *
+*/
 
 #include "lableList.h"
 
@@ -28,11 +30,9 @@ int labelNameCompare(labelListPtr *head,char *labelName,globalVariables *vars)
     while (temp)
     {
         res= strcmp(temp->labelName,labelName);
-        if(res==0) /*we already have this label name*/
+        if(res==0) /*we already have this label name - Error*/
         {
-            vars->type = LabelExistsInTable;
-            /*printf("\n%s:Line %d: Error- Label already exists in label list \n", vars->filename,vars->currentLine);*/
-            vars->errorFound = True;
+            foundError(vars,LabelExistsInTable,labelName);
             return LABEL_EXISTS;
         }
         temp = temp->next;
@@ -40,7 +40,7 @@ int labelNameCompare(labelListPtr *head,char *labelName,globalVariables *vars)
     return VALID_LABEL;
 }
 
-/*this function search in a given name the label in the list*/
+/*this function search for a given operand label name the value (address) of the label in the list*/
 long findLabel(labelListPtr *head, char *str,globalVariables *vars, InstructionWordType commandType)
 {
     labelListPtr temp = *head;
@@ -56,19 +56,17 @@ long findLabel(labelListPtr *head, char *str,globalVariables *vars, InstructionW
     }
     if(commandType==J_WORD)
     {
-        vars->type = JCommandLabelDontExists;
-        vars->errorFound = True;
+        foundError(vars,JCommandLabelDontExists,str);
     }
     if(commandType==I_WORD)
     {
-        vars->type = IBranchLabelDontExists;
-        vars->errorFound = True;
+        foundError(vars,IBranchLabelDontExists,str);
     }
     return LABEL_ERROR;
 }
 
 
-/*This function checks is the external label we want to add is already exists without external attribute*/
+/*This function return False if  the external label we want to add is already exists without external attribute , True otherwise*/
 Bool isLabelExternal(labelListPtr *head, char *labelName,globalVariables *vars)
 {
     labelListPtr temp = *head;
@@ -80,9 +78,7 @@ Bool isLabelExternal(labelListPtr *head, char *labelName,globalVariables *vars)
         {
             if(temp->entryOrExtern==NoEntryExtern) /*check if the existed label is an extern*/
             {
-                vars->type = LabelExistsWithoutExternal;
-                /*printf("\n%s:Line %d: Error- Label exists in label list but without External attribute \n", vars->filename,vars->currentLine);*/
-                vars->errorFound = True;
+                foundError(vars,LabelExistsWithoutExternal,labelName);
                 return False;
             }
         }
@@ -91,7 +87,7 @@ Bool isLabelExternal(labelListPtr *head, char *labelName,globalVariables *vars)
     return True;
 }
 
-/*This function checks if a given label is External Label - in it's an I Branch cannot be an external*/
+/*This function return False if given I branch operand label is External Label -  an I Branch cannot be an external,True otherwise*/
 Bool existsLabelExternalIBranch(labelListPtr *head, char *str,globalVariables *vars)
 {
     labelListPtr temp = *head;
@@ -103,8 +99,7 @@ Bool existsLabelExternalIBranch(labelListPtr *head, char *str,globalVariables *v
         {
             if(temp->entryOrExtern==Extern) /*check if the existed label is an extern*/
             {
-                vars->type = IBranchLabelIsExternal;
-                vars->errorFound = True;
+                foundError(vars,IBranchLabelIsExternal,str);
                 return False;
             }
         }
@@ -153,9 +148,7 @@ Bool isLabelEntry(labelListPtr *head, char *after,globalVariables *vars)
 
     if(flag==0)/*we couldn't find this label*/
     {
-        vars->type = EntryLabelDontExists;
-        /*printf("\n%s:Line %d: Error- Entry Label don't exists in Label Table \n", vars->filename,vars->currentLine);*/
-        vars->errorFound = True;
+        foundError(vars,EntryLabelDontExists,after);
         return False;
     }
     return True;

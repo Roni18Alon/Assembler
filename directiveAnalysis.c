@@ -1,8 +1,9 @@
-//
-// Created by ronia on 06/08/2021.
-//
-
-#include "directiveAnalyzed.h"
+/* Name: directiveAnalysis.c
+ * Author: Roni Alon & Noa Even
+ * Description: Include functions for Directive command analysis
+ *
+*/
+#include "directiveAnalysis.h"
 
 /*This function analyzes Directive command in the first pass */
 void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel,WordNodePtr currentWord) {
@@ -24,6 +25,7 @@ void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables
             }
             /*not a db,dw,dh,asciz - check if an entry or extern or non=invalid directive*/
             else{
+                labelAndEntryOrExtern(hasLabel, directiveNum,vars); /*if we have a label before entry or extern - it's not an error just ignore- don't insert label to label list*/
                 if (directiveNum == DIRECTIVE_EXTERN) {
                     Bool externFirstPass = externDirectiveFirstPass(after, vars, currentLabel);
                     if (externFirstPass == False)return;
@@ -32,10 +34,8 @@ void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables
                 }
             }
         }
-
     else{ /*it's not a valid directive*/
-        vars->type=InvalidDirective;
-        vars->errorFound=True;
+        foundError(vars,InvalidDirective,before);
     }
 }
 
@@ -74,10 +74,11 @@ void ascizDirectiveFirstPass(char *after,char *label,Bool hasLabel,globalVariabl
 
 
 
-Bool isDirectiveCommand(char command[LINE_LENGTH]) {
+Bool isDirectiveCommand(char *command) {
     return command[0] == '.' ? True : False;
 }
 
+/*by given string (char array) returns the number of directive command*/
 int isValidDirectiveName(char *str)
 {
     if(strcmp(str,".db")==0)
@@ -95,18 +96,20 @@ int isValidDirectiveName(char *str)
     else {return DIRECTIVE_ERROR;}  /*-1*/
 
 }
-
+/*this function returns the directive word type by given command number*/
 DirectiveWordType getDirectiveType(int directiveNum)
 {
-    if(directiveNum==1) return D_BYTE;
-    if(directiveNum==2) return D_HALF;
-    if(directiveNum==4) return D_WORD;
-    if(directiveNum==3) return ASCIZ;
+    if(directiveNum==DIRECTIVE_BYTE) return D_BYTE; /*.db*/
+    if(directiveNum==DIRECTIVE_HALF_WORD) return D_HALF; /*.dh*/
+    if(directiveNum==DIRECTIVE_WORD) return D_WORD; /*.dw*/
+    if(directiveNum==DIRECTIVE_ASCIZ) return ASCIZ;  /*.asciz*/
 
 }
 
+/*This function analysis the operands of db,dw,dh directive commands*/
 Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long validInput [LINE_LENGTH],int directive) {
-    int number, i;
+    int  i;
+    long number;
     int counter=0;
     int delimiter;
     long validBitRange;
@@ -118,12 +121,10 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
 
     if (line[lastChar-1] == ',') /* 3,4,5,7, situation*/
     {
-        vars->type = ExtraneousComma;
-        vars->errorFound = True;
+        foundError(vars,ExtraneousComma,line);
         return False;
     }
     /*maybe add a check for non digit in the last char??*/
-
     for (i = 0; i < (LINE_LENGTH - 2) && line[i] != '\0'; i++) /* '\0' is the end of string char */
     {
         memset(line, 0, LINE_LENGTH);
@@ -140,49 +141,43 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
             strip(before);
             if ((strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) && i == 0) /*the first num starts without a comma before - ,3,4,...*/
             {
-                vars->type = CommaBeforeFirstParam;
-                vars->errorFound = True;
+                foundError(vars,CommaBeforeFirstParam,before);
                 return False;
             }
             if ((strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) && i != 0) /*+65,,7...*/
             {
-                vars->type = CommaBetweenParams;
-                vars->errorFound = True;
+                foundError(vars,CommaBetweenParams,before);
                 return False;
             }
             number = isValidNumberDirective(before, vars); /*errors will update in the function*/
             if (number == INT_MIN) {
                 return False; /*error - not a valid number*/
             }
-            validBitRange = validNumByDirective(directive, number); /*check if the num is in the correct range according directive type*/
+            validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/
             if (validBitRange == VALID_BIT_RANGE) {
                 validInput[i] = number;
                 counter++;
                 continue;
-            } else {
-                vars->type = ParamNotInBitRange;
-                vars->errorFound = True;
-                return False;
-            }
+            } else {return False;}
 
         } else {/*we couldn't find a comma*/
             if (strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*if we couldn't find a comma, by split function before gets line value,if empty- missing operands*/
             {
-                vars->type = MissingOperand;
-                vars->errorFound = True;
+                foundError(vars,MissingOperand,before);
                 return False;
             } else {/*not an empty string check if it's a valid operand*/
                 number = isValidNumberDirective(before, vars); /*errors will update in the function*/
                 if (number == LONG_MIN) {
                     return False; /*error - not a valid number*/
                 }
-                validBitRange = validNumByDirective(directive, number); /*check if the num is in the correct range according directive type*/
+                validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/
                 if (validBitRange == VALID_BIT_RANGE) {
                     validInput[i] = number;
                     counter++;
                     break; /*couldn't find a comma and we updates the last number in array*/
                 }
             }
+            break; /*couldn't find a comma */
         }
     }
     /*block the operands long array*/
@@ -190,24 +185,18 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
     return True;
 }
 
+
+/*This function returns True if the asciz operand is a valid string, False otherwise*/
 Bool ascizAnalysis(char *str,globalVariables *vars)
 {
-    int valid=isValidString(str);
-    if(valid==VALID_STRING)
-    {
-        return True;
-    }
-    else{
-        vars->type = StringNotValid;
-        /*printf("\n%s:Line %d: %s not a valid string\n", vars->filename,vars->currentLine,str);*/
-        vars->errorFound = True;
-        return False;
-    }
+    int valid=isValidString(str,vars); /*check if a valid string*/
+    if(valid==VALID_STRING)return True;
+    else{ return False;}
 }
 
 
 
-/*print a warning if we have a label before directive entry or extern*/
+/*print a warning if we have a label before directive entry or extern Print Dynamically*/
 void labelAndEntryOrExtern(Bool hasLabel,int directiveNum,globalVariables *vars)
 {
     if (directiveNum==DIRECTIVE_ENTRY && hasLabel==True) /*we have a label and a directive entry - error*/
@@ -222,8 +211,8 @@ void labelAndEntryOrExtern(Bool hasLabel,int directiveNum,globalVariables *vars)
     }
 }
 
-
-Bool isDirectiveSecondPass(char *before,char *after ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel) {
+/*This function return True if in the second Pass it's an entry command , False otherwise*/
+Bool isDirectiveSecondPass(char *before) {
     int directiveNum;
     directiveNum = isValidDirectiveName(before); /*find if it's a valid directive and the num*/
     if (directiveNum != DIRECTIVE_ENTRY)
@@ -232,8 +221,8 @@ Bool isDirectiveSecondPass(char *before,char *after ,globalVariables *vars, Bool
     }
     /*an entry label */
     return True;
-
 }
+
 /*This function handles cases where there is a label before db,dw,dh,asciiz directives. check if the label is already in the label list and if not update the label list*/
 Bool labelBeforeDirectiveCommand(char *labelName, globalVariables *vars, labelListPtr currentLabel)
 {
@@ -248,6 +237,7 @@ Bool labelBeforeDirectiveCommand(char *labelName, globalVariables *vars, labelLi
     else{ return False;  /*we found the label in the label table*/}
 }
 
+/*This function checks the operand label in directive extern command*/
 Bool externDirectiveFirstPass(char *after ,globalVariables *vars,labelListPtr currentLabel)
 {
     int ValidLabelName;
@@ -286,7 +276,7 @@ void entryDirectiveSecondPass(globalVariables *vars,char *str)
         long entryValue=EntryValueAfterSecondPass(&(vars->headLabelTable),str);
         if(entryValue!=LABEL_ERROR)
         {
-            createEntryNode(str,entryValue,&(vars->headEntryList));/*add to entry list*/
+            createEntryNode(str,entryValue,vars);/*add to entry list*/
         }
     }
 }

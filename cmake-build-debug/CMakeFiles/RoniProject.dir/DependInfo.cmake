@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/WordList.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/WordList.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/createOutput.c.obj"
-  "C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/firstPass.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj"

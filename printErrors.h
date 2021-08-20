@@ -10,10 +10,10 @@
 #include "WordList.h"
 #include "inputAnalyzed.h"
 #include "instructionAnalyzed.h"
-#include "directiveAnalyzed.h"
+#include "directiveAnalysis.h"
 #include "firstPass.h"
 
 void printErrors(globalVariables *vars);
-
+void foundError(globalVariables *vars,errorType type,char *str);
 
 #endif //RONIPROJECT_PRINTERRORS_H

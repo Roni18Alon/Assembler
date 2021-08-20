@@ -1,6 +1,10 @@
-//
-// Created by ronia on 30/07/2021.
-//
+
+/* Name: labelList.h
+ * Author: Roni Alon & Noa Even
+ * Description: Include supporting functions to analyze and handle  the label list like add, search for a label in the list
+ *
+*/
+
 
 #ifndef RONIPROJECT_LABLELIST_H
 #define RONIPROJECT_LABLELIST_H
@@ -9,15 +13,15 @@
 #include "inputAnalyzed.h"
 
 
-void updateLabel(labelListPtr currentLabel,int address,Location Data,LabelType Extern);
+void updateLabel(labelListPtr ,int ,Location ,LabelType );
 void addLabelToList(labelListPtr* , labelListPtr );
-int labelNameCompare(labelListPtr *head, char *labelName,globalVariables *vars);
-Bool isLabelExternal(labelListPtr *head,char *labelName ,globalVariables *vars);
-Bool isLabelEntry(labelListPtr *head, char *after,globalVariables *vars);
-void  updateLabelTableICF(labelListPtr *head,globalVariables *vars);
-long findLabel(labelListPtr *head, char *str,globalVariables *vars,InstructionWordType commandType);
-Bool existsLabelExternalIBranch(labelListPtr *head, char *str,globalVariables *vars);
-Bool existsLabelExternalJ(labelListPtr *head, char *str,globalVariables *vars);
-long EntryValueAfterSecondPass(labelListPtr *head, char *str);
+int labelNameCompare(labelListPtr *, char *,globalVariables *);
+Bool isLabelExternal(labelListPtr *,char * ,globalVariables *);
+Bool isLabelEntry(labelListPtr *, char *after,globalVariables *);
+void  updateLabelTableICF(labelListPtr *,globalVariables *);
+long findLabel(labelListPtr *, char *,globalVariables *,InstructionWordType );
+Bool existsLabelExternalIBranch(labelListPtr *, char *,globalVariables *);
+Bool existsLabelExternalJ(labelListPtr *, char *,globalVariables *);
+long EntryValueAfterSecondPass(labelListPtr *, char *);
 
-#endif //RONIPROJECT_LABLELIST_H
+#endif

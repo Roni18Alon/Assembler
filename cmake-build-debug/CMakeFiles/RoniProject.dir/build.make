@@ -166,18 +166,18 @@ CMakeFiles/RoniProject.dir/instructionAnalyzed.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RoniProject.dir/instructionAnalyzed.c.s"
 	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ronia\CLionProjects\AssemblerProj\instructionAnalyzed.c -o CMakeFiles\RoniProject.dir\instructionAnalyzed.c.s
 
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: CMakeFiles/RoniProject.dir/flags.make
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../directiveAnalyzed.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronia\CLionProjects\AssemblerProj\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\RoniProject.dir\directiveAnalyzed.c.obj -c C:\Users\ronia\CLionProjects\AssemblerProj\directiveAnalyzed.c
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: CMakeFiles/RoniProject.dir/flags.make
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../directiveAnalysis.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronia\CLionProjects\AssemblerProj\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\RoniProject.dir\directiveAnalysis.c.obj -c C:\Users\ronia\CLionProjects\AssemblerProj\directiveAnalysis.c
 
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/RoniProject.dir/directiveAnalyzed.c.i"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\ronia\CLionProjects\AssemblerProj\directiveAnalyzed.c > CMakeFiles\RoniProject.dir\directiveAnalyzed.c.i
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/RoniProject.dir/directiveAnalysis.c.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\ronia\CLionProjects\AssemblerProj\directiveAnalysis.c > CMakeFiles\RoniProject.dir\directiveAnalysis.c.i
 
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RoniProject.dir/directiveAnalyzed.c.s"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ronia\CLionProjects\AssemblerProj\directiveAnalyzed.c -o CMakeFiles\RoniProject.dir\directiveAnalyzed.c.s
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RoniProject.dir/directiveAnalysis.c.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ronia\CLionProjects\AssemblerProj\directiveAnalysis.c -o CMakeFiles\RoniProject.dir\directiveAnalysis.c.s
 
 CMakeFiles/RoniProject.dir/secondPass.c.obj: CMakeFiles/RoniProject.dir/flags.make
 CMakeFiles/RoniProject.dir/secondPass.c.obj: ../secondPass.c
@@ -227,7 +227,7 @@ RoniProject_OBJECTS = \
 "CMakeFiles/RoniProject.dir/WordList.c.obj" \
 "CMakeFiles/RoniProject.dir/lableList.c.obj" \
 "CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj" \
-"CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj" \
+"CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj" \
 "CMakeFiles/RoniProject.dir/secondPass.c.obj" \
 "CMakeFiles/RoniProject.dir/printErrors.c.obj" \
 "CMakeFiles/RoniProject.dir/createOutput.c.obj"
@@ -242,7 +242,7 @@ RoniProject.exe: CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/WordList.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/lableList.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj
-RoniProject.exe: CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj
+RoniProject.exe: CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/secondPass.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/printErrors.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/createOutput.c.obj

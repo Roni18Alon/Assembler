@@ -1,14 +1,18 @@
-//
-// Created by ronia on 27/07/2021.
-//
+/* Name: EntryAndExtern.c
+ * Author: Roni Alon & Noa Even
+ * Description: Include the function to add and create node of Entry or Extern Labels , and their linked lists
+ *
+*/
+
+
 
 #include "default.h"
 
-
+/*This function add an external label to the external label list*/
 void addExternalToList(externalListPtr *head, externalListPtr externalToAdd) {
 
     externalListPtr temp = *head;
-    if (temp == NULL) {
+    if (temp==NULL) {
         *head = externalToAdd;
         return;
     }
@@ -21,8 +25,8 @@ void addExternalToList(externalListPtr *head, externalListPtr externalToAdd) {
 
 }
 
-
-void createExternalNode(char *str, globalVariables *vars,externalListPtr *head)
+/*This function create an external label by given params - label name and address (value)*/
+void createExternalNode(char *str, globalVariables *vars)
 {
     externalListPtr externalLabel = (externalListPtr) calloc(1, sizeof(externalList));
     if(!externalLabel)
@@ -32,15 +36,15 @@ void createExternalNode(char *str, globalVariables *vars,externalListPtr *head)
 
     strcpy(externalLabel->labelName,str);
     externalLabel->value=vars->IC;
-    addExternalToList(head,externalLabel); /*add to external list*/
+    addExternalToList(&(vars->headExternList),externalLabel); /*add to external list*/
 }
 
 
-
+/*This function add an entry label to the entry label list*/
 void addEntryToList(entryListPtr *head, entryListPtr entryToAdd)
 {
     entryListPtr temp = *head;
-    if (temp == NULL) {
+    if (temp==NULL) {
         *head = entryToAdd;
         return;
     }
@@ -53,7 +57,8 @@ void addEntryToList(entryListPtr *head, entryListPtr entryToAdd)
 
 }
 
-void createEntryNode(char *str, long address,entryListPtr *head)
+/*This function create an entry label by given params - label name and address (value)*/
+void createEntryNode(char *str, long address,globalVariables *vars)
 {
     entryListPtr entryLabel = (entryListPtr) calloc(1, sizeof(entryList));
     if(!entryLabel)
@@ -63,5 +68,5 @@ void createEntryNode(char *str, long address,entryListPtr *head)
 
     strcpy(entryLabel->labelName,str);
     entryLabel->value=address;
-    addEntryToList(head,entryLabel); /*add to external list*/
+    addEntryToList(&(vars->headEntryList),entryLabel); /*add to external list*/
 }

@@ -14,17 +14,12 @@ void firstPass(globalVariables *vars) {
     char lineCpyAfterLabel[LINE_LENGTH] = {0};
     char label[LABEL_LENGTH] = {0};
 
-    char fileName[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
-    strcpy(vars->filename, fileName);
+   // char fileName[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH]={0};
+   // strcpy(vars->filename, fileName);
 
 
-    Bool hasLabel,validLineLength;
-    WordType word;
-
-
+    Bool validLineLength;
     int  lineAnalyzed;
-    int instructionNum;
-
 
     while (!feof(vars->file)) {
 
@@ -34,55 +29,28 @@ void firstPass(globalVariables *vars) {
         fgets(line, LINE_LENGTH, vars->file); /*vars->file*/
 
         validLineLength=getLine(line,lineCpy,vars);
-        if (validLineLength==False)continue; /*get the next line*/
+        if (validLineLength==False)
+        {
+           vars->currentLine++;
+           continue;  /*get the next line*/
+        }
 
+        strip(lineCpy); /*strip white chars from the side*/
 
-        strip(lineCpy); /*strip white chars*/
-        lineAnalyzed = isEmptyOrCommandLine(lineCpy);
-        if (lineAnalyzed == 1) {
+        lineAnalyzed = isEmptyOrCommentLine(lineCpy);
+        if (lineAnalyzed == EMPTY_OR_COMMENT) {
             vars->currentLine++;
             continue; /*if the line is an empty line or command line - the assembler ignores*/
         }
 
         /*analyze if its a directive or instruction*/
 
-        /*create a new word node*/
-        WordNodePtr currentWord = (WordNodePtr) calloc(1, sizeof(WordNode));
-        if (!currentWord) {
-            exit(0);
-        }
+        firstPassAnalysis(vars,lineCpy,before,after,label,lineCpyAfterLabel);
 
-        /*create a new label node*/
-        labelListPtr currentLabel = (labelListPtr) calloc(1, sizeof(labelListPtr));
-        if (!currentLabel) {
-            exit(0);
-        }
-
-        /*add bool function to check if we have a label*/
-        hasLabel = foundLabel(lineCpy, before, after, vars, currentLabel); /*look for a label and the checks if it's a valid label*/
-
-        if (hasLabel == True) { /*we found a label*/
-            strcpy(label, before);
-            strcpy(lineCpyAfterLabel, after);
-        } else { /*we couldn't fina d label, by split fun before=linecpy*/
-            strcpy(lineCpyAfterLabel, lineCpy);
-        }
-
-        strip(lineCpyAfterLabel);
-        word = directiveOrInstruction(lineCpyAfterLabel, before, after, vars); /*check if Directive or Instruction or none*/
-        if (word == Directive) {
-            isDirectiveFirstPass(before, after,label ,vars, hasLabel, currentLabel, currentWord);
-        }
-        else {
-            if (word == Instruction) {
-                instructionNum = instructionValidName(before); /*get the instruction number*/
-                isInstructionFirstPass(before, after,label, vars, hasLabel, currentLabel, currentWord, instructionNum);
-                vars->IC+=4;
-            }
-            else { /*not a directive and not an instruction than - None - error*/
-                vars->type = notDirectiveOrInstruction;
-                vars->errorFound = True;
-            }
+        if(vars->type != NoError)
+        {
+            printErrors(vars); /*print the error in the current line*/
+            vars->type=NoError;
         }
         vars->currentLine++;
     }
@@ -92,7 +60,9 @@ void firstPass(globalVariables *vars) {
     {
         vars->type = MaxMemory;
         vars->errorFound = True;
+        printErrors(vars);
     }
+
     /*we finished to read the file*/
     if(vars->errorFound == False) /*we found errors - don't continue to second Pass */
     {
@@ -103,11 +73,50 @@ void firstPass(globalVariables *vars) {
         updateLabelTableICF(&(vars->headLabelTable),vars); /*update the value of data labels with final IC*/
         addDirectiveICF(&(vars->headWordList),vars); /*add the final IC value to the directive values in Word list*/
     }
-    else{ /*we found an error*/
-        printErrors(vars);
-    }
 
 }
+
+
+
+void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *after , char *label,char *lineCpyAfterLabel)
+{
+    Bool hasLabel;
+    WordType word;
+    int instructionNum;
+
+    /*create a new word node*/
+    WordNodePtr currentWord = (WordNodePtr) calloc(1, sizeof(WordNode));
+    if (!currentWord) {
+        exit(0);
+    }
+
+    /*create a new label node*/
+    labelListPtr currentLabel = (labelListPtr) calloc(1, sizeof(labelListPtr));
+    if (!currentLabel) {
+        exit(0);
+    }
+
+    /*add bool function to check if we have a label*/
+    hasLabel=labelAnalysis( lineCpy,before, after,label,lineCpyAfterLabel,vars ,currentLabel);
+
+    strip(lineCpyAfterLabel);
+    word = directiveOrInstruction(lineCpyAfterLabel, before, after, vars); /*check if Directive or Instruction or none*/
+    if (word == Directive) {
+        isDirectiveFirstPass(before, after,label ,vars, hasLabel, currentLabel, currentWord);
+    }
+    else {
+        if (word == Instruction) {
+            instructionNum = instructionValidName(before); /*get the instruction number*/
+            isInstructionFirstPass(before, after,label, vars, hasLabel, currentLabel, currentWord, instructionNum);
+            vars->IC+=4;
+        }
+        else { /*not a directive and not an instruction than - None - error*/
+            foundError(vars,notDirectiveOrInstruction,before);
+        }
+    }
+}
+
+
 
 
 
@@ -132,8 +141,8 @@ Bool getLine(char *line,char *lineCpy,globalVariables *vars)
     }
     /*Check if the line we got is to long - more than 80 chars*/
     if (((i - 1) == LAST_CHAR_IN_LINE) && line[i - 1] != '\0') {
-        vars->type = LineTooLong;
-        vars->errorFound = True;
+
+        foundError(vars,LineTooLong,line);
         printErrors(vars);
         getToNextLine(vars->file);
         return False;

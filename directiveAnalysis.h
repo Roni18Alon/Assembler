@@ -1,19 +1,21 @@
-//
-// Created by ronia on 06/08/2021.
-//
+/* Name: directiveAnalysis.h
+ * Author: Roni Alon & Noa Even
+ * Description: Include functions for Directive command analysis
+ *
+*/
 
-#ifndef RONIPROJECT_DIRECTIVEANALYZED_H
-#define RONIPROJECT_DIRECTIVEANALYZED_H
+#ifndef RONIPROJECT_DIRECTIVEANALYSIS_H
+#define RONIPROJECT_DIRECTIVEANALYSIS_H
 
 #include "default.h"
 #include "inputAnalyzed.h"
 #include "instructionAnalyzed.h"
 
 void isDirectiveFirstPass(char* ,char* ,char* ,globalVariables *,Bool ,labelListPtr ,WordNodePtr ) ;
-Bool isDirectiveSecondPass(char *,char*  ,globalVariables *, Bool , labelListPtr );
+Bool isDirectiveSecondPass(char *);
 void byteDirectiveFirstPass(char *, char *,char *,Bool ,globalVariables *,int , DirectiveWordType, labelListPtr);
 void ascizDirectiveFirstPass(char *,char *,Bool ,globalVariables *,DirectiveWordType ,labelListPtr);
-Bool isDirectiveCommand(char []);
+Bool isDirectiveCommand(char *);
 int isValidDirectiveName(char *);
 DirectiveWordType getDirectiveType(int);
 Bool dataAnalysis(char *,char *,char *,globalVariables *,long [],int );
@@ -25,4 +27,4 @@ void entryDirectiveSecondPass(globalVariables *,char *);
 
 
 
-#endif //RONIPROJECT_DIRECTIVEANALYZED_H
+#endif //RONIPROJECT_DIRECTIVEANALYSIS_H

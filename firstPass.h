@@ -10,10 +10,11 @@
 #include "WordList.h"
 #include "inputAnalyzed.h"
 #include "instructionAnalyzed.h"
-#include "directiveAnalyzed.h"
+#include "directiveAnalysis.h"
 #include "printErrors.h"
 
 void firstPass(globalVariables *);
+void firstPassAnalysis(globalVariables *,char *,char *, char * , char *,char *);
 Bool getLine(char *line,char *lineCpy,globalVariables *vars);
 #endif //RONIPROJ_FIRSTPASS_H
 

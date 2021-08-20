@@ -1,39 +1,37 @@
-//
-// Created by ronia on 27/07/2021.
-//
+/* Name: inputAnalyzed.h
+ * Author: Roni Alon & Noa Even
+ * Description: Include supporting functions to analyze the given input
+ *
+*/
 
 #ifndef MMN14_INPUTANALYZED_H
 #define MMN14_INPUTANALYZED_H
 
 #include "default.h"
-#include "directiveAnalyzed.h"
+#include "directiveAnalysis.h"
 
 
 void strip(char*);
-int isEmptyOrCommandLine(char *);
-int split(char *str, char *delimiter, char *before, char *after);
-int isLegalLabel(char*str,globalVariables *vars);
-int isValidNumberDirective(char *str,globalVariables *vars);
-
-WordType directiveOrInstruction(char *lineCpy,char *before,char *after,globalVariables *vars);
-
-long validNumByDirective(int directive,int num);
-
-void ascizStr(char *str);
-int isValidString(char *str);
-
-
-int Rfunct(int instructionNum);
-int instructionValidName(char command[LINE_LENGTH]);
-int numberOfOperands(InstructionWordType command,int instructionNum);
-int isValidRegisterNum(char *str,globalVariables *vars);
-int isValidRegister(char *str,globalVariables *vars);
-int isValidImmediate(char *str,globalVariables *vars);
-InstructionWordType commandGroup (int instructionNum);
-Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars,labelListPtr currentLabel);
-
+int isEmptyOrCommentLine(char *);
+int split(char *, char *, char *, char *);
+Bool labelAnalysis(char *,char *, char *,char *,char *,globalVariables * ,labelListPtr);
+int isLegalLabel(char*,globalVariables *);
+Bool labelIsKnown(char *label);
+long isValidNumberDirective(char *,globalVariables *);
+WordType directiveOrInstruction(char *,char *,char *,globalVariables *);
+long validNumByDirective(int,long,char *,globalVariables *);
+void ascizStr(char *);
+int isValidString(char *,globalVariables*);
+int Rfunct(int );
+int instructionValidName(char *);
+int numberOfOperands(InstructionWordType ,int );
+int isValidRegisterNum(char *,globalVariables *);
+int isValidRegister(char *,globalVariables *);
+int isValidImmediate(char *,globalVariables *);
+InstructionWordType commandGroup (int );
+Bool foundLabel(char *,char *,char *,globalVariables *,labelListPtr );
 int validJRegister(char *str,globalVariables *vars);
-void resetStrings(char *line,char *lineCpy,char *before , char *after, char *lineCpyAfterLabel,char *label);
+void resetStrings(char *,char *,char * , char *, char *,char *);
 
 
-#endif //MMN14_INPUTANALYZED_H
+#endif

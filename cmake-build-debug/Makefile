@@ -222,32 +222,32 @@ createOutput.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/createOutput.c.s
 .PHONY : createOutput.c.s
 
-directiveAnalyzed.obj: directiveAnalyzed.c.obj
+directiveAnalysis.obj: directiveAnalysis.c.obj
 
-.PHONY : directiveAnalyzed.obj
+.PHONY : directiveAnalysis.obj
 
 # target to build an object file
-directiveAnalyzed.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj
-.PHONY : directiveAnalyzed.c.obj
+directiveAnalysis.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj
+.PHONY : directiveAnalysis.c.obj
 
-directiveAnalyzed.i: directiveAnalyzed.c.i
+directiveAnalysis.i: directiveAnalysis.c.i
 
-.PHONY : directiveAnalyzed.i
+.PHONY : directiveAnalysis.i
 
 # target to preprocess a source file
-directiveAnalyzed.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/directiveAnalyzed.c.i
-.PHONY : directiveAnalyzed.c.i
+directiveAnalysis.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/directiveAnalysis.c.i
+.PHONY : directiveAnalysis.c.i
 
-directiveAnalyzed.s: directiveAnalyzed.c.s
+directiveAnalysis.s: directiveAnalysis.c.s
 
-.PHONY : directiveAnalyzed.s
+.PHONY : directiveAnalysis.s
 
 # target to generate assembly for a file
-directiveAnalyzed.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/directiveAnalyzed.c.s
-.PHONY : directiveAnalyzed.c.s
+directiveAnalysis.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/directiveAnalysis.c.s
+.PHONY : directiveAnalysis.c.s
 
 firstPass.obj: firstPass.c.obj
 
@@ -456,9 +456,9 @@ help:
 	@echo ... createOutput.obj
 	@echo ... createOutput.i
 	@echo ... createOutput.s
-	@echo ... directiveAnalyzed.obj
-	@echo ... directiveAnalyzed.i
-	@echo ... directiveAnalyzed.s
+	@echo ... directiveAnalysis.obj
+	@echo ... directiveAnalysis.i
+	@echo ... directiveAnalysis.s
 	@echo ... firstPass.obj
 	@echo ... firstPass.i
 	@echo ... firstPass.s

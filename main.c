@@ -6,10 +6,13 @@ int main(int argc, char *argv[]) {
     for (i = 1; i < argc; i++) {
         globalVariables *vars;
         char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
+        char shortFileName[FILE_NAME_LENGTH];
         vars = (globalVariables *) calloc(1, sizeof(globalVariables));
+        sprintf(shortFileName, "%s", argv[i]);
+
         sprintf(filename, "%s.as", argv[i]);
 
-        strcpy(vars->filename, filename);
+        strcpy(vars->filename, shortFileName);
 
         vars->file = fopen(filename, "r");
 
@@ -46,9 +49,6 @@ int main(int argc, char *argv[]) {
         printf("Completed Second Pass!\n");
         createOutput(vars);
         freeLists(vars);
-        freeExternList(&vars->headExternList);
-        freeVars(vars);
-
         printf("\n");
     }
     return 0;
@@ -85,7 +85,8 @@ void freeExternList(externalListPtr *head)
 {
     externalListPtr temp = *head;
 
-    while(temp)
+
+    while(temp) /*free all except head*/
     {
         temp = (temp)->next;
         free(*head);
@@ -97,6 +98,7 @@ void freeExternList(externalListPtr *head)
 void freeEntryList(entryListPtr *head)
 {
     entryListPtr temp = *head;
+    temp = (temp)->next;
 
     while(temp)
     {
@@ -109,6 +111,7 @@ void freeEntryList(entryListPtr *head)
 void freeWordList(WordNodePtr *head)
 {
     WordNodePtr temp = *head;
+    temp = (temp)->next;
 
     while(temp)
     {
@@ -120,6 +123,7 @@ void freeWordList(WordNodePtr *head)
 void freeLabelList (labelListPtr *head)
 {
     labelListPtr temp = *head;
+    temp = (temp)->next;
 
     while(temp)
     {
@@ -128,3 +132,4 @@ void freeLabelList (labelListPtr *head)
         *head=temp;
     }
 }
+

@@ -1,6 +1,8 @@
-//
-// Created by ronia on 18/08/2021.
-//
+
+/* Name: createOutput.c
+ * Author: Roni Alon & Noa Even
+ * Description: Include functions to create the output from the assembler process.
+*/
 
 #include "createOutput.h"
 //void outputObject(globalVariables *vars) {
@@ -47,42 +49,42 @@
 
     void outputEntries(globalVariables *vars) {
 
-      //  char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
-      //  FILE *file;
+       char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
+       FILE *file;
        // /* create object file with the title the lengths */
-      // sprintf(filename, "%s.ent", vars->filename);
+       sprintf(filename, "%s.ent", vars->filename);
 
-     //   file = fopen(filename, "w");
+       file = fopen(filename, "w");
        entryListPtr entryLabel = vars->headEntryList;
         while (entryLabel)
         {
-            setbuf(stdout, 0);
-            printf( "%s %04lu\n", entryLabel->labelName, entryLabel->value);
+            //(stdout, 0);
+            fprintf( file,"%s %04lu\n", entryLabel->labelName, entryLabel->value);
             entryLabel=entryLabel->next;
         }
 
-       // fclose(file);
+        fclose(file);
 
     }
 
 
 void outputExternals(globalVariables *vars) {
 
-   // char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
-   // FILE *file;
+   char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
+   FILE *file;
     /* create object file with the title the lengths */
-   // sprintf(filename, "%s.ext", vars->filename);
+   sprintf(filename, "%s.ext", vars->filename);
 
-   // file = fopen(filename, "w");
+   file = fopen(filename, "w");
     externalListPtr externalLabel = vars->headExternList;
     while (externalLabel)
     {
-        setbuf(stdout, 0);
-        printf( "%s %04lu\n", externalLabel->labelName, externalLabel->value);
+        //setbuf(stdout, 0);
+        fprintf( file,"%s %04lu\n", externalLabel->labelName, externalLabel->value);
         externalLabel=externalLabel->next;
     }
 
-    //fclose(file);
+    fclose(file);
 
 
 }

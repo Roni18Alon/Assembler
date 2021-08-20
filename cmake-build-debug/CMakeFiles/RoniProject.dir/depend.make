@@ -8,7 +8,7 @@ CMakeFiles/RoniProject.dir/WordList.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../WordList.c
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/WordList.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/WordList.c.obj: ../directiveAnalysis.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../inputAnalyzed.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../instructionAnalyzed.h
@@ -19,21 +19,21 @@ CMakeFiles/RoniProject.dir/createOutput.c.obj: ../createOutput.c
 CMakeFiles/RoniProject.dir/createOutput.c.obj: ../createOutput.h
 CMakeFiles/RoniProject.dir/createOutput.c.obj: ../default.h
 
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../EntryAndExtern.h
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../WordList.h
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../directiveAnalyzed.c
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../directiveAnalyzed.h
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../firstPass.h
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../inputAnalyzed.h
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../instructionAnalyzed.h
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../lableList.h
-CMakeFiles/RoniProject.dir/directiveAnalyzed.c.obj: ../printErrors.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../EntryAndExtern.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../WordList.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../default.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../directiveAnalysis.c
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../directiveAnalysis.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../firstPass.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../inputAnalyzed.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../instructionAnalyzed.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../lableList.h
+CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj: ../printErrors.h
 
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/firstPass.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/firstPass.c.obj: ../directiveAnalysis.h
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../firstPass.c
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../inputAnalyzed.h
@@ -44,7 +44,7 @@ CMakeFiles/RoniProject.dir/firstPass.c.obj: ../printErrors.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../directiveAnalysis.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../inputAnalyzed.c
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../inputAnalyzed.h
@@ -55,7 +55,7 @@ CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj: ../printErrors.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../directiveAnalysis.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../inputAnalyzed.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../instructionAnalyzed.c
@@ -66,7 +66,7 @@ CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../printErrors.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/lableList.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/lableList.c.obj: ../directiveAnalysis.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../inputAnalyzed.h
 CMakeFiles/RoniProject.dir/lableList.c.obj: ../instructionAnalyzed.h
@@ -78,7 +78,7 @@ CMakeFiles/RoniProject.dir/main.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../createOutput.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/main.c.obj: ../directiveAnalysis.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../inputAnalyzed.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../instructionAnalyzed.h
@@ -91,7 +91,7 @@ CMakeFiles/RoniProject.dir/main.c.obj: ../secondPass.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/printErrors.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/printErrors.c.obj: ../directiveAnalysis.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../inputAnalyzed.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../instructionAnalyzed.h
@@ -102,7 +102,7 @@ CMakeFiles/RoniProject.dir/printErrors.c.obj: ../printErrors.h
 CMakeFiles/RoniProject.dir/secondPass.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/secondPass.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/secondPass.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/secondPass.c.obj: ../directiveAnalyzed.h
+CMakeFiles/RoniProject.dir/secondPass.c.obj: ../directiveAnalysis.h
 CMakeFiles/RoniProject.dir/secondPass.c.obj: ../firstPass.h
 CMakeFiles/RoniProject.dir/secondPass.c.obj: ../inputAnalyzed.h
 CMakeFiles/RoniProject.dir/secondPass.c.obj: ../instructionAnalyzed.h

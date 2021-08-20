@@ -95,10 +95,10 @@
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/default.h">
 			<Option target="RoniProject"/>
 		</Unit>
-		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalyzed.c">
+		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.c">
 			<Option target="RoniProject"/>
 		</Unit>
-		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalyzed.h">
+		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h">
 			<Option target="RoniProject"/>
 		</Unit>
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.c">
