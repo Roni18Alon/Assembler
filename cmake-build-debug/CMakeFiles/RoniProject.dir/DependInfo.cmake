@@ -11,7 +11,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/firstPass.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj"
-  "C:/Users/ronia/CLionProjects/AssemblerProj/lableList.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/lableList.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/labelList.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/labelList.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/main.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/main.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/memleaks.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/memleaks.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/printErrors.c.obj"

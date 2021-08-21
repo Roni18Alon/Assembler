@@ -6,7 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/RoniProject.dir/firstPass.c.obj"
   "CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj"
   "CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj"
-  "CMakeFiles/RoniProject.dir/lableList.c.obj"
+  "CMakeFiles/RoniProject.dir/labelList.c.obj"
   "CMakeFiles/RoniProject.dir/main.c.obj"
   "CMakeFiles/RoniProject.dir/memleaks.c.obj"
   "CMakeFiles/RoniProject.dir/printErrors.c.obj"

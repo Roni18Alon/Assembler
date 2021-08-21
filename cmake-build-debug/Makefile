@@ -330,32 +330,32 @@ instructionAnalyzed.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/instructionAnalyzed.c.s
 .PHONY : instructionAnalyzed.c.s
 
-lableList.obj: lableList.c.obj
+labelList.obj: labelList.c.obj
 
-.PHONY : lableList.obj
+.PHONY : labelList.obj
 
 # target to build an object file
-lableList.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/lableList.c.obj
-.PHONY : lableList.c.obj
+labelList.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/labelList.c.obj
+.PHONY : labelList.c.obj
 
-lableList.i: lableList.c.i
+labelList.i: labelList.c.i
 
-.PHONY : lableList.i
+.PHONY : labelList.i
 
 # target to preprocess a source file
-lableList.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/lableList.c.i
-.PHONY : lableList.c.i
+labelList.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/labelList.c.i
+.PHONY : labelList.c.i
 
-lableList.s: lableList.c.s
+labelList.s: labelList.c.s
 
-.PHONY : lableList.s
+.PHONY : labelList.s
 
 # target to generate assembly for a file
-lableList.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/lableList.c.s
-.PHONY : lableList.c.s
+labelList.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/labelList.c.s
+.PHONY : labelList.c.s
 
 main.obj: main.c.obj
 
@@ -495,9 +495,9 @@ help:
 	@echo ... instructionAnalyzed.obj
 	@echo ... instructionAnalyzed.i
 	@echo ... instructionAnalyzed.s
-	@echo ... lableList.obj
-	@echo ... lableList.i
-	@echo ... lableList.s
+	@echo ... labelList.obj
+	@echo ... labelList.i
+	@echo ... labelList.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

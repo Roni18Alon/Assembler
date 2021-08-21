@@ -140,18 +140,18 @@ CMakeFiles/RoniProject.dir/WordList.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RoniProject.dir/WordList.c.s"
 	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ronia\CLionProjects\AssemblerProj\WordList.c -o CMakeFiles\RoniProject.dir\WordList.c.s
 
-CMakeFiles/RoniProject.dir/lableList.c.obj: CMakeFiles/RoniProject.dir/flags.make
-CMakeFiles/RoniProject.dir/lableList.c.obj: ../lableList.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronia\CLionProjects\AssemblerProj\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/RoniProject.dir/lableList.c.obj"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\RoniProject.dir\lableList.c.obj -c C:\Users\ronia\CLionProjects\AssemblerProj\lableList.c
+CMakeFiles/RoniProject.dir/labelList.c.obj: CMakeFiles/RoniProject.dir/flags.make
+CMakeFiles/RoniProject.dir/labelList.c.obj: ../labelList.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronia\CLionProjects\AssemblerProj\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/RoniProject.dir/labelList.c.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\RoniProject.dir\labelList.c.obj -c C:\Users\ronia\CLionProjects\AssemblerProj\labelList.c
 
-CMakeFiles/RoniProject.dir/lableList.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/RoniProject.dir/lableList.c.i"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\ronia\CLionProjects\AssemblerProj\lableList.c > CMakeFiles\RoniProject.dir\lableList.c.i
+CMakeFiles/RoniProject.dir/labelList.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/RoniProject.dir/labelList.c.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\ronia\CLionProjects\AssemblerProj\labelList.c > CMakeFiles\RoniProject.dir\labelList.c.i
 
-CMakeFiles/RoniProject.dir/lableList.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RoniProject.dir/lableList.c.s"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ronia\CLionProjects\AssemblerProj\lableList.c -o CMakeFiles\RoniProject.dir\lableList.c.s
+CMakeFiles/RoniProject.dir/labelList.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RoniProject.dir/labelList.c.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ronia\CLionProjects\AssemblerProj\labelList.c -o CMakeFiles\RoniProject.dir\labelList.c.s
 
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: CMakeFiles/RoniProject.dir/flags.make
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj: ../instructionAnalyzed.c
@@ -238,7 +238,7 @@ RoniProject_OBJECTS = \
 "CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj" \
 "CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj" \
 "CMakeFiles/RoniProject.dir/WordList.c.obj" \
-"CMakeFiles/RoniProject.dir/lableList.c.obj" \
+"CMakeFiles/RoniProject.dir/labelList.c.obj" \
 "CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj" \
 "CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj" \
 "CMakeFiles/RoniProject.dir/secondPass.c.obj" \
@@ -254,7 +254,7 @@ RoniProject.exe: CMakeFiles/RoniProject.dir/firstPass.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/WordList.c.obj
-RoniProject.exe: CMakeFiles/RoniProject.dir/lableList.c.obj
+RoniProject.exe: CMakeFiles/RoniProject.dir/labelList.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/secondPass.c.obj

@@ -119,10 +119,10 @@
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h">
 			<Option target="RoniProject"/>
 		</Unit>
-		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/lableList.c">
+		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/labelList.c">
 			<Option target="RoniProject"/>
 		</Unit>
-		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h">
+		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/labelList.h">
 			<Option target="RoniProject"/>
 		</Unit>
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/main.c">

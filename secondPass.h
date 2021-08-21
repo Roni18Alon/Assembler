@@ -9,7 +9,7 @@
 
 
 #include "default.h"
-#include "lableList.h"
+#include "labelList.h"
 #include "WordList.h"
 #include "inputAnalyzed.h"
 #include "instructionAnalyzed.h"
