@@ -88,6 +88,6 @@ void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *
 
 void varsResetForSecondPass(globalVariables *vars) {
     vars->DC = 0;
-    vars->IC = 100;
+    vars->IC = IC_START;
     vars->currentLine = 1;
 }

@@ -32,7 +32,7 @@ Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, Word
 Bool regJCommand(char *str,globalVariables *vars, WordNodePtr currentWord);
 Bool labelJCommand(char *str,globalVariables *vars, WordNodePtr currentWord);
 
-int opcodeJ(int instructionNum);
+int opcodeInstruction(int instructionNum);
 
 void secondPassJ(char *str,globalVariables *vars, InstructionWordType commandType);
 void secondPassI(char *str,globalVariables *vars, InstructionWordType commandType);

@@ -82,12 +82,13 @@ Bool R_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,i
 {
     Bool validOperandLine;
     int funct= Rfunct(instructionNum);
-    currentWord->word.instruction.rWord.funct =funct; /*add funct to current word*/
+    int opcodeR=opcodeInstruction(instructionNum);
 
     validOperandLine=validROperandLine(str,before,after,instructionNum,numOfOperands,vars,currentWord);
     if(validOperandLine==True) /*the R command line is valid update the word node and add to word list*/
     {
-        currentWord->word.instruction.rWord.opcode =0;
+        currentWord->word.instruction.rWord.funct =funct; /*add funct to current word*/
+        currentWord->word.instruction.rWord.opcode =opcodeR;
         currentWord->word.instruction.rWord.unused =0;
         currentWord->word.instruction.address = vars->IC;
         return True;
@@ -456,7 +457,7 @@ void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,Word
 Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, WordNodePtr currentWord)
 {
     Bool validOperandLine;
-    int opcode=opcodeJ(instructionNum);
+    int opcode=opcodeInstruction(instructionNum);
     currentWord->word.instruction.jWord.opcode =opcode;
 
     validOperandLine= validJOperandLine(str,instructionNum,vars,currentWord);
@@ -470,8 +471,10 @@ Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, Word
 }
 
 
-int opcodeJ(int instructionNum)
+int opcodeInstruction(int instructionNum)
 {
+   if(ADD<=instructionNum && instructionNum<=NOR) return OP_R_ARI_LOG;
+   if(MOVE<=instructionNum && instructionNum<=MVLO)return OP_R_COPY;
     if(instructionNum==JMP)
         return OP_JMP;
     if(instructionNum==LA)

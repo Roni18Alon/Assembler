@@ -32,6 +32,7 @@
 #define DIRECTIVE_ENTRY 6
 #define DIRECTIVE_ERROR -1
 
+#define IC_START 100
 #define D_BYTE_MIN_VALUE -128 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
 #define D_BYTE_MAX_VALUE  127 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
 #define D_HALF_MIN_VALUE -32768 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
@@ -97,6 +98,8 @@
 #define MOVE_FUNCT 1
 #define MVHI_FUNCT 2
 #define MVLO_FUNCT 3
+#define OP_R_ARI_LOG 0
+#define OP_R_COPY 1
 #define OP_JMP 30
 #define OP_LA 31
 #define OP_CALL 32

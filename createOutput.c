@@ -21,7 +21,8 @@ void outputObject(globalVariables *vars) {
 
     WordNodePtr temp = vars->headWordList;
 
-/*כותרת */
+    fprintf(file,"   %02d  %02d \n", (vars->ICF-IC_START),vars->DCF);
+
     /*print instruction */
     while (temp) {
         if (temp->word.wordType == Instruction) {
@@ -52,7 +53,7 @@ void outputInstruction(InstructionWord wordToPrint,FILE *file)
         fprintf(file,"%02lX  ", result);
         mask<<=8;                       /*mask=maks<<8*/
     }
-    fprintf(file,"\n ");
+    fprintf(file,"\n");
 }
 
 void outputDirective(DirectiveWord wordToPrint,FILE *file) {

@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 }
 
 void resetVars(globalVariables *vars) {
-    vars->IC = 100;
+    vars->IC = IC_START;
     vars->DC = 0;
     vars->DCF = 0;
     vars->ICF = 0;
