@@ -22,7 +22,7 @@ void printErrors(globalVariables *vars)
     setbuf(stdout, 0);
     if(vars->type==LineTooLong)
     {
-        printf("\n%s:Line %d:Error - line is too long, line has 80 characters maximum \n", vars->filename, vars->currentLine,vars->error);
+        printf("\n%s:Line %d:Error - line is too long, line has 80 characters maximum \n", vars->filename, vars->currentLine);
     }
 
     if(vars->type==IllegalCharInLabel)

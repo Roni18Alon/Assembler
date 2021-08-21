@@ -3,16 +3,16 @@
 
 int main(int argc, char *argv[]) {
     int i;
-   // INIT_MEMLEAKS;
+   /* INIT_MEMLEAKS; */
     for (i = 1; i < argc; i++) {
         globalVariables *vars;
         char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
         char shortFileName[FILE_NAME_LENGTH];
         vars = (globalVariables *) calloc(1, sizeof(globalVariables));
+        setbuf(stdout,0);
         sprintf(shortFileName, "%s", argv[i]);
 
         sprintf(filename, "%s.as", argv[i]);
-
         strcpy(vars->filename, shortFileName);
 
         vars->file = fopen(filename, "r");
@@ -24,11 +24,14 @@ int main(int argc, char *argv[]) {
 
         /* check that the file isn't empty */
         fseek(vars->file, 0, SEEK_END);
+
+
+
         if (ftell(vars->file) == 0)
-            continue; //to the next file
+            continue; /*to the next file*/
         rewind(vars->file);
 
-        resetVars(vars); //reset Vars values
+        resetVars(vars); /*reset Vars values*/
 
         firstPass(vars);
         if (vars->errorFound == True) {
@@ -62,10 +65,10 @@ void resetVars(globalVariables *vars) {
     vars->ICF = 0;
     vars->errorFound = False;
     vars->currentLine = 1;
-    vars->headLabelTable = NULL;
-    vars->headWordList = NULL;
-    vars->headExternList = NULL;
-    vars->headEntryList = NULL;
+   /* vars->headLabelTable = NULL; */
+   /* vars->headWordList = NULL; */
+  /*  vars->headExternList = NULL; */
+ /*   vars->headEntryList = NULL; */
 }
 
 void freeVars(globalVariables *vars) {

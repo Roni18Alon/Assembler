@@ -19,7 +19,6 @@
 
 
 void secondPass(globalVariables *);
-void secondPassAnalysis(globalVariables *,char *,char *, char *, char *,char *);
-void varsResetForSecondPass(globalVariables *);
+
 
 #endif

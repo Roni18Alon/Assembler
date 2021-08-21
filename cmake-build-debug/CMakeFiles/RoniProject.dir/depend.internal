@@ -15,6 +15,7 @@ CMakeFiles/RoniProject.dir/WordList.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
  C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
  C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
+ C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
 CMakeFiles/RoniProject.dir/createOutput.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.c
  C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.h
@@ -30,6 +31,7 @@ CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
  C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
  C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
+ C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
 CMakeFiles/RoniProject.dir/firstPass.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.h
  C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
@@ -41,6 +43,7 @@ CMakeFiles/RoniProject.dir/firstPass.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
  C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
  C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
+ C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
 CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.h
  C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
@@ -52,6 +55,7 @@ CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
  C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
  C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
+ C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
 CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.h
  C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
@@ -63,6 +67,7 @@ CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
  C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
  C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
+ C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
 CMakeFiles/RoniProject.dir/lableList.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.h
  C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
@@ -74,6 +79,7 @@ CMakeFiles/RoniProject.dir/lableList.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/lableList.c
  C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
  C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
+ C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
 CMakeFiles/RoniProject.dir/main.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.h
  C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
@@ -102,6 +108,7 @@ CMakeFiles/RoniProject.dir/printErrors.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
  C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.c
  C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
+ C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
 CMakeFiles/RoniProject.dir/secondPass.c.obj
  C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.h
  C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h

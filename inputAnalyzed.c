@@ -53,7 +53,7 @@ Bool labelAnalysis(char *lineCpy,char *before, char *after,char *label,char *lin
         strcpy(lineCpyAfterLabel, after);
         return True;
     } else {
-        if (vars->type ==NoError)/*we couldn't fina d label and we didn't find an error during looking for a label , by split fun before=linecpy*/
+        if (vars->type ==NoError)/*we couldn't fina d label and we didn't find an error during looking for a label , by split fun before=lineCpy*/
         {
             strcpy(lineCpyAfterLabel, lineCpy);
         } else { /*we found a label but it's not a valid one*/
@@ -64,7 +64,7 @@ Bool labelAnalysis(char *lineCpy,char *before, char *after,char *label,char *lin
     }
 }
 
-/*This function checks if a label is valid by syntx */
+/*This function checks if a label is valid by syntax */
 int isLegalLabel(char *str, globalVariables *vars) {
 
     int length = strlen(str);
@@ -181,9 +181,6 @@ long isValidNumberDirective(char *str,globalVariables *vars)
 long validNumByDirective(int directive,long num,char *str,globalVariables *vars)
 {
     long minValue,maxValue;
-    //int numOfBit=directive*NUMBER_BITS_IN_BYTE;
-    //int minValue= -1*(pow(2,numOfBit-1));
-    //int maxValue= (pow(2,numOfBit-1)-1);
 
     if(directive==DIRECTIVE_BYTE)
     {
@@ -246,18 +243,13 @@ void ascizStr(char *str)
 
 }
 
-Bool isInstructionCommand(char command[LINE_LENGTH]) {
-    return command[0] == '.' ? True : False;
-}
-
-
 /*a valid register stars with $ and between 0-31*/
 int isValidRegister(char *str,globalVariables *vars)
 {
     char currentReg[REG_MAX_LENGTH]={0};
     int validNum;
     strip(str);
-    if(strlen(str)>REG_MAX_LENGTH) {
+    if(strlen(str)>LONG_MIN) {
         foundError(vars,RegisterLength,str);
         return REGISTER_ERROR;
     }
@@ -276,7 +268,10 @@ int isValidRegister(char *str,globalVariables *vars)
     }
 
     validNum= isValidRegisterNum(currentReg,vars);
-    if(validNum>=VALID_REGISTER)return validNum;
+    if(validNum>=VALID_REGISTER)
+        return validNum;
+
+    return VALID_REGISTER;
 }
 
 /*a valid register num is an integer between 0-31*/
@@ -386,7 +381,7 @@ Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars) {
 WordType directiveOrInstruction(char *str,char *before,char *after,globalVariables *vars)
 {
     WordType word;
-    int lineAnalyzed, directiveName, instructionNum;
+    int lineAnalyzed, instructionNum;
     Bool isDirective;
     strip(after);
     instructionNum = instructionValidName(after);

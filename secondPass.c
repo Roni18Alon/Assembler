@@ -5,6 +5,8 @@
 */
 #include "secondPass.h"
 
+void secondPassAnalysis(globalVariables *,char *,char *, char *, char *,char *);
+void varsResetForSecondPass(globalVariables *);
 
 void secondPass(globalVariables *vars) {
 

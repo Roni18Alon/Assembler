@@ -33,6 +33,7 @@ void createLabelNode(labelListPtr labelToAdd, globalVariables *vars)
         exit(0);
     }
 
+
     strcpy(labelCpy->labelName,labelToAdd->labelName);
     labelCpy->address=labelToAdd->address;
     labelCpy->codeOrData=labelToAdd->codeOrData;

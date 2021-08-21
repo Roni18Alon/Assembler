@@ -246,16 +246,18 @@ Bool externDirectiveFirstPass(char *after ,globalVariables *vars,labelListPtr cu
 
     strip(after);
     externLabel = isLegalLabel(after, vars); /*check if  the operand label is valid label by syntax*/
+
     if (externLabel == LABEL_ERROR) { /*not a valid label - return an error*/
         return False;
     }
     /*else- a valid label check if already exists without external type or with */
+
     ValidLabelName = labelNameCompare(&(vars->headLabelTable), after, vars);
     labelWithExtern = isLabelExternal(&(vars->headLabelTable), after, vars);
 
+
     if (ValidLabelName == VALID_LABEL || labelWithExtern ==True) {
         /*label is not exists or if exists with external label and add to label table*/
-
         strcpy(currentLabel->labelName,after); /*update the label we want to add name*/
         updateLabel(currentLabel,0,NoCodeOrData,Extern);
         createLabelNode(currentLabel,vars); /* create a copy and add to label list*/

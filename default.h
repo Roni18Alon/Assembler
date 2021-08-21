@@ -112,7 +112,7 @@
 #define ONE_LABEL 1
 #define NONE 0
 
-#define MAX_MEMORY 33554432 /*wh have 2^25 volume of memory*/
+#define MAX_MEMORY 33554432 /*we have 2^25 volume of memory*/
 
 
 typedef enum {Instruction, Directive,None} WordType;
@@ -199,7 +199,7 @@ typedef struct labelList{
     char labelName[LABEL_LENGTH];
     long address;
     Location codeOrData;
-    LabelType entryOrExtern; // enum {entry, extern, none}
+    LabelType entryOrExtern;
     labelListPtr next;
 }labelList;
 

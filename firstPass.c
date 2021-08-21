@@ -31,6 +31,7 @@ void firstPass(globalVariables *vars) {
         fgets(line, LINE_LENGTH, vars->file); /*vars->file*/
 
         validLineLength=getLine(line,lineCpy,vars);
+
         if (validLineLength==False)
         {
            vars->currentLine++;
@@ -55,6 +56,7 @@ void firstPass(globalVariables *vars) {
             vars->type=NoError;
         }
         vars->currentLine++;
+
     }
 
     int finalMemory=vars->IC+vars->DC;
@@ -82,6 +84,7 @@ void firstPass(globalVariables *vars) {
 
 void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *after , char *label,char *lineCpyAfterLabel)
 {
+    setbuf(stdout,0);
     Bool hasLabel;
     WordType word;
     int instructionNum;
@@ -93,16 +96,19 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
     }
 
     /*create a new label node*/
-    labelListPtr currentLabel = (labelListPtr) calloc(1, sizeof(labelListPtr));
+    labelListPtr currentLabel = (labelListPtr) calloc(1, sizeof(labelList));
     if (!currentLabel) {
         exit(0);
     }
 
+
     /*add bool function to check if we have a label*/
     hasLabel=labelAnalysis( lineCpy,before, after,label,lineCpyAfterLabel,vars ,currentLabel);
 
+
     strip(lineCpyAfterLabel);
     word = directiveOrInstruction(lineCpyAfterLabel, before, after, vars); /*check if Directive or Instruction or none*/
+
     if (word == Directive) {
         isDirectiveFirstPass(before, after,label ,vars, hasLabel, currentLabel, currentWord);
     }
@@ -110,14 +116,17 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
         if (word == Instruction) {
             instructionNum = instructionValidName(before); /*get the instruction number*/
             isInstructionFirstPass(before, after,label, vars, hasLabel, currentLabel, currentWord, instructionNum);
+
             vars->IC+=4;
         }
         else { /*not a directive and not an instruction than - None - error*/
             foundError(vars,notDirectiveOrInstruction,before);
         }
     }
+
     free(currentLabel);
     free(currentWord);
+
 }
 
 

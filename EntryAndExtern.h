@@ -8,6 +8,11 @@
 #ifndef RONIPROJECT_ENTRYANDEXTERN_H
 #define RONIPROJECT_ENTRYANDEXTERN_H
 
+#include "default.h"
+#include "WordList.h"
+#include "lableList.h"
+
+
 
 void addExternalToList(externalListPtr *, externalListPtr );
 void createExternalNode(char *, globalVariables *);

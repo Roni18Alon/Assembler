@@ -10,6 +10,8 @@
 #include "default.h"
 #include "inputAnalyzed.h"
 #include "instructionAnalyzed.h"
+#include "firstPass.h"
+#include "secondPass.h"
 
 void isDirectiveFirstPass(char* ,char* ,char* ,globalVariables *,Bool ,labelListPtr ,WordNodePtr ) ;
 Bool isDirectiveSecondPass(char *);

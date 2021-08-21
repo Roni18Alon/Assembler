@@ -6,13 +6,35 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.c
+default.h
+C:/Users/ronia/CLionProjects/AssemblerProj/default.h
+
 C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.h
+default.h
+C:/Users/ronia/CLionProjects/AssemblerProj/default.h
+WordList.h
+C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
+lableList.h
+C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/WordList.c
+WordList.h
+C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
 
 C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
 default.h
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 inputAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.c
+createOutput.h
+C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.h
+default.h
+C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 stdio.h
@@ -26,6 +48,10 @@ ctype.h
 math.h
 -
 
+C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.c
+directiveAnalysis.h
+C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
+
 C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
 default.h
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
@@ -33,6 +59,10 @@ inputAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
 instructionAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
+firstPass.h
+C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.h
+secondPass.h
+C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
 
 C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.c
 firstPass.h
@@ -54,11 +84,19 @@ C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
 printErrors.h
 C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
 
+C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.c
+inputAnalyzed.h
+C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
+
 C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
 default.h
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 directiveAnalysis.h
 C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.c
+instructionAnalyzed.h
+C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
 
 C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
 inputAnalyzed.h
@@ -70,11 +108,33 @@ C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 EntryAndExtern.h
 C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.h
 
+C:/Users/ronia/CLionProjects/AssemblerProj/lableList.c
+lableList.h
+C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
+
 C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
 default.h
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 inputAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/main.c
+main.h
+C:/Users/ronia/CLionProjects/AssemblerProj/main.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/main.h
+default.h
+C:/Users/ronia/CLionProjects/AssemblerProj/default.h
+firstPass.h
+C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.h
+secondPass.h
+C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
+createOutput.h
+C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.c
+printErrors.h
+C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
 
 C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
 default.h
@@ -91,4 +151,24 @@ directiveAnalysis.h
 C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
 firstPass.h
 C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.c
+secondPass.h
+C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
+default.h
+C:/Users/ronia/CLionProjects/AssemblerProj/default.h
+lableList.h
+C:/Users/ronia/CLionProjects/AssemblerProj/lableList.h
+WordList.h
+C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h
+inputAnalyzed.h
+C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
+instructionAnalyzed.h
+C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
+directiveAnalysis.h
+C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
+printErrors.h
+C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.h
 
