@@ -25,5 +25,6 @@ Bool existsLabelExternalIBranch(labelListPtr *, char *,globalVariables *);
 Bool existsLabelExternalJ(labelListPtr *, char *,globalVariables *);
 long EntryValueAfterSecondPass(labelListPtr *, char *);
 void createLabelNode(labelListPtr labelToAdd, globalVariables *vars);
+void freeLabelList (labelListPtr *);
 
 #endif

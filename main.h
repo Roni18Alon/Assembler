@@ -8,11 +8,6 @@
 
 void resetVars(globalVariables *);
 void freeVars(globalVariables *);
-
 void freeLists(globalVariables *vars);
-void freeExternList(externalListPtr *head);
-void freeEntryList(entryListPtr *head);
-void freeWordList(WordNodePtr *head);
-void freeLabelList (labelListPtr *head);
 
 #endif

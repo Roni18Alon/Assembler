@@ -187,3 +187,15 @@ void addLabelAddress(WordNodePtr *head,globalVariables *vars,long labelAddress,I
         temp = temp->next;
     }
 }
+
+/*free word list*/
+void freeWordList(WordNodePtr *head)
+{
+    WordNodePtr temp = *head;
+    while(temp)
+    {
+        temp = (temp)->next;
+        free(*head);
+        *head=temp;
+    }
+}

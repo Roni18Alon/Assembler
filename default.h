@@ -33,6 +33,8 @@
 #define DIRECTIVE_ERROR -1
 
 #define IC_START 100
+#define START_VALUE 0
+#define FIRST_ROW 1
 #define D_BYTE_MIN_VALUE -128 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
 #define D_BYTE_MAX_VALUE  127 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
 #define D_HALF_MIN_VALUE -32768 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
@@ -231,7 +233,7 @@ typedef struct globalVariables{
     int ICF;
     int currentLine;
     char filename[FILE_NAME_LENGTH];
-    char error[FILE_NAME_LENGTH];
+    char error[LINE_LENGTH];
     FILE *file;
     labelListPtr headLabelTable;
     WordNodePtr headWordList;

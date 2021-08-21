@@ -16,6 +16,7 @@ void addDirectiveByteToWordList(long [], WordNodePtr *, int , DirectiveWordType 
 void addDirectiveAsciz(char *, WordNodePtr *, DirectiveWordType , globalVariables *);
 void addDirectiveICF(WordNodePtr *,globalVariables *);
 void addLabelAddress(WordNodePtr *,globalVariables *,long ,InstructionWordType ,Bool );
-void createWordNode(WordNodePtr nodeToAdd,globalVariables *vars);
+void createWordNode(WordNodePtr ,globalVariables *vas);
+void freeWordList(WordNodePtr *);
 
 #endif

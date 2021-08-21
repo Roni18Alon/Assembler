@@ -19,5 +19,7 @@ void createExternalNode(char *, globalVariables *);
 
 void addEntryToList(entryListPtr *, entryListPtr );
 void createEntryNode(char *, long ,globalVariables *);
+void freeExternList(externalListPtr *);
+void freeEntryList(entryListPtr *);
 
 #endif

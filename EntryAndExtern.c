@@ -39,6 +39,17 @@ void createExternalNode(char *str, globalVariables *vars)
     addExternalToList(&(vars->headExternList),externalLabel); /*add to external list*/
 }
 
+/*free the external list*/
+void freeExternList(externalListPtr *head)
+{
+    externalListPtr temp = *head;
+    while(temp) /*free all except head*/
+    {
+        temp = (temp)->next;
+        free(*head);
+        *head=temp;
+    }
+}
 
 /*This function add an entry label to the entry label list*/
 void addEntryToList(entryListPtr *head, entryListPtr entryToAdd)
@@ -69,4 +80,15 @@ void createEntryNode(char *str, long address,globalVariables *vars)
     strcpy(entryLabel->labelName,str);
     entryLabel->value=address;
     addEntryToList(&(vars->headEntryList),entryLabel); /*add to external list*/
+}
+/*free entry list*/
+void freeEntryList(entryListPtr *head)
+{
+    entryListPtr temp = *head;
+    while(temp)
+    {
+        temp = (temp)->next;
+        free(*head);
+        *head=temp;
+    }
 }

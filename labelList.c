@@ -14,7 +14,6 @@ void addLabelToList(labelListPtr *head, labelListPtr labelToAdd) {
         *head = labelToAdd;
         return;
     }
-
     while(temp->next) {
         temp = temp->next;
     }
@@ -32,7 +31,6 @@ void createLabelNode(labelListPtr labelToAdd, globalVariables *vars)
     {
         exit(0);
     }
-
 
     strcpy(labelCpy->labelName,labelToAdd->labelName);
     labelCpy->address=labelToAdd->address;
@@ -215,4 +213,16 @@ long EntryValueAfterSecondPass(labelListPtr *head, char *str)
     }
 
     return LABEL_ERROR;
+}
+
+/*free label list*/
+void freeLabelList (labelListPtr *head)
+{
+    labelListPtr temp = *head;
+    while(temp)
+    {
+        temp = (temp)->next;
+        free(*head);
+        *head=temp;
+    }
 }
