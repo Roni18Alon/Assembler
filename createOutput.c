@@ -57,7 +57,7 @@ void outputInstruction(InstructionWord wordToPrint,FILE *file)
 }
 
 void outputDirective(DirectiveWord wordToPrint,FILE *file) {
-    unsigned long mask;
+    long mask;
     if (wordToPrint.wordType == D_BYTE) {
         outputByte(wordToPrint.db, wordToPrint.address, file);
     } else if (wordToPrint.wordType == D_HALF) {
@@ -70,11 +70,10 @@ void outputDirective(DirectiveWord wordToPrint,FILE *file) {
             mask = 0xFF;
             int i;
             for (i = 0; i < 4; i++) {
-                long a = wordToPrint.dw;
-                char result = mask & a;
-                result >>= i*8;
+                long wordToPrintValue = wordToPrint.dw;
+                long shifted = wordToPrintValue >> i*8;
+                char result = mask & shifted;
                 outputByte(result, wordToPrint.address+i, file);
-                mask <<= 8;
             }
         } else {
             outputByte(wordToPrint.asciz, wordToPrint.address, file);
@@ -90,8 +89,8 @@ void outputByte(char byte,long address,FILE *file)
 //        fprintf(file,"\n");
         fprintf(file,"%04lu  ",address);
     }
-    printf("%02X  ",byte&0xFF);
-//    fprintf(file,"%02X  ",byte);
+//    printf("%02X  ",byte&0xFF);
+    fprintf(file,"%02X  ",byte&0xFF);
     if((address+1)%4==0)
     {
         fprintf(file,"\n");
