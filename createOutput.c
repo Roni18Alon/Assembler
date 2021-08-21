@@ -58,38 +58,43 @@ void outputInstruction(InstructionWord wordToPrint,FILE *file)
 
 void outputDirective(DirectiveWord wordToPrint,FILE *file) {
     unsigned long mask;
-    if (wordToPrint.wordType == D_BYTE || wordToPrint.wordType == ASCIZ) {
+    if (wordToPrint.wordType == D_BYTE) {
         outputByte(wordToPrint.db, wordToPrint.address, file);
     } else if (wordToPrint.wordType == D_HALF) {
-        unsigned char result;
-        mask = 0xFF00;
-        result = (mask & wordToPrint.dh) >> 8;
-        outputByte(result, wordToPrint.address, file);
         mask = 0xFF;
-        outputByte(mask & wordToPrint.dh, wordToPrint.address + 1, file);
+        outputByte(mask & wordToPrint.dh, wordToPrint.address, file);
+        mask = 0xFF00;
+        outputByte((mask & wordToPrint.dh) >> 8, wordToPrint.address + 1, file);
     } else {
-        mask = 0xFF000000;
-        int i;
-        for (i = 0; i < 4; i++) {
-            unsigned char result = mask & wordToPrint.dw;
-            result >>= (3 - i) * 8;
-            outputByte(result, wordToPrint.address++, file);
-            mask >>= 8;
+        if (wordToPrint.wordType == D_WORD) {
+            mask = 0xFF;
+            int i;
+            for (i = 0; i < 4; i++) {
+                long a = wordToPrint.dw;
+                char result = mask & a;
+                result >>= i*8;
+                outputByte(result, wordToPrint.address+i, file);
+                mask <<= 8;
+            }
+        } else {
+            outputByte(wordToPrint.asciz, wordToPrint.address, file);
         }
-
     }
 }
 
 void outputByte(char byte,long address,FILE *file)
 {
-    if(byte%4==0)
+
+    if(address%4==0)
     {
-        fprintf(file,"%04lu ",address);
+//        fprintf(file,"\n");
+        fprintf(file,"%04lu  ",address);
     }
-    fprintf(file,"%02lx ",byte&0xFF);
-    if((address-100+1)%4==0)
+    printf("%02X  ",byte&0xFF);
+//    fprintf(file,"%02X  ",byte);
+    if((address+1)%4==0)
     {
-        fprintf(file,"\n ");
+        fprintf(file,"\n");
     }
 
 }

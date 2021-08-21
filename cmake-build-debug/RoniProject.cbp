@@ -131,12 +131,6 @@
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/main.h">
 			<Option target="RoniProject"/>
 		</Unit>
-		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/memleaks.c">
-			<Option target="RoniProject"/>
-		</Unit>
-		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/memleaks.h">
-			<Option target="RoniProject"/>
-		</Unit>
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.c">
 			<Option target="RoniProject"/>
 		</Unit>

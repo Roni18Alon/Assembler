@@ -94,9 +94,6 @@ CMakeFiles/RoniProject.dir/main.c.obj: ../main.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../printErrors.h
 CMakeFiles/RoniProject.dir/main.c.obj: ../secondPass.h
 
-CMakeFiles/RoniProject.dir/memleaks.c.obj: ../memleaks.c
-CMakeFiles/RoniProject.dir/memleaks.c.obj: ../memleaks.h
-
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../WordList.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../default.h

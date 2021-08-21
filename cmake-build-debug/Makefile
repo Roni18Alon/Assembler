@@ -384,33 +384,6 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/main.c.s
 .PHONY : main.c.s
 
-memleaks.obj: memleaks.c.obj
-
-.PHONY : memleaks.obj
-
-# target to build an object file
-memleaks.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/memleaks.c.obj
-.PHONY : memleaks.c.obj
-
-memleaks.i: memleaks.c.i
-
-.PHONY : memleaks.i
-
-# target to preprocess a source file
-memleaks.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/memleaks.c.i
-.PHONY : memleaks.c.i
-
-memleaks.s: memleaks.c.s
-
-.PHONY : memleaks.s
-
-# target to generate assembly for a file
-memleaks.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/memleaks.c.s
-.PHONY : memleaks.c.s
-
 printErrors.obj: printErrors.c.obj
 
 .PHONY : printErrors.obj
@@ -501,9 +474,6 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... memleaks.obj
-	@echo ... memleaks.i
-	@echo ... memleaks.s
 	@echo ... printErrors.obj
 	@echo ... printErrors.i
 	@echo ... printErrors.s

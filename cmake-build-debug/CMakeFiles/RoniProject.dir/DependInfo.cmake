@@ -13,7 +13,6 @@ set(CMAKE_DEPENDS_CHECK_C
   "C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/labelList.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/labelList.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/main.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/main.c.obj"
-  "C:/Users/ronia/CLionProjects/AssemblerProj/memleaks.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/memleaks.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/printErrors.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/secondPass.c.obj"
   )

@@ -178,10 +178,10 @@ typedef struct DirectiveWord {
     DirectiveWordType wordType;
     unsigned long address;
     union {
-        long db:8;
-        long dh:16;
-        long dw:32;
-        char asciz;
+        signed long db:8;
+        signed long dh:16;
+        signed long dw:32;
+        signed char asciz;
     };
 } DirectiveWord;
 
