@@ -9,6 +9,7 @@
 void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel) {
 
     int directiveNum;
+
     DirectiveWordType directiveType;
     Bool externFirstPass;
     directiveNum = isValidDirectiveName(before); /*find if it's a valid directive and the num*/
@@ -49,9 +50,10 @@ void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables
 void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,globalVariables *vars,int directiveNum,DirectiveWordType directiveType,labelListPtr currentLabel)
 {
     long validInput[LINE_LENGTH] = {0};
-    Bool validDirectiveParam,labelBeforeDirective;
+    Bool labelBeforeDirective;
+    int validDirectiveParam ;
     validDirectiveParam = dataAnalysis( before, after, vars, validInput,directiveNum);/*analyzed the operands of directive row*/
-    if (validDirectiveParam == False) return;
+    if (validDirectiveParam == DIRECTIVE_ERROR) return;
     if (hasLabel == True)
         /*we have a label and a data - add to symbol table the value is the DC before insert the numbers to the list*/
     {
@@ -59,7 +61,7 @@ void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,
         if (labelBeforeDirective == False) return ; /*if False - return false and get the next row, else continue*/
     }
     /*not a label only directive */
-    addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveType, vars);
+    addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveType, vars,validDirectiveParam);
 }
 
 
@@ -117,15 +119,15 @@ DirectiveWordType getDirectiveType(int directiveNum)
 }
 
 /*This function analysis the operands of db,dw,dh directive commands*/
-Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput [LINE_LENGTH],int directive) {
-    int  i;
+int dataAnalysis(char *before,char *after,globalVariables *vars,long validInput [LINE_LENGTH],int directive) {
+    int  i,counter;
     long number;
-    int counter=0;
     int delimiter;
     long validBitRange;
     char line[LINE_LENGTH] = {0};
     int lastChar;
     Bool validDirectiveNum;
+    counter =0;
 
     strcpy(line, after);
     lastChar = strlen(line);
@@ -133,7 +135,7 @@ Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput
     if (line[lastChar-1] == ',') /* 3,4,5,7, situation*/
     {
         foundError(vars,ExtraneousComma,line);
-        return False;
+        return DIRECTIVE_ERROR;
     }
     /*maybe add a check for non digit in the last char??*/
     for (i = 0; i < (LINE_LENGTH - 2) && line[i] != '\0'; i++) /* '\0' is the end of string char */
@@ -153,31 +155,31 @@ Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput
             if ((strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) && i == 0) /*the first num starts without a comma before - ,3,4,...*/
             {
                 foundError(vars,CommaBeforeFirstParam,before);
-                return False;
+                return DIRECTIVE_ERROR;
             }
             if ((strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) && i != 0) /*+65,,7...*/
             {
                 foundError(vars,CommaBetweenParams,before);
-                return False;
+                return DIRECTIVE_ERROR;
             }
             validDirectiveNum=ValidNumberDirective(before, vars); /*check if a valid by syntax*/
-            if(validDirectiveNum==False)  return False; /*error - not a valid number*/
+            if(validDirectiveNum==False)  return DIRECTIVE_ERROR; /*error - not a valid number*/
             number = directiveNumber(before, vars); /*return the number*/
             validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/
             if (validBitRange == VALID_BIT_RANGE) {
                 validInput[i] = number;
                 counter++;
                 continue;
-            } else {return False;}
+            } else {return DIRECTIVE_ERROR;}
 
         } else {/*we couldn't find a comma*/
             if (strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*if we couldn't find a comma, by split function before gets line value,if empty- missing operands*/
             {
                 foundError(vars,MissingOperand,before);
-                return False;
+                return DIRECTIVE_ERROR;
             } else {/*not an empty string check if it's a valid operand*/
                 validDirectiveNum=ValidNumberDirective(before, vars); /*check if a valid by syntax*/
-                if(validDirectiveNum==False)  return False; /*error - not a valid number*/
+                if(validDirectiveNum==False)  return DIRECTIVE_ERROR; /*error - not a valid number*/
                 number = directiveNumber(before, vars); /*errors will update in the function*/
                 validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/
                 if (validBitRange == VALID_BIT_RANGE) {
@@ -189,9 +191,7 @@ Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput
             break; /*couldn't find a comma */
         }
     }
-    /*block the operands long array*/
-    validInput[counter]='E';
-    return True;
+    return counter;
 }
 
 

@@ -174,6 +174,7 @@ Bool getLine(char *line,char *lineCpy,globalVariables *vars)
 
         foundError(vars,LineTooLong,line);
         printErrors(vars);
+        vars->type=NoError; /*reset type*/
         getToNextLine(vars->file);
         return False;
     }
