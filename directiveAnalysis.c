@@ -9,7 +9,6 @@
 void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel) {
 
     int directiveNum;
-
     DirectiveWordType directiveType;
     Bool externFirstPass;
     directiveNum = isValidDirectiveName(before); /*find if it's a valid directive and the num*/
@@ -52,7 +51,9 @@ void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,
     long validInput[LINE_LENGTH] = {0};
     Bool labelBeforeDirective;
     int validDirectiveParam ;
+
     validDirectiveParam = dataAnalysis( before, after, vars, validInput,directiveNum);/*analyzed the operands of directive row*/
+
     if (validDirectiveParam == DIRECTIVE_ERROR) return;
     if (hasLabel == True)
         /*we have a label and a data - add to symbol table the value is the DC before insert the numbers to the list*/
@@ -164,7 +165,7 @@ int dataAnalysis(char *before,char *after,globalVariables *vars,long validInput 
             }
             validDirectiveNum=ValidNumberDirective(before, vars); /*check if a valid by syntax*/
             if(validDirectiveNum==False)  return DIRECTIVE_ERROR; /*error - not a valid number*/
-            number = directiveNumber(before, vars); /*return the number*/
+            number = directiveNumber(before); /*return the number*/
             validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/
             if (validBitRange == VALID_BIT_RANGE) {
                 validInput[i] = number;
@@ -180,7 +181,7 @@ int dataAnalysis(char *before,char *after,globalVariables *vars,long validInput 
             } else {/*not an empty string check if it's a valid operand*/
                 validDirectiveNum=ValidNumberDirective(before, vars); /*check if a valid by syntax*/
                 if(validDirectiveNum==False)  return DIRECTIVE_ERROR; /*error - not a valid number*/
-                number = directiveNumber(before, vars); /*errors will update in the function*/
+                number = directiveNumber(before); /*errors will update in the function*/
                 validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/
                 if (validBitRange == VALID_BIT_RANGE) {
                     validInput[i] = number;

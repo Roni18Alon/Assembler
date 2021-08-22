@@ -67,15 +67,16 @@ void isInstructionSecondPass(char *str,InstructionWordType commandType,int instr
     }
 
 }
-
+/*This function analyzed R command in the first Pass*/
 void RCommandFirstPass(char *before,char *after,InstructionWordType commandType,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
 {
     int numOfOperands;
+    Bool validRCommand;
 
     currentWord->word.instruction.wordType = R_WORD;
     numOfOperands = numberOfOperands(commandType, instructionNum);
     strip(after);
-    Bool validRCommand = R_commandAnalyzed(after, before, after, instructionNum, numOfOperands, vars, currentWord);
+    validRCommand = R_commandAnalyzed(after, before, after, instructionNum, numOfOperands, vars, currentWord);
     if (validRCommand == True) {
         /*need to add the word node to the list*/
         createWordNode(currentWord,vars); /*it's a valid R command -create a copy and add to list*/
@@ -87,15 +88,18 @@ void RCommandFirstPass(char *before,char *after,InstructionWordType commandType,
 Bool R_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,int numOfOperands,globalVariables *vars, WordNodePtr currentWord)
 {
     Bool validOperandLine;
-    int funct= Rfunct(instructionNum);
-    int opcodeR=opcodeInstruction(instructionNum);
+    int funct,opcodeR;
 
-    validOperandLine=validROperandLine(str,before,after,numOfOperands,vars,currentWord);
+    opcodeR=opcodeInstruction(instructionNum); /*get R command opcode*/
+    funct= Rfunct(instructionNum);/*get R command funct*/
+
+    validOperandLine=validROperandLine(str,before,after,numOfOperands,vars,currentWord); /*analyzed the operands */
+
     if(validOperandLine==True) /*the R command line is valid update the word node and add to word list*/
     {
         currentWord->word.instruction.rWord.funct =funct; /*add funct to current word*/
-        currentWord->word.instruction.rWord.opcode =opcodeR;
-        currentWord->word.instruction.rWord.unused =0;
+        currentWord->word.instruction.rWord.opcode =opcodeR; /*add opcode to current word*/
+        currentWord->word.instruction.rWord.unused =R_UNUSED; /*unused is 0 to all R */
         currentWord->word.instruction.address = vars->IC;
         return True;
     }
@@ -255,10 +259,13 @@ Bool validROperandLine(char *str,char *before ,char *after,int numOfOperands,glo
 /*this function starts to analysis I commands*/
 void ICommandFirstPass(char *before,char *after,InstructionWordType commandType,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
 {
+    int type;
+    Bool validICommand;
     currentWord->word.instruction.wordType = I_WORD;
-    int type = numberOfOperands(commandType, instructionNum);
+
+    type = numberOfOperands(commandType, instructionNum);
     strip(after);
-    Bool validICommand = I_commandAnalyzed(after, before, after, instructionNum, type, vars, currentWord);
+    validICommand = I_commandAnalyzed(after, before, after, instructionNum, type, vars, currentWord); /*analyzed the command */
     if (validICommand == True) {
         /*need to add the word node to the list*/
         createWordNode(currentWord,vars); /*it's a valid I command - create a copy and add to word list*/
@@ -270,9 +277,12 @@ void ICommandFirstPass(char *before,char *after,InstructionWordType commandType,
 Bool I_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,int type,globalVariables *vars, WordNodePtr currentWord)
 {
     Bool validOperandLine;
-    int opcodeI=instructionNum+1;
-    currentWord->word.instruction.iWord.opcode =opcodeI;
-    validOperandLine=validIOperandLine(str,before,after,type,vars,currentWord);
+    int opcodeI;
+
+    opcodeI= opcodeInstruction(instructionNum);
+    currentWord->word.instruction.iWord.opcode =opcodeI; /*set opcode*/
+
+    validOperandLine=validIOperandLine(str,before,after,type,vars,currentWord); /*analyzed the operands */
     if(validOperandLine==True)
     {
         currentWord->word.instruction.address = vars->IC;
@@ -291,14 +301,14 @@ Bool validIOperandLine(char *str, char *before, char *after, int type, globalVar
 
     /*look for the first comma */
     char operandLine[LINE_LENGTH] = {0};
+
     strcpy(operandLine, str);
     firstDelimiter = split(operandLine, ",", before, after);
     strip(before);
     strip(after);
     if (firstDelimiter == VALID_SPLIT) /*we found a comma check if valid operand*/
     {
-        if (strlen(before) == 0 || strcmp(before, " ") == 0 ||
-            strcmp(before, "\t") == 0) /*the first operand is without a comma*/
+        if (strlen(before) == 0 || strcmp(before, " ") == 0 || strcmp(before, "\t") == 0) /*the first operand is without a comma*/
         {
             foundError(vars, CommaBeforeFirstParam, before);
             return False;
@@ -326,7 +336,7 @@ Bool validIOperandLine(char *str, char *before, char *after, int type, globalVar
     strip(after);
     if (secondDelimiter == VALID_SPLIT) /*we found the second comma*/
     {
-        if (strlen(before) == 0 || strcmp(before, " ") == 0 || strcmp(before, "\t") == 0) /*$3,,7...*/
+        if (strlen(before) == 0 || strcmp(before," ") == 0 || strcmp(before, "\t") == 0) /*$3,,7...*/
         {
             foundError(vars, CommaBetweenParams, before);
             return False;
@@ -422,9 +432,10 @@ Bool validIOperandLine(char *str, char *before, char *after, int type, globalVar
 /*this function analysis J commands in the first pass*/
 void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
 {
+    Bool validICommand;
     currentWord->word.instruction.wordType = J_WORD;
     strip(after);
-    Bool validICommand = J_commandAnalyzed(after, instructionNum, vars, currentWord);
+    validICommand = J_commandAnalyzed(after, instructionNum, vars, currentWord);
     if (validICommand == True) {
         /*need to add the word node to the list*/
         createWordNode(currentWord,vars); /*it's a valid J command - create a copy and add to word list*/
@@ -436,7 +447,8 @@ void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,Word
 Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, WordNodePtr currentWord)
 {
     Bool validOperandLine;
-    int opcode=opcodeInstruction(instructionNum);
+    int opcode;
+    opcode=opcodeInstruction(instructionNum);
     currentWord->word.instruction.jWord.opcode =opcode;
 
     validOperandLine= validJOperandLine(str,instructionNum,vars,currentWord);
@@ -452,16 +464,27 @@ Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, Word
 
 int opcodeInstruction(int instructionNum)
 {
-   if(ADD<=instructionNum && instructionNum<=NOR) return OP_R_ARI_LOG;
-   if(MOVE<=instructionNum && instructionNum<=MVLO)return OP_R_COPY;
-    if(instructionNum==JMP)
-        return OP_JMP;
-    if(instructionNum==LA)
-        return OP_LA;
-    if(instructionNum==CALL)
-        return OP_CALL;
-    if(instructionNum==STOP)
-        return OP_STOP;
+   if(ADD<=instructionNum && instructionNum<=NOR) return OP_R_ARI_LOG; /*OPCODE=0*/
+   if(MOVE<=instructionNum && instructionNum<=MVLO)return OP_R_COPY;  /*OPCODE=1*/
+    if(instructionNum==ADDI)  return OP_ADDI; /*OPCODE=10*/
+    if(instructionNum==SUBI)  return OP_SUBI; /*OPCODE=11*/
+    if(instructionNum==ANDI)  return OP_ANDI; /*OPCODE=12*/
+    if(instructionNum==ORI)  return OP_ORI;  /*OPCODE=13*/
+    if(instructionNum==NORI)  return OP_NORI; /*OPCODE=14*/
+    if(instructionNum==BNE)  return OP_BNE; /*OPCODE=15*/
+    if(instructionNum==BEQ)  return OP_BEQ; /*OPCODE=16*/
+    if(instructionNum==BLT)  return OP_BLT; /*OPCODE=17*/
+    if(instructionNum==BGT)  return OP_BGT; /*OPCODE=18*/
+    if(instructionNum==LB)  return OP_LB; /*OPCODE=19*/
+    if(instructionNum==SB)  return OP_SB; /*OPCODE=20*/
+    if(instructionNum==LW)  return OP_LW; /*OPCODE=21*/
+    if(instructionNum==SW)  return OP_SW; /*OPCODE=22*/
+    if(instructionNum==LH)  return OP_LH; /*OPCODE=23*/
+    if(instructionNum==SH)  return OP_SH; /*OPCODE=24*/
+    if(instructionNum==JMP)  return OP_JMP; /*OPCODE=30*/
+    if(instructionNum==LA)  return OP_LA; /*OPCODE=31*/
+    if(instructionNum==CALL) return OP_CALL; /*OPCODE=32*/
+    if(instructionNum==STOP)  return OP_STOP;  /*OPCODE=63*/
 }
 
 /*this function returns True if the operands of J command is valid - false otherwise*/
@@ -516,7 +539,7 @@ Bool regJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
     regNum= isValidRegisterNum(str,vars);
     if(regNum<VALID_REGISTER)/* not valid reg num */
         return False;
-    currentWord->word.instruction.jWord.reg=1;
+    currentWord->word.instruction.jWord.reg= J_WITH_REG; /*if we have register - enter 1*/
     currentWord->word.instruction.jWord.address =regNum;
     return True;
 }
@@ -529,7 +552,7 @@ Bool labelJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
     if(isLabel==LABEL_ERROR) /*not a valid label*/
         return False;
     /*than a valid label - by syntax. in the second pass we will update the address. */
-    currentWord->word.instruction.jWord.reg=0;
+    currentWord->word.instruction.jWord.reg= J_WITH_LABEL; /*if we have label - enter 0*/
     return True;
 }
 
@@ -560,7 +583,7 @@ void secondPassJ(char *str,globalVariables *vars, InstructionWordType commandTyp
 }
 
 
-
+/*this function analyzed I commands in the second pass- for Branch command complete the address*/
 void secondPassI(char *str,globalVariables *vars, InstructionWordType commandType) {
     int firstSplit, secondSplit;
     long currentLabelAddress;

@@ -16,7 +16,7 @@ int isEmptyOrCommentLine(char *);
 int split(char *, char *, char *, char *);
 int isLegalLabel(char*,globalVariables *);
 Bool labelIsKnown(char *label);
-long directiveNumber(char *,globalVariables *);
+long directiveNumber(char *);
 Bool ValidNumberDirective(char *,globalVariables *);
 WordType directiveOrInstruction(char *,char *,char *,globalVariables *);
 long validNumByDirective(int,long,char *,globalVariables *);

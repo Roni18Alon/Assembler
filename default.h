@@ -39,8 +39,8 @@
 #define D_BYTE_MAX_VALUE  127 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
 #define D_HALF_MIN_VALUE -32768 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
 #define D_HALF_MAX_VALUE  32767 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
-#define INT_MAX 2147483647
-#define INT_MIN -2147483648
+#define D_WORD_MAX_VALUE 2147483647  /*4 byte=32 bits the range is [-2^31...2^31-1]=[-2147483648,2147483647]*/
+#define D_WORD_MIN_VALUE -2147483648 /*4 byte=32 bits the range is [-2^31...2^31-1]=[-2147483648,2147483647]*/
 
 
 #define STRING_ERROR -1
@@ -56,6 +56,7 @@
 #define REGISTER_ERROR -1
 #define VALID_REGISTER 0
 #define REG_MAX_LENGTH 4 /*the max register is $31*/
+
 
 #define VALID_IMMEDIATE 1
 #define IMMEDIATE_ERROR 40000 /*out of 16 bits range [-2^15...2^15-1]=[-32768,32767] */
@@ -109,11 +110,29 @@
 #define MVLO_FUNCT 3
 #define OP_R_ARI_LOG 0
 #define OP_R_COPY 1
+#define OP_ADDI 10
+#define OP_SUBI 11
+#define OP_ANDI 12
+#define OP_ORI 13
+#define OP_NORI 14
+#define OP_BNE 15
+#define OP_BEQ 16
+#define OP_BLT 17
+#define OP_BGT 18
+#define OP_LB 19
+#define OP_SB 20
+#define OP_LW 21
+#define OP_SW 22
+#define OP_LH 23
+#define OP_SH 24
 #define OP_JMP 30
 #define OP_LA 31
 #define OP_CALL 32
 #define OP_STOP 63
 
+#define R_UNUSED 0 /*the unused is 0 to all R commands*/
+#define J_WITH_REG 1
+#define J_WITH_LABEL 1
 #define THREE_REGISTERS 3
 #define TWO_REGISTERS 2
 #define REG_IM_REG_ARI_LOG  4

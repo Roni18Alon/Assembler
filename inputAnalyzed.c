@@ -96,12 +96,12 @@ int isEmptyOrCommentLine(char *str) {
 /*check if the directive number is valid by syntax*/
 Bool ValidNumberDirective(char *str,globalVariables *vars)
 {
-    int sign=1;
-    int i;
+    int sign,i;
     long number;
     char num[LINE_LENGTH]={0};
     char *ptr;
 
+    sign=POSITIVE_NUM;
     if (strcmp(str,"0")==0) /*strtol don't recognize 0*/
     {
         return True;
@@ -143,7 +143,7 @@ Bool ValidNumberDirective(char *str,globalVariables *vars)
 
     if(sign==POSITIVE_NUM)
     {
-        if(number==INT_MAX && strcmp(num,"2147483647")!=0) /*strtol returns INT_MAX= 2147483647 but the num string is not equal so we ot a bigger number from INT_MAX*/
+        if(number==D_WORD_MAX_VALUE && strcmp(num,"2147483647")!=0) /*strtol returns INT_MAX= 2147483647 but the num string is not equal so we ot a bigger number from INT_MAX*/
         {
             foundError(vars,ParamNotInBitRange,num);
             return False;/*error- not an integer*/
@@ -151,7 +151,7 @@ Bool ValidNumberDirective(char *str,globalVariables *vars)
     }
     if(sign==NEGATIVE_NUM)
     {
-        if(number==INT_MIN && strcmp(str,"-2147483648")!=0) /*strtol returns INT_MIN= -2147483648 but the num string is not equal so we ot a smaller number from INT_MIN */
+        if(number==D_WORD_MIN_VALUE && strcmp(str,"-2147483648")!=0) /*strtol returns INT_MIN= -2147483648 but the num string is not equal so we ot a smaller number from INT_MIN */
         {
             foundError(vars,ParamNotInBitRange,str);
             return False;/*error- not an integer*/
@@ -161,7 +161,7 @@ Bool ValidNumberDirective(char *str,globalVariables *vars)
 }
 
 /*this function returns the directive number - we will reach to this function only in the number is valid by syntax*/
-long directiveNumber(char *str,globalVariables *vars)
+long directiveNumber(char *str)
 {
     long number;
     char *ptr;
@@ -170,45 +170,7 @@ long directiveNumber(char *str,globalVariables *vars)
     {
         return 0;
     }
-
     number=strtol(str,&ptr,10);
-
-//    if(num<0)sign = NEGATIVE_NUM;/*negative num*/
-//    if(num>=0)sign = POSITIVE_NUM;/*negative num*/
-//
-//
-//
-//    for (i = 1; i < strlen(str); i++) {
-//        int Digit = (int) (str[i]);
-//        if (isdigit(Digit) == 0) {
-//            foundError(vars, DirectiveOperandNotAnInt, str);
-//            return LONG_MIN;/*error- not an integer*/
-//        }
-//    }
-//
-//    strcpy(num,str);
-//    if (strcmp(str,"+0")==0 ||strcmp(str,"-0")==0) /* -0 and +0 it's not valid*/
-//    {
-//        foundError(vars, InvalidOperand, str);
-//        return LONG_MIN;/*error- not an integer*/
-//    }
-//
-//    if(sign==POSITIVE_NUM)
-//    {
-//        if(number==INT_MAX && strcmp(num,"2147483647")!=0) /*strtol returns INT_MAX= 2147483647 but the num string is not equal so we ot a bigger number from INT_MAX*/
-//        {
-//            foundError(vars,ParamNotInBitRange,num);
-//            return LONG_MIN;/*error- not an integer*/
-//        }
-//    }
-//    if(sign==NEGATIVE_NUM)
-//    {
-//        if(number==INT_MIN && strcmp(str,"-2147483648")!=0) /*strtol returns INT_MIN= -2147483648 but the num string is not equal so we ot a smaller number from INT_MIN */
-//        {
-//            foundError(vars,ParamNotInBitRange,str);
-//            return LONG_MIN;/*error- not an integer*/
-//        }
-//    }
     return number;
 }
 
@@ -229,8 +191,8 @@ long validNumByDirective(int directive,long num,char *str,globalVariables *vars)
     }
     if(directive==DIRECTIVE_WORD)
     {
-        minValue=INT_MIN;  /*-2147483648*/
-        maxValue=INT_MAX;  /* 2147483647*/
+        minValue=D_WORD_MIN_VALUE;  /*-2147483648*/
+        maxValue=D_WORD_MAX_VALUE;  /* 2147483647*/
     }
 
 

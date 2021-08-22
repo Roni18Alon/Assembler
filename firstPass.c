@@ -143,8 +143,8 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
         }
     }
 
-    free(currentLabel);
-    free(currentWord);
+    free(currentLabel); /*re-allocate currentLabel*/
+    free(currentWord); /*re-allocate currentWord*/
 
 }
 
