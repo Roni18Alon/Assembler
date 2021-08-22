@@ -89,5 +89,5 @@ void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *
 void varsResetForSecondPass(globalVariables *vars) {
     vars->DC = START_VALUE;
     vars->IC = IC_START;
-    vars->currentLine = 1;
+    vars->currentLine = FIRST_ROW;
 }

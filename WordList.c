@@ -27,45 +27,45 @@ void createWordNode(WordNodePtr nodeToAdd,globalVariables *vars)
         exit(0);
     }
 
-    if(nodeToAdd->word.instruction.wordType== R_WORD)
+    if(nodeToAdd->word.wordUnion.instruction.wordType== R_WORD)
     {
         wordCpy->word.wordType=Instruction;
-        wordCpy->word.instruction.wordType=R_WORD;
-        wordCpy->word.instruction.address= nodeToAdd->word.instruction.address;
-        wordCpy->word.instruction.rWord.opcode=nodeToAdd->word.instruction.rWord.opcode;
-        wordCpy->word.instruction.rWord.rs= nodeToAdd->word.instruction.rWord.rs;
-        wordCpy->word.instruction.rWord.rt= nodeToAdd->word.instruction.rWord.rt;
-        wordCpy->word.instruction.rWord.rd= nodeToAdd->word.instruction.rWord.rd;
-        wordCpy->word.instruction.rWord.funct= nodeToAdd->word.instruction.rWord.funct;
-        wordCpy->word.instruction.rWord.unused= nodeToAdd->word.instruction.rWord.unused;
+        wordCpy->word.wordUnion.instruction.wordType=R_WORD;
+        wordCpy->word.wordUnion.instruction.address= nodeToAdd->word.wordUnion.instruction.address;
+        wordCpy->word.wordUnion.instruction.code.rWord.opcode=nodeToAdd->word.wordUnion.instruction.code.rWord.opcode;
+        wordCpy->word.wordUnion.instruction.code.rWord.rs= nodeToAdd->word.wordUnion.instruction.code.rWord.rs;
+        wordCpy->word.wordUnion.instruction.code.rWord.rt= nodeToAdd->word.wordUnion.instruction.code.rWord.rt;
+        wordCpy->word.wordUnion.instruction.code.rWord.rd= nodeToAdd->word.wordUnion.instruction.code.rWord.rd;
+        wordCpy->word.wordUnion.instruction.code.rWord.funct= nodeToAdd->word.wordUnion.instruction.code.rWord.funct;
+        wordCpy->word.wordUnion.instruction.code.rWord.unused= nodeToAdd->word.wordUnion.instruction.code.rWord.unused;
         addWordToList(&(vars->headWordList),wordCpy);
     }
-    if(nodeToAdd->word.instruction.wordType== I_WORD )
+    if(nodeToAdd->word.wordUnion.instruction.wordType== I_WORD )
     {
         wordCpy->word.wordType=Instruction;
-        wordCpy->word.instruction.wordType=I_WORD;
-        wordCpy->word.instruction.address= nodeToAdd->word.instruction.address;
-        wordCpy->word.instruction.iWord.opcode=nodeToAdd->word.instruction.iWord.opcode;
-        wordCpy->word.instruction.iWord.rs=  nodeToAdd->word.instruction.iWord.rs;
-        wordCpy->word.instruction.iWord.rt=  nodeToAdd->word.instruction.iWord.rt;
-        wordCpy->word.instruction.iWord.immed=  nodeToAdd->word.instruction.iWord.immed;
+        wordCpy->word.wordUnion.instruction.wordType=I_WORD;
+        wordCpy->word.wordUnion.instruction.address= nodeToAdd->word.wordUnion.instruction.address;
+        wordCpy->word.wordUnion.instruction.code.iWord.opcode=nodeToAdd->word.wordUnion.instruction.code.iWord.opcode;
+        wordCpy->word.wordUnion.instruction.code.iWord.rs=  nodeToAdd->word.wordUnion.instruction.code.iWord.rs;
+        wordCpy->word.wordUnion.instruction.code.iWord.rt=  nodeToAdd->word.wordUnion.instruction.code.iWord.rt;
+        wordCpy->word.wordUnion.instruction.code.iWord.immed=  nodeToAdd->word.wordUnion.instruction.code.iWord.immed;
         addWordToList(&(vars->headWordList),wordCpy);
     }
-    if(nodeToAdd->word.instruction.wordType== J_WORD)
+    if(nodeToAdd->word.wordUnion.instruction.wordType== J_WORD)
     {
         wordCpy->word.wordType=Instruction;
-        wordCpy->word.instruction.wordType=J_WORD;
-        wordCpy->word.instruction.address= nodeToAdd->word.instruction.address;
-        wordCpy->word.instruction.jWord.opcode=nodeToAdd->word.instruction.jWord.opcode;
-        wordCpy->word.instruction.jWord.reg=  nodeToAdd->word.instruction.jWord.reg;
-        wordCpy->word.instruction.jWord.address=  nodeToAdd->word.instruction.jWord.address;
+        wordCpy->word.wordUnion.instruction.wordType=J_WORD;
+        wordCpy->word.wordUnion.instruction.address= nodeToAdd->word.wordUnion.instruction.address;
+        wordCpy->word.wordUnion.instruction.code.jWord.opcode=nodeToAdd->word.wordUnion.instruction.code.jWord.opcode;
+        wordCpy->word.wordUnion.instruction.code.jWord.reg=  nodeToAdd->word.wordUnion.instruction.code.jWord.reg;
+        wordCpy->word.wordUnion.instruction.code.jWord.address=  nodeToAdd->word.wordUnion.instruction.code.jWord.address;
         addWordToList(&(vars->headWordList),wordCpy);
     }
 
 
 }
 
-
+/*this function adds the dw,dh,db operand to word list*/
 void addDirectiveByteToWordList( long validInput[LINE_LENGTH], WordNodePtr *head, DirectiveWordType givenWordType,globalVariables *vars, int counter)
 {
     int i;
@@ -74,10 +74,10 @@ void addDirectiveByteToWordList( long validInput[LINE_LENGTH], WordNodePtr *head
         for (i = 0; i < counter ; i++) {
             newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
             newNode->word.wordType = Directive;
-            newNode->word.directive.wordType = givenWordType;
-            newNode->word.directive.address = vars->DC;
-            newNode->word.directive.db = validInput[i];
-            vars->DC+=1;
+            newNode->word.wordUnion.directive.wordType = givenWordType;
+            newNode->word.wordUnion.directive.address = vars->DC;
+            newNode->word.wordUnion.directive.data.db = validInput[i];
+            vars->DC+=D_B_BYTE_NUM;
             addWordToList(head, newNode);
         }
 
@@ -91,10 +91,10 @@ void addDirectiveByteToWordList( long validInput[LINE_LENGTH], WordNodePtr *head
                         exit(0);
                     }
                     newNode->word.wordType = Directive;
-                    newNode->word.directive.wordType = givenWordType;
-                    newNode->word.directive.address = vars->DC;
-                    newNode->word.directive.dh =validInput[i];
-                    vars->DC+=2;
+                    newNode->word.wordUnion.directive.wordType = givenWordType;
+                    newNode->word.wordUnion.directive.address = vars->DC;
+                    newNode->word.wordUnion.directive.data.dh =validInput[i];
+                    vars->DC+=D_H_BYTE_NUM;
                     addWordToList(head, newNode);
                 }
 
@@ -108,10 +108,10 @@ void addDirectiveByteToWordList( long validInput[LINE_LENGTH], WordNodePtr *head
                     exit(0);
                 }
                 newNode->word.wordType = Directive;
-                newNode->word.directive.wordType = givenWordType;
-                newNode->word.directive.address = vars->DC;
-                newNode->word.directive.dw = validInput[i];
-                vars->DC+=4;
+                newNode->word.wordUnion.directive.wordType = givenWordType;
+                newNode->word.wordUnion.directive.address= vars->DC;
+                newNode->word.wordUnion.directive.data.dw = validInput[i];
+                vars->DC+=D_W_BYTE_NUM;
                 addWordToList(head, newNode);
             }
 
@@ -119,12 +119,12 @@ void addDirectiveByteToWordList( long validInput[LINE_LENGTH], WordNodePtr *head
 
     }
 }
-
+/*this function adds the asciz string to word list , each char to a node and add \0 */
 void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWordType, globalVariables *vars)
 {
-    ascizStr(str);
     int i;
     WordNodePtr newNode;
+    ascizStr(str);
     for (i = 0; i < strlen(str); i++)
     {
          newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
@@ -133,10 +133,10 @@ void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWord
             exit(0);
         }
         newNode->word.wordType = Directive;
-        newNode->word.directive.wordType = givenWordType;
-        newNode->word.directive.address = (vars->DC);
-        newNode->word.directive.asciz =  str[i];
-        vars->DC+=1;
+        newNode->word.wordUnion.directive.wordType = givenWordType;
+        newNode->word.wordUnion.directive.address = (vars->DC);
+        newNode->word.wordUnion.directive.data.asciz =  str[i];
+        vars->DC+=ASCIZ_BYTE_NUM;
         addWordToList(head, newNode);
     }
 
@@ -148,11 +148,11 @@ void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWord
         exit(0);
     }
     newNode->word.wordType = Directive;
-    newNode->word.directive.wordType = givenWordType;
-    newNode->word.directive.address = vars->DC;
-    newNode->word.directive.asciz =  '\0';
+    newNode->word.wordUnion.directive.wordType = givenWordType;
+    newNode->word.wordUnion.directive.address = (vars->DC);
+    newNode->word.wordUnion.directive.data.asciz =  '\0';
     addWordToList(head, newNode);
-    vars->DC+=1;
+    vars->DC+=ASCIZ_BYTE_NUM;
 }
 
 /*this function adds after the first pass to each directive node in the word list the final IC value to the address*/
@@ -162,7 +162,7 @@ void addDirectiveICF(WordNodePtr *head,globalVariables *vars)
 
     while(temp) {
         if(temp->word.wordType == Directive) {
-            temp->word.directive.address +=vars->ICF;
+            temp->word.wordUnion.directive.address +=vars->ICF;
         }
         temp = temp->next;
     }
@@ -175,20 +175,20 @@ void addLabelAddress(WordNodePtr *head,globalVariables *vars,long labelAddress,I
     WordNodePtr temp = *head;
     while (temp != NULL)
     {
-        if(temp->word.instruction.address == vars->IC) /*find the right node */
+        if(temp->word.wordUnion.instruction.address == vars->IC) /*find the right node */
         {
             if(commandType==J_WORD)  /*if it's a J - just update the address from label list*/
             {
                 if(isExtern==True)
                 {
-                    temp->word.instruction.jWord.address=0;
+                    temp->word.wordUnion.instruction.code.jWord.address=0;
                 }
-                else {temp->word.instruction.jWord.address=labelAddress;}
+                else {temp->word.wordUnion.instruction.code.jWord.address=labelAddress;}
             }
             else{ if(commandType==I_WORD) /*if it's an I-Branch update the immed */
                 {
-                    finalIAddress= labelAddress- (temp->word.instruction.address); /*the final address (Immediate value) will be the sub between address from label list and current address*/
-                    temp->word.instruction.iWord.immed=finalIAddress;
+                    finalIAddress= labelAddress- (temp->word.wordUnion.instruction.address); /*the final address (Immediate value) will be the sub between address from label list and current address*/
+                    temp->word.wordUnion.instruction.code.iWord.immed=finalIAddress;
                 }
             }
             return;

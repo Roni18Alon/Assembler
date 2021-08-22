@@ -27,7 +27,7 @@ void outputObject(globalVariables *vars) {
     /*print instruction */
     while (temp) {
         if (temp->word.wordType == Instruction) {
-            outputInstruction(temp->word.instruction, file);
+            outputInstruction(temp->word.wordUnion.instruction, file);
         }
         temp=temp->next;
     }
@@ -36,7 +36,7 @@ void outputObject(globalVariables *vars) {
     /*print Directive */
     while (temp) {
         if (temp->word.wordType == Directive) {
-            outputDirective(temp->word.directive, file);
+            outputDirective(temp->word.wordUnion.directive, file);
         }
         temp=temp->next;
     }
@@ -49,7 +49,7 @@ void outputInstruction(InstructionWord wordToPrint,FILE *file)
     int i;
     fprintf(file,"%04lu  ", wordToPrint.address);
     for ( i = 0; i <4 ; i++) {
-        result= (wordToPrint.bytes & mask) >> (8*i);
+        result= (wordToPrint.code.bytes & mask) >> (8*i);
         fprintf(file,"%02lX  ", result);
         mask<<=8;                       /*mask=maks<<8*/
     }
@@ -63,21 +63,21 @@ void outputDirective(DirectiveWord wordToPrint,FILE *file) {
     int i;
 
     if (wordToPrint.wordType == D_BYTE) {
-        outputByte(wordToPrint.db, wordToPrint.address, file);
+        outputByte(wordToPrint.data.db, wordToPrint.address, file);
     } else if (wordToPrint.wordType == D_HALF) {
-        outputByte(mask & wordToPrint.dh, wordToPrint.address, file); /*print the first byte*/
-        outputByte(mask & (wordToPrint.dh >> 8), wordToPrint.address + 1, file); /*print the second byte*/
+        outputByte(mask & wordToPrint.data.dh, wordToPrint.address, file); /*print the first byte*/
+        outputByte(mask & (wordToPrint.data.dh >> 8), wordToPrint.address + 1, file); /*print the second byte*/
     } else {
         if (wordToPrint.wordType == D_WORD) {
             mask = 0xFF;
             for (i = 0; i < 4; i++) {
-                wordToPrintValue = wordToPrint.dw;
+                wordToPrintValue = wordToPrint.data.dw;
                 shifted = wordToPrintValue >> i*8;
                  result = mask & shifted;
                 outputByte(result, wordToPrint.address+i, file);
             }
         } else {
-            outputByte(wordToPrint.asciz, wordToPrint.address, file);
+            outputByte(wordToPrint.data.asciz, wordToPrint.address, file);
         }
     }
 }

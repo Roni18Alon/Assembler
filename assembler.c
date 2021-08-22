@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     }
     return 0;
 }
-
+/*reset the global vars*/
 void resetVars(globalVariables *vars) {
     vars->IC = IC_START;
     vars->DC = START_VALUE;
@@ -67,6 +67,7 @@ void resetVars(globalVariables *vars) {
     vars->currentLine = FIRST_ROW;
 }
 
+/*free vars*/
 void freeVars(globalVariables *vars) {
     freeLists(vars);
     fclose(vars->file);

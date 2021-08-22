@@ -74,7 +74,7 @@ void RCommandFirstPass(char *before,char *after,InstructionWordType commandType,
     int numOfOperands;
     Bool validRCommand;
 
-    currentWord->word.instruction.wordType = R_WORD;
+    currentWord->word.wordUnion.instruction.wordType = R_WORD;
     numOfOperands = numberOfOperands(commandType, instructionNum);
     strip(after);
     validRCommand = R_commandAnalyzed(after, before, after, instructionNum, numOfOperands, vars, currentWord);
@@ -98,10 +98,10 @@ Bool R_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,i
 
     if(validOperandLine==True) /*the R command line is valid update the word node and add to word list*/
     {
-        currentWord->word.instruction.rWord.funct =funct; /*add funct to current word*/
-        currentWord->word.instruction.rWord.opcode =opcodeR; /*add opcode to current word*/
-        currentWord->word.instruction.rWord.unused =R_UNUSED; /*unused is 0 to all R */
-        currentWord->word.instruction.address = vars->IC;
+        currentWord->word.wordUnion.instruction.code.rWord.funct =funct; /*add funct to current word*/
+        currentWord->word.wordUnion.instruction.code.rWord.opcode =opcodeR; /*add opcode to current word*/
+        currentWord->word.wordUnion.instruction.code.rWord.unused =R_UNUSED; /*unused is 0 to all R */
+        currentWord->word.wordUnion.instruction.address = vars->IC;
         return True;
     }
     else {return False; }/*not a valid R command line*/
@@ -137,7 +137,7 @@ Bool validROperandLine(char *str,char *before ,char *after,int numOfOperands,glo
     validReg=isValidRegister(before,vars);
     if(validReg>=VALID_REGISTER) {
         firstReg = validReg;
-        currentWord->word.instruction.rWord.rs = firstReg;
+        currentWord->word.wordUnion.instruction.code.rWord.rs = firstReg;
     }
     /*look for the second comma*/
     memset(operandLine,0,LINE_LENGTH);
@@ -180,7 +180,7 @@ Bool validROperandLine(char *str,char *before ,char *after,int numOfOperands,glo
             validReg=isValidRegister(before,vars);
             if(validReg>=VALID_REGISTER) {
                 secondReg = validReg;
-                currentWord->word.instruction.rWord.rt = secondReg;
+                currentWord->word.wordUnion.instruction.code.rWord.rt = secondReg;
             }
             else{ /*not a valid register*/
                 return False; /*error type already been checked*/
@@ -198,8 +198,8 @@ Bool validROperandLine(char *str,char *before ,char *after,int numOfOperands,glo
             validReg=isValidRegister(before,vars);
             if(validReg>=VALID_REGISTER) {
                 secondReg = validReg;
-                currentWord->word.instruction.rWord.rd = secondReg;
-                currentWord->word.instruction.rWord.rt = 0;
+                currentWord->word.wordUnion.instruction.code.rWord.rd = secondReg;
+                currentWord->word.wordUnion.instruction.code.rWord.rt = 0;
                 return True;
             }
             else{ /*not a valid register*/
@@ -248,7 +248,7 @@ Bool validROperandLine(char *str,char *before ,char *after,int numOfOperands,glo
         validReg=isValidRegister(before,vars);
         if(validReg>=VALID_REGISTER) {
             thirdReg = validReg;
-            currentWord->word.instruction.rWord.rd = thirdReg;
+            currentWord->word.wordUnion.instruction.code.rWord.rd = thirdReg;
             return True;
         }
         else{ /*not a valid register*/
@@ -262,7 +262,7 @@ void ICommandFirstPass(char *before,char *after,InstructionWordType commandType,
 {
     int type;
     Bool validICommand;
-    currentWord->word.instruction.wordType = I_WORD;
+    currentWord->word.wordUnion.instruction.wordType = I_WORD;
 
     type = numberOfOperands(commandType, instructionNum);
     strip(after);
@@ -281,12 +281,12 @@ Bool I_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,i
     int opcodeI;
 
     opcodeI= opcodeInstruction(instructionNum);
-    currentWord->word.instruction.iWord.opcode =opcodeI; /*set opcode*/
+    currentWord->word.wordUnion.instruction.code.iWord.opcode =opcodeI; /*set opcode*/
 
     validOperandLine=validIOperandLine(str,before,after,type,vars,currentWord); /*analyzed the operands */
     if(validOperandLine==True)
     {
-        currentWord->word.instruction.address = vars->IC;
+        currentWord->word.wordUnion.instruction.address = vars->IC;
         return True;
     }
     else {return False; }/*not a valid I command line*/
@@ -320,7 +320,7 @@ Bool validIOperandLine(char *str, char *before, char *after, int type, globalVar
         validReg = isValidRegister(before, vars);
         if (validReg >= VALID_REGISTER) {
             firstReg = validReg;
-            currentWord->word.instruction.iWord.rs = firstReg;
+            currentWord->word.wordUnion.instruction.code.iWord.rs = firstReg;
         } else { return False; }/*not a valid register*/
     } else {/*we couldn't find the first comma*/
 
@@ -349,14 +349,14 @@ Bool validIOperandLine(char *str, char *before, char *after, int type, globalVar
             if (validImmediate == IMMEDIATE_ERROR) {
                 return False;
             }
-            currentWord->word.instruction.iWord.immed = validImmediate;
+            currentWord->word.wordUnion.instruction.code.iWord.immed = validImmediate;
         } else {
             if (type == REG_REG_LABEL) /*supposed to be a register*/
             {
                 validReg = isValidRegister(before, vars);
                 if (validReg >= VALID_REGISTER) {
                     secondReg = validReg;
-                    currentWord->word.instruction.iWord.rt = secondReg;
+                    currentWord->word.wordUnion.instruction.code.iWord.rt = secondReg;
                 } else { /*not a valid register*/
                     return False; /*error type already been checked*/
                 }
@@ -417,14 +417,14 @@ Bool validIOperandLine(char *str, char *before, char *after, int type, globalVar
             validReg = isValidRegister(before, vars);
             if (validReg >= VALID_REGISTER) {
                 thirdReg = validReg;
-                currentWord->word.instruction.iWord.rt = thirdReg;
+                currentWord->word.wordUnion.instruction.code.iWord.rt = thirdReg;
                 return True;
             }
                 /*not a valid register*/
             else { return False; } /*error type already been checked*/
         } else {
             /*type==REG_REG_LABEL - in the first Pass we put the address as the current IC in immediate, will be handle in second Pass*/
-            currentWord->word.instruction.iWord.immed = vars->IC;
+            currentWord->word.wordUnion.instruction.code.iWord.immed = vars->IC;
             return True;
         }
     }
@@ -434,7 +434,7 @@ Bool validIOperandLine(char *str, char *before, char *after, int type, globalVar
 void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
 {
     Bool validICommand;
-    currentWord->word.instruction.wordType = J_WORD;
+    currentWord->word.wordUnion.instruction.wordType = J_WORD;
     strip(after);
     validICommand = J_commandAnalyzed(after, instructionNum, vars, currentWord);
     if (validICommand == True) {
@@ -450,13 +450,13 @@ Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, Word
     Bool validOperandLine;
     int opcode;
     opcode=opcodeInstruction(instructionNum);
-    currentWord->word.instruction.jWord.opcode =opcode;
+    currentWord->word.wordUnion.instruction.code.jWord.opcode =opcode;
 
     validOperandLine= validJOperandLine(str,instructionNum,vars,currentWord);
 
     if(validOperandLine==True)
     {
-        currentWord->word.instruction.address = vars->IC;
+        currentWord->word.wordUnion.instruction.address = vars->IC;
         return True;
     }
     else {return False; }/*not a valid J command line*/
@@ -486,6 +486,7 @@ int opcodeInstruction(int instructionNum)
     if(instructionNum==LA)  return OP_LA; /*OPCODE=31*/
     if(instructionNum==CALL) return OP_CALL; /*OPCODE=32*/
     if(instructionNum==STOP)  return OP_STOP;  /*OPCODE=63*/
+    else return INSTRUCTION_ERROR;
 }
 
 /*this function returns True if the operands of J command is valid - false otherwise*/
@@ -515,7 +516,6 @@ Bool validJOperandLine(char *str, int instructionNum, globalVariables *vars, Wor
             JwithLabel = labelJCommand(str, vars, currentWord);
             if (JwithLabel == False) /* not a register and not a label by syntax - operand error*/
             {
-                //foundError(vars, InvalidOperand, str);
                 return False;
             }
         } else {
@@ -525,8 +525,8 @@ Bool validJOperandLine(char *str, int instructionNum, globalVariables *vars, Wor
                     foundError(vars, InvalidTextAfterStop, str);
                     return False;
                 }
-                currentWord->word.instruction.jWord.reg = 0;
-                currentWord->word.instruction.jWord.address = 0;
+                currentWord->word.wordUnion.instruction.code.jWord.reg = 0;
+                currentWord->word.wordUnion.instruction.code.jWord.address = 0;
                 return True;
             }
         }
@@ -540,8 +540,8 @@ Bool regJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
     regNum= isValidRegisterNum(str,vars);
     if(regNum<VALID_REGISTER)/* not valid reg num */
         return False;
-    currentWord->word.instruction.jWord.reg= J_WITH_REG; /*if we have register - enter 1*/
-    currentWord->word.instruction.jWord.address =regNum;
+    currentWord->word.wordUnion.instruction.code.jWord.reg= J_WITH_REG; /*if we have register - enter 1*/
+    currentWord->word.wordUnion.instruction.code.jWord.address =regNum;
     return True;
 }
 
@@ -553,7 +553,7 @@ Bool labelJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
     if(isLabel==LABEL_ERROR) /*not a valid label*/
         return False;
     /*than a valid label - by syntax. in the second pass we will update the address. */
-    currentWord->word.instruction.jWord.reg= J_WITH_LABEL; /*if we have label - enter 0*/
+    currentWord->word.wordUnion.instruction.code.jWord.reg= J_WITH_LABEL; /*if we have label - enter 0*/
     return True;
 }
 
@@ -701,30 +701,22 @@ int instructionValidName(char *command) {
 /*returns the funct of a given R command*/
 int Rfunct(int instructionNum)
 {
-    if(instructionNum==ADD)
-        return ADD_FUNCT; /*command add funct 1*/
-    if(instructionNum==SUB)
-        return SUB_FUNCT;/*command sub funct 2*/
-    if(instructionNum==AND)
-        return AND_FUNCT; /*command and funct 3*/
-    if(instructionNum==OR)
-        return OR_FUNCT; /*command or funct 4*/
-    if(instructionNum==NOR)
-        return NOR_FUNCT; /*command nor funct 5*/
-    if(instructionNum==MOVE)
-        return MOVE_FUNCT; /*command move funct 1*/
-    if(instructionNum==MVHI)
-        return MVHI_FUNCT;/*command mvhi funct 2*/
-    if(instructionNum==MVLO)
-        return MVLO_FUNCT; /*command mvlo funct 3*/
+    if(instructionNum==ADD) return ADD_FUNCT; /*command add funct 1*/
+    if(instructionNum==SUB)return SUB_FUNCT;/*command sub funct 2*/
+    if(instructionNum==AND) return AND_FUNCT; /*command and funct 3*/
+    if(instructionNum==OR)return OR_FUNCT; /*command or funct 4*/
+    if(instructionNum==NOR) return NOR_FUNCT; /*command nor funct 5*/
+    if(instructionNum==MOVE)return MOVE_FUNCT; /*command move funct 1*/
+    if(instructionNum==MVHI) return MVHI_FUNCT;/*command mvhi funct 2*/
+    if(instructionNum==MVLO) return MVLO_FUNCT; /*command mvlo funct 3*/
+
+
 }
 /*by given instruction number returns the instruction word type*/
 InstructionWordType commandGroup (int instructionNum)
 {
-    if(instructionNum>=ADD &&instructionNum<=MVLO )
-        return R_WORD;
-    if(instructionNum>=ADDI &&instructionNum<=SH )
-        return I_WORD;
-    if(instructionNum>=JMP &&instructionNum<=STOP )
-        return J_WORD;
+    if (instructionNum >= ADD && instructionNum <= MVLO) return R_WORD;
+    else if (instructionNum >= ADDI && instructionNum <= SH)  return I_WORD;
+    else /*if(instructionNum>=JMP &&instructionNum<=STOP )*/ return J_WORD;
+
 }

@@ -31,6 +31,10 @@
 #define DIRECTIVE_EXTERN 5
 #define DIRECTIVE_ENTRY 6
 #define DIRECTIVE_ERROR -1
+#define D_B_BYTE_NUM 1  /*db number of bytes for each param = 1*/
+#define D_H_BYTE_NUM 2  /*dh number of bytes for each param = 2*/
+#define D_W_BYTE_NUM 4  /*dw number of bytes for each param = 4*/
+#define ASCIZ_BYTE_NUM 1 /*asciz number of bytes for each char = 1*/
 
 #define IC_START 100
 #define START_VALUE 0
@@ -132,7 +136,7 @@
 
 #define R_UNUSED 0 /*the unused is 0 to all R commands*/
 #define J_WITH_REG 1
-#define J_WITH_LABEL 1
+#define J_WITH_LABEL 0
 
 #define THREE_REGISTERS 3
 #define TWO_REGISTERS 2
@@ -185,34 +189,39 @@ typedef struct Jfunc {
 
 } J_cmd;
 
+ union instructionWord {
+    R_cmd rWord;
+    I_cmd iWord;
+    J_cmd jWord;
+    unsigned int bytes:32;
+};
+
 typedef struct InstructionWord {
     InstructionWordType wordType;
     unsigned long address;
-    union  {
-        R_cmd rWord;
-        I_cmd iWord;
-        J_cmd jWord;
-        unsigned int bytes:32;
-    };
+    union instructionWord code;
 } InstructionWord;
+
+union directiveWord {
+    int db:8;
+    int dh:16;
+    int dw:32;
+    char asciz;
+};
 
 typedef struct DirectiveWord {
     DirectiveWordType wordType;
     unsigned long address;
-    union  {
-         int db:8;
-         int dh:16;
-         int dw:32;
-         char asciz;
-    };
+    union directiveWord data;
 } DirectiveWord;
 
+union WordUnion{
+    InstructionWord instruction;
+    DirectiveWord directive;
+};
 typedef struct Word {
     WordType wordType;
-    union {
-        InstructionWord instruction;
-        DirectiveWord directive;
-    };
+   union WordUnion wordUnion;
 } Word;
 
 typedef struct WordNode *WordNodePtr;
