@@ -105,6 +105,13 @@ Bool isLabelExternal(labelListPtr *head, char *labelName,globalVariables *vars)
                 foundError(vars,LabelExistsWithoutExternal,labelName);
                 return False;
             }
+            if(temp->entryOrExtern==Entry) /*check if the existed label is an extern*/
+            {
+                foundError(vars,EntryAndExternalTogether,labelName); /*if we want to add an external but it's an entry - error*/
+                return False;
+            }
+
+
         }
         temp = temp->next;
     }
@@ -170,6 +177,11 @@ Bool isLabelEntry(labelListPtr *head, char *after,globalVariables *vars)
         res= strcmp(temp->labelName,after);
         if(res==0) /*we already have this label name*/
         {
+           if(temp->entryOrExtern==Extern) /*entry can't be external*/
+           {
+               foundError(vars,EntryAndExternalTogether,after);
+               return False;
+           }
             temp->entryOrExtern=Entry;
             flag=1;
         }

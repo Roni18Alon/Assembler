@@ -4,8 +4,8 @@
  *
 */
 
-#ifndef RONIPROJ_FIRSTPASS_H
-#define RONIPROJ_FIRSTPASS_H
+#ifndef ASSEMBLERPROJ_FIRSTPASS_H
+#define ASSEMBLERPROJ_FIRSTPASS_H
 
 #include "default.h"
 #include "labelList.h"

@@ -16,7 +16,11 @@ void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables
     /* first pass step 6 */
     if (directiveNum != DIRECTIVE_ERROR ) {
          directiveType = getDirectiveType(directiveNum); /*find the directive word type*/
-
+        if(strcmp(after,"")==0||strcmp(after," ")==0||strcmp(after,"\t")==0)
+        {
+            foundError(vars,MissingOperand,after);
+            return;
+        }
         if (directiveNum == DIRECTIVE_BYTE || directiveNum == DIRECTIVE_HALF_WORD || directiveNum == DIRECTIVE_WORD) { /*dw,db,dh*/
 
             byteDirectiveFirstPass(before,after,label,hasLabel,vars,directiveNum,directiveType, currentLabel); /*dw,db,dh command analysis*/
@@ -121,6 +125,7 @@ Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput
     long validBitRange;
     char line[LINE_LENGTH] = {0};
     int lastChar;
+    Bool validDirectiveNum;
 
     strcpy(line, after);
     lastChar = strlen(line);
@@ -155,10 +160,9 @@ Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput
                 foundError(vars,CommaBetweenParams,before);
                 return False;
             }
-            number = isValidNumberDirective(before, vars); /*errors will update in the function*/
-            if (number == LONG_MIN) {
-                return False; /*error - not a valid number*/
-            }
+            validDirectiveNum=ValidNumberDirective(before, vars); /*check if a valid by syntax*/
+            if(validDirectiveNum==False)  return False; /*error - not a valid number*/
+            number = directiveNumber(before, vars); /*return the number*/
             validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/
             if (validBitRange == VALID_BIT_RANGE) {
                 validInput[i] = number;
@@ -172,10 +176,9 @@ Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput
                 foundError(vars,MissingOperand,before);
                 return False;
             } else {/*not an empty string check if it's a valid operand*/
-                number = isValidNumberDirective(before, vars); /*errors will update in the function*/
-                if (number == LONG_MIN) {
-                    return False; /*error - not a valid number*/
-                }
+                validDirectiveNum=ValidNumberDirective(before, vars); /*check if a valid by syntax*/
+                if(validDirectiveNum==False)  return False; /*error - not a valid number*/
+                number = directiveNumber(before, vars); /*errors will update in the function*/
                 validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/
                 if (validBitRange == VALID_BIT_RANGE) {
                     validInput[i] = number;
@@ -187,7 +190,7 @@ Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput
         }
     }
     /*block the operands long array*/
-    validInput[counter]=LONG_MAX;
+    validInput[counter]='E';
     return True;
 }
 
@@ -208,12 +211,10 @@ void labelAndEntryOrExtern(Bool hasLabel,int directiveNum,globalVariables *vars)
 {
     if (directiveNum==DIRECTIVE_ENTRY && hasLabel==True) /*we have a label and a directive entry - error*/
     {
-        vars->type=labelBeforeEntry;
         printf("\n%s:Line %d:Warning!Illegal Label before Entry\n", vars->filename,vars->currentLine);
     }
     if(directiveNum==DIRECTIVE_EXTERN && hasLabel==True)
     {
-        vars->type=labelBeforeExtern;
         printf("\n%s:Line %d:Warning!Illegal Label before External\n", vars->filename,vars->currentLine);
     }
 }
@@ -257,12 +258,9 @@ Bool externDirectiveFirstPass(char *after ,globalVariables *vars,labelListPtr cu
         return False;
     }
     /*else- a valid label check if already exists without external type or with */
-
-    ValidLabelName = labelNameCompare(&(vars->headLabelTable), after, vars);
     labelWithExtern = isLabelExternal(&(vars->headLabelTable), after, vars);
 
-
-    if (ValidLabelName == VALID_LABEL || labelWithExtern ==True) {
+    if ( labelWithExtern ==True) {
         /*label is not exists or if exists with external label and add to label table*/
         strcpy(currentLabel->labelName,after); /*update the label we want to add name*/
         updateLabel(currentLabel,0,NoCodeOrData,Extern);

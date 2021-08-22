@@ -14,12 +14,13 @@ void outputObject(globalVariables *vars) {
 
     char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
     FILE *file;
+    WordNodePtr temp;
     /* create object file with the title the lengths */
     sprintf(filename, "%s.ob", vars->filename);
 
     file = fopen(filename, "w");
 
-    WordNodePtr temp = vars->headWordList;
+     temp = vars->headWordList;
 
     fprintf(file,"      %02d  %02d \n", (vars->ICF-IC_START),vars->DCF);
 
@@ -59,6 +60,7 @@ void outputDirective(DirectiveWord wordToPrint,FILE *file) {
     long mask=0xFF;
     long wordToPrintValue,shifted;
     char result;
+    int i;
 
     if (wordToPrint.wordType == D_BYTE) {
         outputByte(wordToPrint.db, wordToPrint.address, file);
@@ -68,7 +70,6 @@ void outputDirective(DirectiveWord wordToPrint,FILE *file) {
     } else {
         if (wordToPrint.wordType == D_WORD) {
             mask = 0xFF;
-            int i;
             for (i = 0; i < 4; i++) {
                 wordToPrintValue = wordToPrint.dw;
                 shifted = wordToPrintValue >> i*8;
@@ -99,11 +100,12 @@ void outputByte(char byte,unsigned long address,FILE *file)
 
        char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
        FILE *file;
+        entryListPtr entryLabel;
        /* create object file with the title the lengths */
        sprintf(filename, "%s.ent", vars->filename);
 
        file = fopen(filename, "w");
-       entryListPtr entryLabel = vars->headEntryList;
+        entryLabel = vars->headEntryList;
         while (entryLabel)
         {
 
@@ -120,11 +122,12 @@ void outputExternals(globalVariables *vars) {
 
    char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
    FILE *file;
+    externalListPtr externalLabel ;
     /* create object file with the title the lengths */
    sprintf(filename, "%s.ext", vars->filename);
 
    file = fopen(filename, "w");
-    externalListPtr externalLabel = vars->headExternList;
+     externalLabel = vars->headExternList;
     while (externalLabel)
     {
         fprintf( file,"%s %04lu\n", externalLabel->labelName, externalLabel->value);

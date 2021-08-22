@@ -41,6 +41,7 @@ void secondPass(globalVariables *vars) {
         if (vars->type != NoError) /*we found an error-print*/
         {
             printErrors(vars);
+            vars->type=NoError;
         }
         vars->currentLine++;
     }

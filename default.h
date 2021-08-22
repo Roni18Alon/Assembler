@@ -138,7 +138,7 @@ typedef enum {NoError,LineTooLong,IllegalCharInLabel,TooLongLabel,firstCharInLab
               IllegalInstruction,IllegalOperandNoComma,RegisterLength,RegisterSign,RegisterNegative,RegisterNotAnInt,RegisterNotInRange,ExtraneousComma,ExtraneousText,
               ExtraneousOperand,MissingOperand,ImmediateNotAnInt,ImmediateNotValid,ImmediateNotInRange,InvalidOperand,ExtraneousImmediate,DirectiveOperandNotAnInt,StringNotValid,
               LabelExistsWithoutExternal,LabelExistsInTable,InvalidTextAfterStop,EntryLabelDontExists,JCommandLabelDontExists,IBranchLabelIsExternal,IBranchLabelDontExists
-              ,InvalidDirective,DirectiveOperandWrongSign,MaxMemory,InvalidWhiteChar,LabelIsKnownWord} errorType; /*add error each time, at the end of firstPass - print*/
+              ,InvalidDirective,DirectiveOperandWrongSign,MaxMemory,InvalidWhiteChar,LabelIsKnownWord,EntryAndExternalTogether} errorType; /*add error each time, at the end of firstPass - print*/
 
 
 typedef struct Rfunc {
@@ -168,7 +168,7 @@ typedef struct Jfunc {
 typedef struct InstructionWord {
     InstructionWordType wordType;
     unsigned long address;
-    union {
+    union  {
         R_cmd rWord;
         I_cmd iWord;
         J_cmd jWord;
@@ -179,7 +179,7 @@ typedef struct InstructionWord {
 typedef struct DirectiveWord {
     DirectiveWordType wordType;
     unsigned long address;
-    union {
+    union  {
          int db:8;
          int dh:16;
          int dw:32;

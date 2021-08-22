@@ -4,8 +4,8 @@
  *
 */
 
-#ifndef RONIPROJECT_PRINTERRORS_H
-#define RONIPROJECT_PRINTERRORS_H
+#ifndef ASSEMBLERPROJ_PRINTERRORS_H
+#define ASSEMBLERPROJ_PRINTERRORS_H
 
 #include "default.h"
 #include "labelList.h"
@@ -13,7 +13,7 @@
 #include "inputAnalyzed.h"
 #include "instructionAnalyzed.h"
 #include "directiveAnalysis.h"
-#include "firstPass.h"
+
 
 void printErrors(globalVariables *);
 void foundError(globalVariables *,errorType ,char *);

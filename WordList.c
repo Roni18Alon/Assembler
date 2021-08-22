@@ -71,20 +71,20 @@ void addDirectiveByteToWordList(signed long validInput[LINE_LENGTH], WordNodePtr
     int i;
     WordNodePtr newNode;
     if (givenWordType == D_BYTE) {
-        for (i = 0; i < LINE_LENGTH && validInput[i]!=LONG_MAX ; i++) {
+        for (i = 0; i < LINE_LENGTH && validInput[i]!='\0' ; i++) {
             newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
             newNode->word.wordType = Directive;
             newNode->word.directive.wordType = givenWordType;
             newNode->word.directive.address = vars->DC;
             newNode->word.directive.db = validInput[i];
-            vars->DC++;
             addWordToList(head, newNode);
         }
+        vars->DC+=(vars->DC+i);
 
     } else {
         if (givenWordType == D_HALF) {
             {
-                for (i = 0; i < LINE_LENGTH && validInput[i]!=LONG_MAX; i++) {
+                for (i = 0; i < LINE_LENGTH && validInput[i]!='\0'; i++) {
                      newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
                     if(!newNode)
                     {
@@ -94,13 +94,13 @@ void addDirectiveByteToWordList(signed long validInput[LINE_LENGTH], WordNodePtr
                     newNode->word.directive.wordType = givenWordType;
                     newNode->word.directive.address = vars->DC;
                     newNode->word.directive.dh =validInput[i];
-                    vars->DC+=2;
                     addWordToList(head, newNode);
                 }
+                vars->DC+=(vars->DC+i*2);
             }
         } else {
             /* givenWordType==D_WORD WORD=4 Bytes */
-            for (i = 0; i < LINE_LENGTH && validInput[i]!=LONG_MAX; i++) {
+            for (i = 0; i < LINE_LENGTH && validInput[i]!='\0'; i++) {
                  newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
                 if(!newNode)
                 {
@@ -110,9 +110,9 @@ void addDirectiveByteToWordList(signed long validInput[LINE_LENGTH], WordNodePtr
                 newNode->word.directive.wordType = givenWordType;
                 newNode->word.directive.address = vars->DC;
                 newNode->word.directive.dw = validInput[i];
-                vars->DC+=4;
                 addWordToList(head, newNode);
             }
+            vars->DC+=(vars->DC+i*4);
         }
 
     }
@@ -134,9 +134,9 @@ void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWord
         newNode->word.directive.wordType = givenWordType;
         newNode->word.directive.address = (vars->DC);
         newNode->word.directive.asciz =  str[i];
-        vars->DC++;
         addWordToList(head, newNode);
     }
+
 
     /*add the \0 char to end the string*/
     newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
@@ -146,10 +146,10 @@ void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWord
     }
     newNode->word.wordType = Directive;
     newNode->word.directive.wordType = givenWordType;
-    newNode->word.directive.address = vars->DC++;
+    newNode->word.directive.address = vars->DC;
     newNode->word.directive.asciz =  '\0';
     addWordToList(head, newNode);
-
+    vars->DC+=(vars->DC+1+i);
 }
 
 /*this function adds after the first pass to each directive node in the word list the final IC value to the address*/

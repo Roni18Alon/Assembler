@@ -59,7 +59,7 @@ void printErrors(globalVariables *vars)
     }
     if(vars->type==notDirectiveOrInstruction)
     {
-        printf("\n%s:Line %d:Error - %s isn't  an Instruction or Directive\n", vars->filename, vars->currentLine,vars->error);
+        printf("\n%s:Line %d:Error- '%s' isn't a valid Instruction or Directive\n", vars->filename, vars->currentLine,vars->error);
     }
     if(vars->type==labelExistsInTable)
     {
@@ -76,11 +76,11 @@ void printErrors(globalVariables *vars)
 
     if(vars->type==RegisterLength)
     {
-        printf("\n%s:Line %d: Register %s is to long\n", vars->filename, vars->currentLine,vars->error);
+        printf("\n%s:Line %d: Register '%s' is to0 long\n", vars->filename, vars->currentLine,vars->error);
     }
     if(vars->type==RegisterSign)
     {
-        printf("\n%s:Line %d:Error - %s Register must start with $  \n", vars->filename, vars->currentLine,vars->error);
+        printf("\n%s:Line %d:Error -'%s' Register must start with $  \n", vars->filename, vars->currentLine,vars->error);
     }
     if(vars->type==RegisterNegative)
     {
@@ -100,11 +100,11 @@ void printErrors(globalVariables *vars)
     }
     if(vars->type==ExtraneousText)
     {
-        printf("\n%s:Line %d:Error - '%s' is Extraneous Text \n", vars->filename,vars->currentLine,vars->error);
+        printf("\n%s:Line %d:Error -'%s' is Extraneous Text \n", vars->filename,vars->currentLine,vars->error);
     }
     if(vars->type==ExtraneousOperand)
     {
-        printf("\n%s:Line %d:Error -  %s is Extraneous operand  \n", vars->filename, vars->currentLine,vars->error);
+        printf("\n%s:Line %d:Error -'%s' is Extraneous operand  \n", vars->filename, vars->currentLine,vars->error);
     }
     if(vars->type==MissingOperand)
     {
@@ -114,7 +114,6 @@ void printErrors(globalVariables *vars)
     {
         printf("\n%s:Line %d:Error - %s Immediate must be an integer \n", vars->filename, vars->currentLine,vars->error);
     }
-//
     if(vars->type==ImmediateNotValid)
     {
         printf("\n%s:Line %d:Error - %s it is not a valid Immediate \n", vars->filename, vars->currentLine,vars->error);
@@ -160,6 +159,10 @@ void printErrors(globalVariables *vars)
     {
         printf("\n%s:Line %d: Error- Entry Label '%s' don't exists in Label Table \n", vars->filename,vars->currentLine,vars->error);
     }
+    if(vars->type==EntryAndExternalTogether)
+    {
+        printf("\n%s:Line %d: Error- Label '%s' can't be Entry and External label together \n", vars->filename,vars->currentLine,vars->error);
+    }
     if(vars->type==JCommandLabelDontExists)
     {
         printf("\n%s:Line %d: Error- Couldn't find the requested operand label - '%s' in label list \n", vars->filename,vars->currentLine,vars->error);
@@ -172,11 +175,7 @@ void printErrors(globalVariables *vars)
     {
         printf("\n%s:Line %d: Error- Couldn't find the requested Branch label - '%s' in label list \n", vars->filename,vars->currentLine,vars->error);
     }
-//
-//    if(vars->type==notDirectiveOrInstruction)
-//    {
-//        printf("\n%s:Line %d:Illegal we couldn't find an Instruction or Directive\n", vars->filename, vars->currentLine);
-//    }
+
     if(vars->type==InvalidDirective)
     {
         printf("\n%s:Line %d:Error- %s is Illegal Directive name\n", vars->filename, vars->currentLine,vars->error);

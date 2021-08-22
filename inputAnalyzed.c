@@ -40,29 +40,6 @@ int split(char *str, char *delimiter, char *before, char *after) {
     strcpy(before, str);
     return INVALID_SPLIT;
 }
-/*this function analysis is we have a legal label or not in the first Pass*/
-Bool labelAnalysis(char *lineCpy,char *before, char *after,char *label,char *lineCpyAfterLabel,globalVariables *vars ,labelListPtr currentLabel)
-{
-   Bool hasLabel;
-    hasLabel = foundLabel(lineCpy, before, after, vars); /*look for a label and the checks if it's a valid label*/
-
-    if (hasLabel == True) { /*we found a label*/
-
-        strcpy(label, before);
-        strcpy(currentLabel->labelName, before);
-        strcpy(lineCpyAfterLabel, after);
-        return True;
-    } else {
-        if (vars->type ==NoError)/*we couldn't fina d label and we didn't find an error during looking for a label , by split fun before=lineCpy*/
-        {
-            strcpy(lineCpyAfterLabel, lineCpy);
-        } else { /*we found a label but it's not a valid one*/
-            strcpy(label, before);
-            strcpy(lineCpyAfterLabel, after);
-        }
-        return False;
-    }
-}
 
 /*This function checks if a label is valid by syntax */
 int isLegalLabel(char *str, globalVariables *vars) {
@@ -95,6 +72,7 @@ int isLegalLabel(char *str, globalVariables *vars) {
             if(isKeepWord==False)
             {
                 foundError(vars, LabelIsKnownWord, str);
+                return LABEL_ERROR;/*a known word*/
             }
             return VALID_LABEL;
         }
@@ -111,12 +89,12 @@ int isLegalLabel(char *str, globalVariables *vars) {
 int isEmptyOrCommentLine(char *str) {
     if (str[0] == ';'||isspace(str[0])!=0 )
         return EMPTY_OR_COMMENT;
+    if(strlen(str)==0)
+        return EMPTY_OR_COMMENT;
     else return NOT_EMPTY_OR_COMMENT;
 }
-
-
-/*this function checks if the directive operand of dw,db,dh is a valid number*/
-long isValidNumberDirective(char *str,globalVariables *vars)
+/*check if the directive number is valid by syntax*/
+Bool ValidNumberDirective(char *str,globalVariables *vars)
 {
     int sign=1;
     int i;
@@ -124,46 +102,51 @@ long isValidNumberDirective(char *str,globalVariables *vars)
     char num[LINE_LENGTH]={0};
     char *ptr;
 
-    for(i=1;i< strlen(str);i++)
+    if (strcmp(str,"0")==0) /*strtol don't recognize 0*/
     {
-        int Digit=(int)(str[i]);
-        if(isdigit(Digit)==0)
-        {
-            foundError(vars,DirectiveOperandNotAnInt,str);
-            return LONG_MIN;/*error- not an integer*/
-        }
+        return True;
     }
+
+    number=strtol(str,&ptr,10);
+    if (number==0) /*not an integer*/
+    {
+        foundError(vars,DirectiveOperandNotAnInt,str);
+        return False;/*error- not an integer*/
+    }
+
+    if(num<0)sign = NEGATIVE_NUM;/*negative num*/
+    if(num>=0)sign = POSITIVE_NUM;/*negative num*/
 
     if((isdigit((int)(str[0]))==0)) /*doesnt start with a digit*/
     {
-       if(str[0]!='+' && str[0]!='-') /*operand start with a sign but not with + or - , it's an error*/
-       {
-           foundError(vars,DirectiveOperandWrongSign,str);
-           return LONG_MIN;/*error- not an integer*/
-       }else{
-           if(str[0]=='+')sign=POSITIVE_NUM;/*positive num*/
-           if(str[0]=='-')sign=NEGATIVE_NUM;/*negative num*/
-
-       }
-    }
-    strcpy(num,str);
-
-    if (strcmp(num,"0")==0)
-        number=0; /*atol doesn't recognize 0 */
-    else{
-        number=strtol(str,&ptr,10);
-        if (number==0) /*not an integer*/
+        if (str[0] != '+' && str[0] != '-') /*operand start with a sign but not with + or - , it's an error*/
         {
-            foundError(vars,DirectiveOperandNotAnInt,str);
-            return LONG_MIN;/*error- not an integer*/
+            foundError(vars, DirectiveOperandWrongSign, str);
+            return False;/*error- not an integer*/
         }
     }
+
+    for (i = 1; i < strlen(str); i++) {
+        int Digit = (int) (str[i]);
+        if (isdigit(Digit) == 0) {
+            foundError(vars, DirectiveOperandNotAnInt, str);
+            return False;/*error- not an integer*/
+        }
+    }
+
+    strcpy(num,str);
+    if (strcmp(str,"+0")==0 ||strcmp(str,"-0")==0) /* -0 and +0 it's not valid*/
+    {
+        foundError(vars, InvalidOperand, str);
+        return False;/*error- not an integer*/
+    }
+
     if(sign==POSITIVE_NUM)
     {
         if(number==INT_MAX && strcmp(num,"2147483647")!=0) /*strtol returns INT_MAX= 2147483647 but the num string is not equal so we ot a bigger number from INT_MAX*/
         {
             foundError(vars,ParamNotInBitRange,num);
-            return LONG_MIN;/*error- not an integer*/
+            return False;/*error- not an integer*/
         }
     }
     if(sign==NEGATIVE_NUM)
@@ -171,9 +154,61 @@ long isValidNumberDirective(char *str,globalVariables *vars)
         if(number==INT_MIN && strcmp(str,"-2147483648")!=0) /*strtol returns INT_MIN= -2147483648 but the num string is not equal so we ot a smaller number from INT_MIN */
         {
             foundError(vars,ParamNotInBitRange,str);
-            return LONG_MIN;/*error- not an integer*/
+            return False;/*error- not an integer*/
         }
     }
+    return True;
+}
+
+/*this function returns the directive number - we will reach to this function only in the number is valid by syntax*/
+long directiveNumber(char *str,globalVariables *vars)
+{
+    long number;
+    char *ptr;
+
+    if (strcmp(str,"0")==0) /*strtol don't recognize 0*/
+    {
+        return 0;
+    }
+
+    number=strtol(str,&ptr,10);
+
+//    if(num<0)sign = NEGATIVE_NUM;/*negative num*/
+//    if(num>=0)sign = POSITIVE_NUM;/*negative num*/
+//
+//
+//
+//    for (i = 1; i < strlen(str); i++) {
+//        int Digit = (int) (str[i]);
+//        if (isdigit(Digit) == 0) {
+//            foundError(vars, DirectiveOperandNotAnInt, str);
+//            return LONG_MIN;/*error- not an integer*/
+//        }
+//    }
+//
+//    strcpy(num,str);
+//    if (strcmp(str,"+0")==0 ||strcmp(str,"-0")==0) /* -0 and +0 it's not valid*/
+//    {
+//        foundError(vars, InvalidOperand, str);
+//        return LONG_MIN;/*error- not an integer*/
+//    }
+//
+//    if(sign==POSITIVE_NUM)
+//    {
+//        if(number==INT_MAX && strcmp(num,"2147483647")!=0) /*strtol returns INT_MAX= 2147483647 but the num string is not equal so we ot a bigger number from INT_MAX*/
+//        {
+//            foundError(vars,ParamNotInBitRange,num);
+//            return LONG_MIN;/*error- not an integer*/
+//        }
+//    }
+//    if(sign==NEGATIVE_NUM)
+//    {
+//        if(number==INT_MIN && strcmp(str,"-2147483648")!=0) /*strtol returns INT_MIN= -2147483648 but the num string is not equal so we ot a smaller number from INT_MIN */
+//        {
+//            foundError(vars,ParamNotInBitRange,str);
+//            return LONG_MIN;/*error- not an integer*/
+//        }
+//    }
     return number;
 }
 
@@ -369,13 +404,7 @@ Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars) {
     labelDelimiter = split(lineCpy, ":", before, after);
     if (labelDelimiter == VALID_SPLIT)/*we found a ':' - Label*/
     {
-        validLabel = isLegalLabel(before, vars);
-        /*to find if we have a label*/
-        if (validLabel == VALID_LABEL) {
-            strip(before);
-            return True; /*label flag*/
-        }
-        else return False; /*we found a label but it's not valid*/
+        return True;
     }
     else return False; /*we couldn't find ":"*/
 }

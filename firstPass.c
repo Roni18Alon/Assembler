@@ -82,9 +82,10 @@ void firstPass(globalVariables *vars) {
 
 void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *after , char *label,char *lineCpyAfterLabel)
 {
-    Bool hasLabel;
+    Bool hasLabel,found_Label;
     WordType word;
     int instructionNum;
+    int validLabel;
 
     /*create a new word node*/
     WordNodePtr currentWord;
@@ -102,9 +103,27 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
     }
 
 
+   hasLabel=False;
     /*add bool function to check if we have a label*/
-    hasLabel=labelAnalysis( lineCpy,before, after,label,lineCpyAfterLabel,vars ,currentLabel);
-
+    found_Label = foundLabel(lineCpy, before, after, vars); /*look for a label and the checks if it's a valid label*/
+    if(found_Label==True) /*if we found a label - check if a valid label*/
+    {
+        validLabel = isLegalLabel(before, vars);
+        /*to find if we have a label*/
+        if (validLabel == VALID_LABEL) {
+            strip(before);
+            hasLabel = True;
+            strcpy(label, before);  /*update label name*/
+            strcpy(currentLabel->labelName, before); /*update label name in current label*/
+            strcpy(lineCpyAfterLabel, after);
+        }
+        else{ /*we found label but it's not a valid one*/
+            return;
+        }
+    }
+    else{ /*we didn't find label at all- continue*/
+        strcpy(lineCpyAfterLabel, lineCpy);
+    }
 
     strip(lineCpyAfterLabel);
     word = directiveOrInstruction(lineCpyAfterLabel, before, after, vars); /*check if Directive or Instruction or none*/

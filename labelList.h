@@ -6,8 +6,8 @@
 */
 
 
-#ifndef RONIPROJECT_LABELLIST_H
-#define RONIPROJECT_LABELLIST_H
+#ifndef ASSEMBLERPROJ_LABELLIST_H
+#define ASSEMBLERPROJ_LABELLIST_H
 
 #include "default.h"
 #include "inputAnalyzed.h"

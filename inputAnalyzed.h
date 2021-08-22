@@ -4,8 +4,8 @@
  *
 */
 
-#ifndef MMN14_INPUTANALYZED_H
-#define MMN14_INPUTANALYZED_H
+#ifndef ASSEMBLERPROJ_INPUTANALYZED_H
+#define ASSEMBLERPROJ_INPUTANALYZED_H
 
 #include "default.h"
 #include "directiveAnalysis.h"
@@ -14,10 +14,10 @@
 void strip(char*);
 int isEmptyOrCommentLine(char *);
 int split(char *, char *, char *, char *);
-Bool labelAnalysis(char *,char *, char *,char *,char *,globalVariables * ,labelListPtr);
 int isLegalLabel(char*,globalVariables *);
 Bool labelIsKnown(char *label);
-long isValidNumberDirective(char *,globalVariables *);
+long directiveNumber(char *,globalVariables *);
+Bool ValidNumberDirective(char *,globalVariables *);
 WordType directiveOrInstruction(char *,char *,char *,globalVariables *);
 long validNumByDirective(int,long,char *,globalVariables *);
 void ascizStr(char *);

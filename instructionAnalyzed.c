@@ -14,17 +14,22 @@ void isInstructionFirstPass(char *before, char *after,char *label,globalVariable
 
     currentWord->word.wordType = Instruction;
 
+    if (instructionNum < ADD || instructionNum > STOP) {
+        foundError(vars,IllegalInstruction,before);
+        return ;
+    }
+
+    if((strcmp(after,"")==0||strcmp(after," ")==0||strcmp(after,"\t")==0) && instructionNum!=STOP) /*check if we got an operands*/
+    {
+        foundError(vars,MissingOperand,after);
+        return;
+    }
+
     if (hasLabel == True) {
         labelBeforeInstruction=labelBeforeInstructionCommand(label,vars,currentLabel);
         if(labelBeforeInstruction==False) return; /*and get the next row, else continue */
     }
 
-    if (instructionNum < ADD || instructionNum > STOP) {
-        foundError(vars,IllegalInstruction,before);
-        vars->type = IllegalInstruction;
-        vars->errorFound = True;
-        return ;
-    }
     strip(before);
     InstructionWordType commandType = commandGroup(instructionNum);
     if (commandType == R_WORD) {
@@ -486,7 +491,7 @@ Bool validJOperandLine(char *str, int instructionNum, globalVariables *vars, Wor
             JwithLabel = labelJCommand(str, vars, currentWord);
             if (JwithLabel == False) /* not a register and not a label by syntax - operand error*/
             {
-                foundError(vars, InvalidOperand, str);
+                //foundError(vars, InvalidOperand, str);
                 return False;
             }
         } else {
