@@ -69,9 +69,10 @@ void createWordNode(WordNodePtr nodeToAdd,globalVariables *vars)
 void addDirectiveByteToWordList(signed long validInput[LINE_LENGTH], WordNodePtr *head, DirectiveWordType givenWordType,globalVariables *vars)
 {
     int i;
+    WordNodePtr newNode;
     if (givenWordType == D_BYTE) {
         for (i = 0; i < LINE_LENGTH && validInput[i]!=LONG_MAX ; i++) {
-            WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+            newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
             newNode->word.wordType = Directive;
             newNode->word.directive.wordType = givenWordType;
             newNode->word.directive.address = vars->DC;
@@ -84,7 +85,7 @@ void addDirectiveByteToWordList(signed long validInput[LINE_LENGTH], WordNodePtr
         if (givenWordType == D_HALF) {
             {
                 for (i = 0; i < LINE_LENGTH && validInput[i]!=LONG_MAX; i++) {
-                    WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+                     newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
                     if(!newNode)
                     {
                         exit(0);
@@ -100,7 +101,7 @@ void addDirectiveByteToWordList(signed long validInput[LINE_LENGTH], WordNodePtr
         } else {
             /* givenWordType==D_WORD WORD=4 Bytes */
             for (i = 0; i < LINE_LENGTH && validInput[i]!=LONG_MAX; i++) {
-                WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+                 newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
                 if(!newNode)
                 {
                     exit(0);
@@ -121,9 +122,10 @@ void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWord
 {
     ascizStr(str);
     int i;
+    WordNodePtr newNode;
     for (i = 0; i < strlen(str); i++)
     {
-        WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+         newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
         if(!newNode)
         {
             exit(0);
@@ -137,7 +139,7 @@ void addDirectiveAsciz(char *str, WordNodePtr *head, DirectiveWordType givenWord
     }
 
     /*add the \0 char to end the string*/
-    WordNodePtr newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+    newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
     if(!newNode)
     {
         exit(0);

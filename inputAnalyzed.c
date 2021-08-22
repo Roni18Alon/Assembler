@@ -74,7 +74,7 @@ int isLegalLabel(char *str, globalVariables *vars) {
         strip(str);
         if (length < LABEL_LENGTH) {
             int first = (int) str[0];
-            if (isalpha(first)) //*a legal label starts with an alphabet */
+            if (isalpha(first)) /*a legal label starts with an alphabet */
             {
                 int i, isAlphaNum;
                 for (i = 0; i < strlen(str); i++) {
@@ -367,7 +367,7 @@ Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars) {
 
     int labelDelimiter, validLabel;
     labelDelimiter = split(lineCpy, ":", before, after);
-    if (labelDelimiter == VALID_SPLIT)//*we found a ':' - Label*/
+    if (labelDelimiter == VALID_SPLIT)/*we found a ':' - Label*/
     {
         validLabel = isLegalLabel(before, vars);
         /*to find if we have a label*/

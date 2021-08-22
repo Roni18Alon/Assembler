@@ -21,7 +21,7 @@ void firstPass(globalVariables *vars) {
     char label[LABEL_LENGTH] = {0};
 
     Bool validLineLength;
-    int  lineAnalyzed;
+    int  lineAnalyzed, finalMemory;
 
     while (!feof(vars->file)) {
 
@@ -57,7 +57,7 @@ void firstPass(globalVariables *vars) {
 
     }
 
-    int finalMemory=vars->IC+vars->DC;
+    finalMemory=vars->IC+vars->DC;
     if(finalMemory>=MAX_MEMORY)
     {
         vars->type = MaxMemory;
@@ -87,13 +87,16 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
     int instructionNum;
 
     /*create a new word node*/
-    WordNodePtr currentWord = (WordNodePtr) calloc(1, sizeof(WordNode));
+    WordNodePtr currentWord;
+    labelListPtr currentLabel;
+
+    currentWord = (WordNodePtr) calloc(1, sizeof(WordNode));
     if (!currentWord) {
         exit(0);
     }
 
     /*create a new label node*/
-    labelListPtr currentLabel = (labelListPtr) calloc(1, sizeof(labelList));
+     currentLabel = (labelListPtr) calloc(1, sizeof(labelList));
     if (!currentLabel) {
         exit(0);
     }

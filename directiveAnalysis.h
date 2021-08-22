@@ -20,7 +20,7 @@ void ascizDirectiveFirstPass(char *,char *,Bool ,globalVariables *,DirectiveWord
 Bool isDirectiveCommand(char *);
 int isValidDirectiveName(char *);
 DirectiveWordType getDirectiveType(int);
-Bool dataAnalysis(char *,char *,char *,globalVariables *,long [],int );
+Bool dataAnalysis(char *,char *,globalVariables *,long [],int );
 Bool ascizAnalysis(char *str,globalVariables *vars);
 Bool externDirectiveFirstPass(char *, globalVariables *,labelListPtr );
 Bool labelBeforeDirectiveCommand(char *, globalVariables *, labelListPtr );

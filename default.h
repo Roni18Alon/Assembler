@@ -39,6 +39,9 @@
 #define D_BYTE_MAX_VALUE  127 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
 #define D_HALF_MIN_VALUE -32768 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
 #define D_HALF_MAX_VALUE  32767 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
+
 
 #define STRING_ERROR -1
 #define VALID_STRING 1
@@ -139,29 +142,24 @@ typedef enum {NoError,LineTooLong,IllegalCharInLabel,TooLongLabel,firstCharInLab
 
 
 typedef struct Rfunc {
-
     unsigned int unused:6;
     unsigned int funct:5;
     unsigned int rd:5;
     unsigned int rt:5;
     unsigned int rs:5;
     unsigned int opcode:6;
-
 } R_cmd;
 
 typedef struct Ifunc {
-
-
     int immed:16;
     unsigned int rt:5;
     unsigned int rs:5;
     unsigned int opcode:6;
-
 } I_cmd;
 
 typedef struct Jfunc {
 
-    unsigned long int address:25;
+    unsigned int address:25;
     unsigned int reg:1;
     unsigned int opcode:6;
 
@@ -174,7 +172,7 @@ typedef struct InstructionWord {
         R_cmd rWord;
         I_cmd iWord;
         J_cmd jWord;
-        unsigned long bytes:32;
+        unsigned int bytes:32;
     };
 } InstructionWord;
 
@@ -182,11 +180,10 @@ typedef struct DirectiveWord {
     DirectiveWordType wordType;
     unsigned long address;
     union {
-         long db:8;
-         long dh:16;
-         long dw:32;
+         int db:8;
+         int dh:16;
+         int dw:32;
          char asciz;
-
     };
 } DirectiveWord;
 

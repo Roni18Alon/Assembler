@@ -19,8 +19,6 @@ void secondPass(globalVariables *vars) {
     char lineCpyAfterLabel[LINE_LENGTH] = {0};
     char label[LABEL_LENGTH] = {0};
 
-    // char fileName[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
-    // strcpy(vars->filename, fileName);
 
     varsResetForSecondPass(vars); /*reset IC=100,DC=0 , lineNumber=1*/
 

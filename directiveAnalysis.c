@@ -9,11 +9,13 @@
 void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel) {
 
     int directiveNum;
+    DirectiveWordType directiveType;
+    Bool externFirstPass;
     directiveNum = isValidDirectiveName(before); /*find if it's a valid directive and the num*/
 
     /* first pass step 6 */
     if (directiveNum != DIRECTIVE_ERROR ) {
-        DirectiveWordType directiveType = getDirectiveType(directiveNum); /*find the directive word type*/
+         directiveType = getDirectiveType(directiveNum); /*find the directive word type*/
 
         if (directiveNum == DIRECTIVE_BYTE || directiveNum == DIRECTIVE_HALF_WORD || directiveNum == DIRECTIVE_WORD) { /*dw,db,dh*/
 
@@ -27,7 +29,7 @@ void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables
             else{
                 labelAndEntryOrExtern(hasLabel, directiveNum,vars); /*if we have a label before entry or extern - it's not an error just ignore- don't insert label to label list*/
                 if (directiveNum == DIRECTIVE_EXTERN) {
-                    Bool externFirstPass = externDirectiveFirstPass(after, vars, currentLabel);
+                     externFirstPass = externDirectiveFirstPass(after, vars, currentLabel);
                     if (externFirstPass == False)return;
                     }
                 /*directiveNum == DIRECTIVE_ENTRY -in the first pass if we see an entry label - don't do nothing just continue to the next row**/
@@ -43,12 +45,13 @@ void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables
 void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,globalVariables *vars,int directiveNum,DirectiveWordType directiveType,labelListPtr currentLabel)
 {
     long validInput[LINE_LENGTH] = {0};
-    Bool validDirectiveParam = dataAnalysis(after, before, after, vars, validInput,directiveNum);/*analyzed the operands of directive row*/
+    Bool validDirectiveParam,labelBeforeDirective;
+    validDirectiveParam = dataAnalysis( before, after, vars, validInput,directiveNum);/*analyzed the operands of directive row*/
     if (validDirectiveParam == False) return;
     if (hasLabel == True)
         /*we have a label and a data - add to symbol table the value is the DC before insert the numbers to the list*/
     {
-        Bool labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
+        labelBeforeDirective = labelBeforeDirectiveCommand(label, vars, currentLabel);
         if (labelBeforeDirective == False) return ; /*if False - return false and get the next row, else continue*/
     }
     /*not a label only directive */
@@ -100,15 +103,17 @@ int isValidDirectiveName(char *str)
 /*this function returns the directive word type by given command number*/
 DirectiveWordType getDirectiveType(int directiveNum)
 {
-    if(directiveNum==DIRECTIVE_BYTE) return D_BYTE; /*.db*/
-    if(directiveNum==DIRECTIVE_HALF_WORD) return D_HALF; /*.dh*/
-    if(directiveNum==DIRECTIVE_WORD) return D_WORD; /*.dw*/
-    if(directiveNum==DIRECTIVE_ASCIZ) return ASCIZ;  /*.asciz*/
+    DirectiveWordType word;
+    if(directiveNum==DIRECTIVE_BYTE) word=D_BYTE; /*.db*/
+    if(directiveNum==DIRECTIVE_HALF_WORD) word=D_HALF; /*.dh*/
+    if(directiveNum==DIRECTIVE_WORD) word=D_WORD; /*.dw*/
+    if(directiveNum==DIRECTIVE_ASCIZ) word=ASCIZ;/*.asciz*/
+    return word;
 
 }
 
 /*This function analysis the operands of db,dw,dh directive commands*/
-Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long validInput [LINE_LENGTH],int directive) {
+Bool dataAnalysis(char *before,char *after,globalVariables *vars,long validInput [LINE_LENGTH],int directive) {
     int  i;
     long number;
     int counter=0;
@@ -190,7 +195,8 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
 /*This function returns True if the asciz operand is a valid string, False otherwise*/
 Bool ascizAnalysis(char *str,globalVariables *vars)
 {
-    int valid=isValidString(str,vars); /*check if a valid string*/
+    int valid;
+    valid=isValidString(str,vars); /*check if a valid string*/
     if(valid==VALID_STRING)return True;
     else{ return False;}
 }
@@ -272,11 +278,12 @@ Bool externDirectiveFirstPass(char *after ,globalVariables *vars,labelListPtr cu
 void entryDirectiveSecondPass(globalVariables *vars,char *str)
 {
     Bool EntryLabel;
+    long entryValue;
 
     EntryLabel=isLabelEntry(&(vars->headLabelTable),str,vars); /*check if the given entry label exists and add to the label list the attribute to this label as -entry*/
     if(EntryLabel==True) /*add to entry list*/
     {
-        long entryValue=EntryValueAfterSecondPass(&(vars->headLabelTable),str);
+         entryValue=EntryValueAfterSecondPass(&(vars->headLabelTable),str);
         if(entryValue!=LABEL_ERROR)
         {
             createEntryNode(str,entryValue,vars);/*add to entry list*/
