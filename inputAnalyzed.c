@@ -130,7 +130,7 @@ long isValidNumberDirective(char *str,globalVariables *vars)
         if(isdigit(Digit)==0)
         {
             foundError(vars,DirectiveOperandNotAnInt,str);
-            return INT_MIN;/*error- not an integer*/
+            return LONG_MIN;/*error- not an integer*/
         }
     }
 
@@ -139,7 +139,7 @@ long isValidNumberDirective(char *str,globalVariables *vars)
        if(str[0]!='+' && str[0]!='-') /*operand start with a sign but not with + or - , it's an error*/
        {
            foundError(vars,DirectiveOperandWrongSign,str);
-           return INT_MIN;/*error- not an integer*/
+           return LONG_MIN;/*error- not an integer*/
        }else{
            if(str[0]=='+')sign=POSITIVE_NUM;/*positive num*/
            if(str[0]=='-')sign=NEGATIVE_NUM;/*negative num*/
@@ -155,7 +155,7 @@ long isValidNumberDirective(char *str,globalVariables *vars)
         if (number==0) /*not an integer*/
         {
             foundError(vars,DirectiveOperandNotAnInt,str);
-            return INT_MIN;/*error- not an integer*/
+            return LONG_MIN;/*error- not an integer*/
         }
     }
     if(sign==POSITIVE_NUM)
@@ -163,7 +163,7 @@ long isValidNumberDirective(char *str,globalVariables *vars)
         if(number==INT_MAX && strcmp(num,"2147483647")!=0) /*strtol returns INT_MAX= 2147483647 but the num string is not equal so we ot a bigger number from INT_MAX*/
         {
             foundError(vars,ParamNotInBitRange,num);
-            return INT_MIN;/*error- not an integer*/
+            return LONG_MIN;/*error- not an integer*/
         }
     }
     if(sign==NEGATIVE_NUM)
@@ -171,7 +171,7 @@ long isValidNumberDirective(char *str,globalVariables *vars)
         if(number==INT_MIN && strcmp(str,"-2147483648")!=0) /*strtol returns INT_MIN= -2147483648 but the num string is not equal so we ot a smaller number from INT_MIN */
         {
             foundError(vars,ParamNotInBitRange,str);
-            return INT_MIN;/*error- not an integer*/
+            return LONG_MIN;/*error- not an integer*/
         }
     }
     return number;
@@ -222,16 +222,18 @@ int isValidString(char *str,globalVariables *vars)
         return STRING_ERROR; /*a valid string start&end with ""*/
     }
 
-
     for(i=0;i< strlen(str);i++)
     {
         isPrint=(isprint(str[i]));
-        if(isPrint==0) return STRING_ERROR; /*a valid string all the chars are graphic characters*/
+        if(isPrint==0) {
+            foundError(vars,StringNotValid,str);
+            return STRING_ERROR; /*a valid string all the chars are graphic characters*/
+        }
     }
     return VALID_STRING;
 }
 
-
+/*this function set a given valid asciz operand with " " , to be a string without " ".*/
 void ascizStr(char *str)
 {
     int first=1;
@@ -249,37 +251,37 @@ int isValidRegister(char *str,globalVariables *vars)
     char currentReg[REG_MAX_LENGTH]={0};
     int validNum;
     strip(str);
-    if(strlen(str)>LONG_MIN) {
+    if(strlen(str)>(REG_MAX_LENGTH-1)) {
         foundError(vars,RegisterLength,str);
         return REGISTER_ERROR;
     }
 
-    if(str[0]!='$')/*register must begging with $ */
+    if(str[0]!='$')/*register must begins with $ */
     {
         foundError(vars,RegisterSign,str);
         return REGISTER_ERROR;
     }
 
-    strcpy(currentReg,str+1);/*register must be positive number */
-    if(currentReg[0]=='-')
+    strcpy(currentReg,str+1); /*copy to a new string without $  */
+    if(currentReg[0]=='-') /*register must be positive number */
     {
         foundError(vars,RegisterNegative,str);
         return REGISTER_ERROR;
     }
 
-    validNum= isValidRegisterNum(currentReg,vars);
+    validNum= isValidRegisterNum(currentReg,vars); /*gets the string without $*/
     if(validNum>=VALID_REGISTER)
         return validNum;
 
-    return VALID_REGISTER;
+    return REGISTER_ERROR;
 }
 
 /*a valid register num is an integer between 0-31*/
 int isValidRegisterNum(char *str,globalVariables *vars)
 {
     int i,num;
-    char reg[10]={0};
-    strcpy(reg,str); /*copy to a new string without $ char*/
+    char reg[REG_MAX_LENGTH]={0};
+    strcpy(reg,str); /*copy to a new string */
     for(i=0;i< strlen(reg);i++) /*check if an integer*/
     {
         if(isdigit(reg[i])==0)
@@ -303,7 +305,7 @@ int isValidRegisterNum(char *str,globalVariables *vars)
     return num;
 }
 
-
+/*this function checks if a given immediate */
 int isValidImmediate(char *str,globalVariables *vars) {
 
     char positive[LINE_LENGTH]={0};
@@ -311,8 +313,9 @@ int isValidImmediate(char *str,globalVariables *vars) {
 
     int i;
     int validNum = 0;
-    int minRange= D_HALF_MIN_VALUE;
-    int maxRange= D_HALF_MAX_VALUE;
+    int minRange= IMM_MIN_VALUE;
+    int maxRange= IMM_MAX_VALUE;
+
     int sign = POSITIVE_NUM;
     if (str[0] == '-') sign = NEGATIVE_NUM;   /*immediate can be a negative number*/
 
@@ -321,13 +324,13 @@ int isValidImmediate(char *str,globalVariables *vars) {
         {
             if (isdigit(str[i]) == 0) { /*check if all chars are digits*/
                 foundError(vars,ImmediateNotAnInt,str);
-                return INT_MAX;
+                return IMMEDIATE_ERROR;
             }
         }
     }
     else {
         foundError(vars,ImmediateNotValid,str);
-        return INT_MAX;
+        return IMMEDIATE_ERROR;
     }
 
     /*check if the num is in the correct range 16 bits with negative [-2^15...(2^15)-1]*/
@@ -340,9 +343,8 @@ int isValidImmediate(char *str,globalVariables *vars) {
         }
         validNum=sign*validNum;
         if (validNum < minRange || validNum > maxRange) {
-
             foundError(vars,ImmediateNotInRange,str);
-            return INT_MAX;
+            return IMMEDIATE_ERROR;
         }
         return validNum;
     }
@@ -355,7 +357,7 @@ int isValidImmediate(char *str,globalVariables *vars) {
         }
         if (validNum < minRange || validNum > maxRange) {
             foundError(vars,ImmediateNotInRange,str);
-            return INT_MAX;
+            return IMMEDIATE_ERROR;
         }
         return validNum;
     }

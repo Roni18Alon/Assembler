@@ -6,13 +6,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "C:/Users/ronia/CLionProjects/AssemblerProj/EntryAndExtern.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/WordList.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/WordList.c.obj"
+  "C:/Users/ronia/CLionProjects/AssemblerProj/assembler.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/assembler.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/createOutput.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/directiveAnalysis.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/firstPass.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/instructionAnalyzed.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/labelList.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/labelList.c.obj"
-  "C:/Users/ronia/CLionProjects/AssemblerProj/main.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/main.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/printErrors.c.obj"
   "C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.c" "C:/Users/ronia/CLionProjects/AssemblerProj/cmake-build-debug/CMakeFiles/RoniProject.dir/secondPass.c.obj"
   )

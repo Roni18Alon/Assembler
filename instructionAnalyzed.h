@@ -1,6 +1,8 @@
-//
-// Created by ronia on 05/08/2021.
-//
+/* Name: instructionAnalyzed.c
+ * Author: Roni Alon & Noa Even
+ * Description: Include supporting functions to analyze the Instruction commands
+ *
+*/
 
 #ifndef RONIPROJECT_INSTRUCTIONANALYZED_H
 #define RONIPROJECT_INSTRUCTIONANALYZED_H
@@ -10,31 +12,23 @@
 #include "default.h"
 #include "EntryAndExtern.h"
 
-InstructionWordType commandGroup (int instructionNum);
+InstructionWordType commandGroup (int);
+void isInstructionFirstPass(char *, char *,char *, globalVariables *, Bool ,labelListPtr ,WordNodePtr ,int );
+void isInstructionSecondPass(char *,InstructionWordType ,int ,globalVariables *);
+Bool labelBeforeInstructionCommand(char *, globalVariables *, labelListPtr );
+void RCommandFirstPass(char *,char *,InstructionWordType ,int ,globalVariables *,WordNodePtr );
+void ICommandFirstPass(char *,char *,InstructionWordType ,int ,globalVariables *,WordNodePtr );
+void JCommandFirstPass(char *,int ,globalVariables *,WordNodePtr );
+Bool validROperandLine(char *,char * ,char *,int ,globalVariables *, WordNodePtr );
+Bool validIOperandLine(char *,char * ,char *,int ,globalVariables *, WordNodePtr );
+Bool validJOperandLine(char *str, int ,globalVariables *, WordNodePtr );
+Bool I_commandAnalyzed(char *,char * ,char *, int ,int ,globalVariables *, WordNodePtr );
+Bool R_commandAnalyzed(char *,char * ,char *, int ,int ,globalVariables *, WordNodePtr );
+Bool J_commandAnalyzed(char *, int ,globalVariables *, WordNodePtr );
+Bool regJCommand(char *,globalVariables *, WordNodePtr );
+Bool labelJCommand(char *,globalVariables *, WordNodePtr );
+int opcodeInstruction(int );
+void secondPassJ(char *,globalVariables *, InstructionWordType );
+void secondPassI(char *,globalVariables *, InstructionWordType );
 
-
-void isInstructionFirstPass(char *before, char *after,char *labelName, globalVariables *vars, Bool hasLabel, labelListPtr currentLabel, WordNodePtr currentWord, int instructionNum);
-void isInstructionSecondPass(char *str,InstructionWordType commandType,int instructionNum,globalVariables *vars);
-Bool labelBeforeInstructionCommand(char *labelName, globalVariables *vars, labelListPtr currentLabel);
-
-void RCommandFirstPass(char *before,char *after,InstructionWordType commandType,int instructionNum,globalVariables *vars,WordNodePtr currentWord);
-void ICommandFirstPass(char *before,char *after,InstructionWordType commandType,int instructionNum,globalVariables *vars,WordNodePtr currentWord);
-void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,WordNodePtr currentWord);
-
-Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,int numOfOperands,globalVariables *vars, WordNodePtr currentWord);
-Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,int type,globalVariables *vars, WordNodePtr currentWord);
-Bool validJOperandLine(char *str, int instructionNum,globalVariables *vars, WordNodePtr currentWord);
-
-Bool I_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,int type,globalVariables *vars, WordNodePtr currentWord);
-Bool R_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,int numOfOperands,globalVariables *vars, WordNodePtr currentWord);
-Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, WordNodePtr currentWord);
-
-Bool regJCommand(char *str,globalVariables *vars, WordNodePtr currentWord);
-Bool labelJCommand(char *str,globalVariables *vars, WordNodePtr currentWord);
-
-int opcodeInstruction(int instructionNum);
-
-void secondPassJ(char *str,globalVariables *vars, InstructionWordType commandType);
-void secondPassI(char *str,globalVariables *vars, InstructionWordType commandType);
-
-#endif //RONIPROJECT_INSTRUCTIONANALYZED_H
+#endif

@@ -6,7 +6,7 @@
 #include "directiveAnalysis.h"
 
 /*This function analyzes Directive command in the first pass */
-void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel,WordNodePtr currentWord) {
+void isDirectiveFirstPass(char *before, char *after,char *label ,globalVariables *vars, Bool hasLabel, labelListPtr currentLabel) {
 
     int directiveNum;
     directiveNum = isValidDirectiveName(before); /*find if it's a valid directive and the num*/
@@ -52,7 +52,7 @@ void byteDirectiveFirstPass(char *before, char *after,char *label,Bool hasLabel,
         if (labelBeforeDirective == False) return ; /*if False - return false and get the next row, else continue*/
     }
     /*not a label only directive */
-    addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveNum, directiveType, vars);
+    addDirectiveByteToWordList(validInput, &(vars->headWordList), directiveType, vars);
 }
 
 
@@ -151,7 +151,7 @@ Bool dataAnalysis(char *str,char *before,char *after,globalVariables *vars,long 
                 return False;
             }
             number = isValidNumberDirective(before, vars); /*errors will update in the function*/
-            if (number == INT_MIN) {
+            if (number == LONG_MIN) {
                 return False; /*error - not a valid number*/
             }
             validBitRange = validNumByDirective(directive, number,before,vars); /*check if the num is in the correct range according directive type*/

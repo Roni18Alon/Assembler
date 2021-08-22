@@ -12,7 +12,7 @@
 
 
 void addWordToList(WordNodePtr *, WordNodePtr );
-void addDirectiveByteToWordList(long [], WordNodePtr *, int , DirectiveWordType ,globalVariables *);
+void addDirectiveByteToWordList(long [], WordNodePtr *, DirectiveWordType ,globalVariables *);
 void addDirectiveAsciz(char *, WordNodePtr *, DirectiveWordType , globalVariables *);
 void addDirectiveICF(WordNodePtr *,globalVariables *);
 void addLabelAddress(WordNodePtr *,globalVariables *,long ,InstructionWordType ,Bool );

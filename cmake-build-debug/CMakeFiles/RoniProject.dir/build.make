@@ -75,18 +75,18 @@ include CMakeFiles/RoniProject.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/RoniProject.dir/flags.make
 
-CMakeFiles/RoniProject.dir/main.c.obj: CMakeFiles/RoniProject.dir/flags.make
-CMakeFiles/RoniProject.dir/main.c.obj: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronia\CLionProjects\AssemblerProj\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/RoniProject.dir/main.c.obj"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\RoniProject.dir\main.c.obj -c C:\Users\ronia\CLionProjects\AssemblerProj\main.c
+CMakeFiles/RoniProject.dir/assembler.c.obj: CMakeFiles/RoniProject.dir/flags.make
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../assembler.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronia\CLionProjects\AssemblerProj\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/RoniProject.dir/assembler.c.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\RoniProject.dir\assembler.c.obj -c C:\Users\ronia\CLionProjects\AssemblerProj\assembler.c
 
-CMakeFiles/RoniProject.dir/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/RoniProject.dir/main.c.i"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\ronia\CLionProjects\AssemblerProj\main.c > CMakeFiles\RoniProject.dir\main.c.i
+CMakeFiles/RoniProject.dir/assembler.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/RoniProject.dir/assembler.c.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\ronia\CLionProjects\AssemblerProj\assembler.c > CMakeFiles\RoniProject.dir\assembler.c.i
 
-CMakeFiles/RoniProject.dir/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RoniProject.dir/main.c.s"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ronia\CLionProjects\AssemblerProj\main.c -o CMakeFiles\RoniProject.dir\main.c.s
+CMakeFiles/RoniProject.dir/assembler.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RoniProject.dir/assembler.c.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\ronia\CLionProjects\AssemblerProj\assembler.c -o CMakeFiles\RoniProject.dir\assembler.c.s
 
 CMakeFiles/RoniProject.dir/firstPass.c.obj: CMakeFiles/RoniProject.dir/flags.make
 CMakeFiles/RoniProject.dir/firstPass.c.obj: ../firstPass.c
@@ -220,7 +220,7 @@ CMakeFiles/RoniProject.dir/createOutput.c.s: cmake_force
 
 # Object files for target RoniProject
 RoniProject_OBJECTS = \
-"CMakeFiles/RoniProject.dir/main.c.obj" \
+"CMakeFiles/RoniProject.dir/assembler.c.obj" \
 "CMakeFiles/RoniProject.dir/firstPass.c.obj" \
 "CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj" \
 "CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj" \
@@ -235,7 +235,7 @@ RoniProject_OBJECTS = \
 # External object files for target RoniProject
 RoniProject_EXTERNAL_OBJECTS =
 
-RoniProject.exe: CMakeFiles/RoniProject.dir/main.c.obj
+RoniProject.exe: CMakeFiles/RoniProject.dir/assembler.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/firstPass.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/inputAnalyzed.c.obj
 RoniProject.exe: CMakeFiles/RoniProject.dir/EntryAndExtern.c.obj

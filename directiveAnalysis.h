@@ -13,7 +13,7 @@
 #include "firstPass.h"
 #include "secondPass.h"
 
-void isDirectiveFirstPass(char* ,char* ,char* ,globalVariables *,Bool ,labelListPtr ,WordNodePtr ) ;
+void isDirectiveFirstPass(char* ,char* ,char* ,globalVariables *,Bool ,labelListPtr ) ;
 Bool isDirectiveSecondPass(char *);
 void byteDirectiveFirstPass(char *, char *,char *,Bool ,globalVariables *,int , DirectiveWordType, labelListPtr);
 void ascizDirectiveFirstPass(char *,char *,Bool ,globalVariables *,DirectiveWordType ,labelListPtr);

@@ -195,6 +195,33 @@ WordList.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/WordList.c.s
 .PHONY : WordList.c.s
 
+assembler.obj: assembler.c.obj
+
+.PHONY : assembler.obj
+
+# target to build an object file
+assembler.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/assembler.c.obj
+.PHONY : assembler.c.obj
+
+assembler.i: assembler.c.i
+
+.PHONY : assembler.i
+
+# target to preprocess a source file
+assembler.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/assembler.c.i
+.PHONY : assembler.c.i
+
+assembler.s: assembler.c.s
+
+.PHONY : assembler.s
+
+# target to generate assembly for a file
+assembler.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/assembler.c.s
+.PHONY : assembler.c.s
+
 createOutput.obj: createOutput.c.obj
 
 .PHONY : createOutput.obj
@@ -357,33 +384,6 @@ labelList.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/labelList.c.s
 .PHONY : labelList.c.s
 
-main.obj: main.c.obj
-
-.PHONY : main.obj
-
-# target to build an object file
-main.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/main.c.obj
-.PHONY : main.c.obj
-
-main.i: main.c.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/main.c.i
-.PHONY : main.c.i
-
-main.s: main.c.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RoniProject.dir\build.make CMakeFiles/RoniProject.dir/main.c.s
-.PHONY : main.c.s
-
 printErrors.obj: printErrors.c.obj
 
 .PHONY : printErrors.obj
@@ -453,6 +453,9 @@ help:
 	@echo ... WordList.obj
 	@echo ... WordList.i
 	@echo ... WordList.s
+	@echo ... assembler.obj
+	@echo ... assembler.i
+	@echo ... assembler.s
 	@echo ... createOutput.obj
 	@echo ... createOutput.i
 	@echo ... createOutput.s
@@ -471,9 +474,6 @@ help:
 	@echo ... labelList.obj
 	@echo ... labelList.i
 	@echo ... labelList.s
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
 	@echo ... printErrors.obj
 	@echo ... printErrors.i
 	@echo ... printErrors.s

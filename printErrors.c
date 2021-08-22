@@ -6,6 +6,8 @@
 
 #include "printErrors.h"
 
+
+
 void foundError(globalVariables *vars,errorType type,char *str)
 {
     memset(vars->error,0,LINE_LENGTH);
@@ -138,10 +140,10 @@ void printErrors(globalVariables *vars)
         printf("\n%s:Line %d:Error '%s' is a known word, can't be a label\n", vars->filename,vars->currentLine,vars->error);
     }
 
-//    if(vars->type==StringNotValid)
-//    {
-//        printf("\n%s:Line %d: Given asciiz is not a valid string\n", vars->filename,vars->currentLine);
-//    }
+    if(vars->type==StringNotValid)
+    {
+        printf("\n%s:Line %d:Error- %s Given asciz is not a valid string\n", vars->filename,vars->currentLine,vars->error);
+    }
     if(vars->type==LabelExistsWithoutExternal)
     {
         printf("\n%s:Line %d: Error- Label '%s' exists in label list but without External attribute \n", vars->filename,vars->currentLine,vars->error);
@@ -183,8 +185,8 @@ void printErrors(globalVariables *vars)
     {
         printf("\n%s:Line %d: Given Operand %s start with invalid sign  \n", vars->filename,vars->currentLine,vars->error);
     }
-//    if(vars->type==MaxMemory)
-//    {
-//        printf("\n%s:Line %d:We reached the maximum capacity of memory \n", vars->filename,vars->currentLine);
-//    }
+    if(vars->type==MaxMemory)
+    {
+        printf("\n%s:Line %d:We reached the maximum capacity of memory \n", vars->filename,vars->currentLine);
+    }
 }

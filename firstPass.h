@@ -16,7 +16,6 @@
 #include "printErrors.h"
 
 void firstPass(globalVariables *);
-void firstPassAnalysis(globalVariables *,char *,char *, char * , char *,char *);
-Bool getLine(char *,char *,globalVariables *);
+
 #endif
 

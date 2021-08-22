@@ -16,6 +16,20 @@ CMakeFiles/RoniProject.dir/WordList.c.obj: ../labelList.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../printErrors.h
 CMakeFiles/RoniProject.dir/WordList.c.obj: ../secondPass.h
 
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../EntryAndExtern.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../WordList.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../assembler.c
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../assembler.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../createOutput.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../default.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../directiveAnalysis.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../firstPass.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../inputAnalyzed.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../instructionAnalyzed.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../labelList.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../printErrors.h
+CMakeFiles/RoniProject.dir/assembler.c.obj: ../secondPass.h
+
 CMakeFiles/RoniProject.dir/createOutput.c.obj: ../createOutput.c
 CMakeFiles/RoniProject.dir/createOutput.c.obj: ../createOutput.h
 CMakeFiles/RoniProject.dir/createOutput.c.obj: ../default.h
@@ -79,20 +93,6 @@ CMakeFiles/RoniProject.dir/labelList.c.obj: ../labelList.c
 CMakeFiles/RoniProject.dir/labelList.c.obj: ../labelList.h
 CMakeFiles/RoniProject.dir/labelList.c.obj: ../printErrors.h
 CMakeFiles/RoniProject.dir/labelList.c.obj: ../secondPass.h
-
-CMakeFiles/RoniProject.dir/main.c.obj: ../EntryAndExtern.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../WordList.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../createOutput.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../default.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../directiveAnalysis.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../firstPass.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../inputAnalyzed.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../instructionAnalyzed.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../labelList.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../main.c
-CMakeFiles/RoniProject.dir/main.c.obj: ../main.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../printErrors.h
-CMakeFiles/RoniProject.dir/main.c.obj: ../secondPass.h
 
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../EntryAndExtern.h
 CMakeFiles/RoniProject.dir/printErrors.c.obj: ../WordList.h

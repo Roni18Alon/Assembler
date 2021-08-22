@@ -66,7 +66,7 @@ void createWordNode(WordNodePtr nodeToAdd,globalVariables *vars)
 }
 
 
-void addDirectiveByteToWordList(signed long validInput[LINE_LENGTH], WordNodePtr *head, int directive, DirectiveWordType givenWordType,globalVariables *vars)
+void addDirectiveByteToWordList(signed long validInput[LINE_LENGTH], WordNodePtr *head, DirectiveWordType givenWordType,globalVariables *vars)
 {
     int i;
     if (givenWordType == D_BYTE) {

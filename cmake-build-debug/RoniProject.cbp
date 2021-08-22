@@ -86,6 +86,12 @@
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/WordList.h">
 			<Option target="RoniProject"/>
 		</Unit>
+		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/assembler.c">
+			<Option target="RoniProject"/>
+		</Unit>
+		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/assembler.h">
+			<Option target="RoniProject"/>
+		</Unit>
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.c">
 			<Option target="RoniProject"/>
 		</Unit>
@@ -123,12 +129,6 @@
 			<Option target="RoniProject"/>
 		</Unit>
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/labelList.h">
-			<Option target="RoniProject"/>
-		</Unit>
-		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/main.c">
-			<Option target="RoniProject"/>
-		</Unit>
-		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/main.h">
 			<Option target="RoniProject"/>
 		</Unit>
 		<Unit filename="C:/Users/ronia/CLionProjects/AssemblerProj/printErrors.c">

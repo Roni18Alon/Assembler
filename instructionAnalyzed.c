@@ -1,7 +1,8 @@
-//
-// Created by ronia on 05/08/2021.
-//
-
+/* Name: instructionAnalyzed.c
+ * Author: Roni Alon & Noa Even
+ * Description: Include supporting functions to analyze the Instruction commands
+ *
+*/
 
 
 #include "instructionAnalyzed.h"
@@ -84,7 +85,7 @@ Bool R_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,i
     int funct= Rfunct(instructionNum);
     int opcodeR=opcodeInstruction(instructionNum);
 
-    validOperandLine=validROperandLine(str,before,after,instructionNum,numOfOperands,vars,currentWord);
+    validOperandLine=validROperandLine(str,before,after,numOfOperands,vars,currentWord);
     if(validOperandLine==True) /*the R command line is valid update the word node and add to word list*/
     {
         currentWord->word.instruction.rWord.funct =funct; /*add funct to current word*/
@@ -99,7 +100,7 @@ Bool R_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,i
 
 
 
-Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,int numOfOperands,globalVariables *vars, WordNodePtr currentWord)
+Bool validROperandLine(char *str,char *before ,char *after,int numOfOperands,globalVariables *vars, WordNodePtr currentWord)
 {
     int validReg;
     int firstReg,secondReg,thirdReg;
@@ -117,8 +118,6 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
             foundError(vars,CommaBeforeFirstParam,before);
             return False;
         }
-
-
     }
     else { /*wwe couldn't find the first comma - R command have 3 or 2 operands */
         foundError(vars,IllegalOperandNoComma,before);
@@ -128,13 +127,7 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
     validReg=isValidRegister(before,vars);
     if(validReg>=VALID_REGISTER) {
         firstReg = validReg;
-        if(numOfOperands==THREE_REGISTERS) {
-            currentWord->word.instruction.rWord.rs = firstReg;
-        }
-        if(numOfOperands==TWO_REGISTERS)
-        {
-            currentWord->word.instruction.rWord.rs = firstReg;
-        }
+        currentWord->word.instruction.rWord.rs = firstReg;
     }
     /*look for the second comma*/
     memset(operandLine,0,LINE_LENGTH);
@@ -254,7 +247,7 @@ Bool validROperandLine(char *str,char *before ,char *after, int instructionNum,i
     }
 
 }
-
+/*this function starts to analysis I commands*/
 void ICommandFirstPass(char *before,char *after,InstructionWordType commandType,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
 {
     currentWord->word.instruction.wordType = I_WORD;
@@ -268,14 +261,13 @@ void ICommandFirstPass(char *before,char *after,InstructionWordType commandType,
     /*not valid I Command*/
 }
 
-
+/*this function returns True is the I command analysis is valid and update I fields*/
 Bool I_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,int type,globalVariables *vars, WordNodePtr currentWord)
 {
     Bool validOperandLine;
     int opcodeI=instructionNum+1;
     currentWord->word.instruction.iWord.opcode =opcodeI;
-
-    validOperandLine=validIOperandLine(str,before,after,instructionNum,type,vars,currentWord);
+    validOperandLine=validIOperandLine(str,before,after,type,vars,currentWord);
     if(validOperandLine==True)
     {
         currentWord->word.instruction.address = vars->IC;
@@ -285,65 +277,60 @@ Bool I_commandAnalyzed(char *str,char *before ,char *after, int instructionNum,i
 
 }
 
-Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,int type,globalVariables *vars, WordNodePtr currentWord)
+/*This function returns True if the operand of I command are valid - false otherwise*/
+Bool validIOperandLine(char *str, char *before, char *after, int type, globalVariables *vars,  WordNodePtr currentWord)
 {
-    int validReg,validImmediate;
-    int firstReg,secondReg,thirdReg;
-    int firstDelimiter,secondDelimiter,thirdDelimiter;
+    int validReg, validImmediate;
+    int firstReg, secondReg, thirdReg;
+    int firstDelimiter, secondDelimiter, thirdDelimiter;
 
     /*look for the first comma */
-    char operandLine[LINE_LENGTH]={0};
-    strcpy(operandLine,str);
-    firstDelimiter= split(operandLine,",",before,after);
+    char operandLine[LINE_LENGTH] = {0};
+    strcpy(operandLine, str);
+    firstDelimiter = split(operandLine, ",", before, after);
+    strip(before);
+    strip(after);
+    if (firstDelimiter == VALID_SPLIT) /*we found a comma check if valid operand*/
     {
-        if(firstDelimiter==VALID_SPLIT) /*we found a comma check if valid operand*/
+        if (strlen(before) == 0 || strcmp(before, " ") == 0 ||
+            strcmp(before, "\t") == 0) /*the first operand is without a comma*/
         {
-            if(strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*the first operand is without a comma*/
-            {
-                foundError(vars,CommaBeforeFirstParam,before);
-                return False;
-            }
-
-            /*all I operators starts with register*/
-            strip(before);
-            validReg=isValidRegister(before,vars);
-            if(validReg>=VALID_REGISTER) {
-                firstReg = validReg;
-                if(type==REG_REG_LABEL||type==REG_IM_REG_LOAD){
-                    currentWord->word.instruction.iWord.rs = firstReg;
-                }
-                if(type==REG_IM_REG_ARI_LOG)
-                {
-                    currentWord->word.instruction.iWord.rs = firstReg;
-                }
-            }
-            else{   return False; }/*not a valid register*/
-        }
-        else{
-            /*wwe couldn't find the first comma*/
-            foundError(vars,IllegalOperandNoComma,before);
+            foundError(vars, CommaBeforeFirstParam, before);
             return False;
         }
+
+        /*all I operators starts with register*/
+        strip(before);
+        validReg = isValidRegister(before, vars);
+        if (validReg >= VALID_REGISTER) {
+            firstReg = validReg;
+            currentWord->word.instruction.iWord.rs = firstReg;
+        } else { return False; }/*not a valid register*/
+    } else {/*we couldn't find the first comma*/
+
+        foundError(vars, IllegalOperandNoComma, before);
+        return False;
     }
+
     /*look for the second comma */
-    memset(operandLine,0,LINE_LENGTH);
-    strcpy(operandLine,after);
-    secondDelimiter= split(operandLine,",",before,after);
+    memset(operandLine, 0, LINE_LENGTH);
+    strcpy(operandLine, after);
+    secondDelimiter = split(operandLine, ",", before, after);
 
     strip(before);
     strip(after);
-    if(secondDelimiter==VALID_SPLIT) /*we found the second comma*/
+    if (secondDelimiter == VALID_SPLIT) /*we found the second comma*/
     {
-        if (strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*$3,,7...*/
+        if (strlen(before) == 0 || strcmp(before, " ") == 0 || strcmp(before, "\t") == 0) /*$3,,7...*/
         {
-            foundError(vars,CommaBetweenParams,before);
+            foundError(vars, CommaBetweenParams, before);
             return False;
         }
 
         if (type == REG_IM_REG_ARI_LOG || type == REG_IM_REG_LOAD) /*supposed to be an immediate*/
         {
             validImmediate = isValidImmediate(before, vars);
-            if (validImmediate == INT_MAX) {
+            if (validImmediate == IMMEDIATE_ERROR) {
                 return False;
             }
             currentWord->word.instruction.iWord.immed = validImmediate;
@@ -358,89 +345,76 @@ Bool validIOperandLine(char *str,char *before ,char *after, int instructionNum,i
                     return False; /*error type already been checked*/
                 }
             } else {
-                foundError(vars,InvalidOperand,before);
+                foundError(vars, InvalidOperand, before);
                 return False;
             }
         }
-    }
-    else { /*we couldn't find the second comma*/
+    } else { /*we couldn't find the second comma*/
 
-        foundError(vars,MissingOperand,before);
+        foundError(vars, MissingOperand, before);
         return False;
     }
 
     /*look for the third comma*/
-    memset(operandLine,0,LINE_LENGTH);
-    strcpy(operandLine,after);
+    memset(operandLine, 0, LINE_LENGTH);
+    strcpy(operandLine, after);
 
-    thirdDelimiter= split(operandLine,",",before,after);
+    thirdDelimiter = split(operandLine, ",", before, after);
 
     strip(before);
     strip(after);
-    if(thirdDelimiter==VALID_SPLIT) /*if we found the third comma*/
+    if (thirdDelimiter == VALID_SPLIT) /*if we found the third comma*/
     {
-        if(strlen(before)==0||strcmp(before," ")==0||strcmp(before,"\t")==0) /*$3,$2,,$4...*/
+        if (strlen(before) == 0 || strcmp(before, " ") == 0 || strcmp(before, "\t") == 0) /*$3,$2,,$4...*/
         {
-            foundError(vars,CommaBetweenParams,before);
+            foundError(vars, CommaBetweenParams, before);
             return False;
         }
 
-        if(strlen(after)==0||strcmp(after," ")==0||strcmp(after,"\t")==0)/*after is an empty string, we just have a comma $3,12,$6,  */
+        if (strlen(after) == 0 || strcmp(after, " ") == 0 ||
+            strcmp(after, "\t") == 0)/*after is an empty string, we just have a comma $3,12,$6,  */
         {
-            foundError(vars,ExtraneousComma,after);
+            foundError(vars, ExtraneousComma, after);
             return False;
-        }
-        else { /*after isn't an empty string - check if a valid operand*/
+        } else { /*after isn't an empty string - check if a valid operand*/
             validReg = isValidRegister(after, vars);
             if (validReg >= VALID_REGISTER) /*we found a valid reg so we have more operands*/
             {
-                foundError(vars,ExtraneousOperand,after);
+                foundError(vars, ExtraneousOperand, after);
                 return False;
-            }
-            else{ /*check if a valid immediate*/
+            } else { /*check if a valid immediate*/
                 validImmediate = isValidImmediate(before, vars);
-                if (validImmediate != INT_MAX) { /*valid immediate*/
-                    foundError(vars,ExtraneousImmediate,before);
+                if (validImmediate != IMMEDIATE_ERROR) { /*valid immediate but its extraneous*/
+                    foundError(vars, ExtraneousImmediate, before);
                     return False;
                 } else {
                     /*if its not a valid reg or an immediate - Extraneous Text*/
-                    foundError(vars,ExtraneousText,before);
+                    foundError(vars, ExtraneousText, before);
                     return False;
                 }
             }
         }
-    }
-    else{ /* we couldn't find the third comma, check if an Label or register or none*/
+    } else { /* we couldn't find the third comma, check if an Label or register or none*/
         strip(before);
 
-        if(type==REG_IM_REG_LOAD ||type==REG_IM_REG_ARI_LOG ) {
+        if (type == REG_IM_REG_LOAD || type == REG_IM_REG_ARI_LOG) {
             validReg = isValidRegister(before, vars);
             if (validReg >= VALID_REGISTER) {
                 thirdReg = validReg;
-                if (type == REG_IM_REG_LOAD) {
-                    currentWord->word.instruction.iWord.rt = thirdReg;
-                    return True;
-                }
-                else{ /*type == REG_IM_REG_ARI_LOG*/
-                    currentWord->word.instruction.iWord.rt = thirdReg;
-                    return True;
-                }
-            }
-            else{ /*not a valid register*/
-                return False; /*error type already been checked*/
-            }
-        }
-        else{
-            if(type==REG_REG_LABEL) /*in the first Pass we put the address as the current IC in immediate, will be handle in second Pass*/
-            {
-                /*in the first Pass we put the address as the current IC in immediate, will be handle in second Pass*/
-                currentWord->word.instruction.iWord.immed=vars->IC;
+                currentWord->word.instruction.iWord.rt = thirdReg;
                 return True;
             }
+                /*not a valid register*/
+            else { return False; } /*error type already been checked*/
+        } else {
+            /*type==REG_REG_LABEL - in the first Pass we put the address as the current IC in immediate, will be handle in second Pass*/
+            currentWord->word.instruction.iWord.immed = vars->IC;
+            return True;
         }
     }
 }
 
+/*this function analysis J commands in the first pass*/
 void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
 {
     currentWord->word.instruction.wordType = J_WORD;
@@ -485,17 +459,16 @@ int opcodeInstruction(int instructionNum)
         return OP_STOP;
 }
 
-
-Bool validJOperandLine(char *str, int instructionNum,globalVariables *vars, WordNodePtr currentWord)
-{
+/*this function returns True if the operands of J command is valid - false otherwise*/
+Bool validJOperandLine(char *str, int instructionNum, globalVariables *vars, WordNodePtr currentWord) {
     strip(str);
-    int isReg, isLabel;
+    int isReg;
     Bool JwithReg, JwithLabel;
     if (instructionNum == JMP) /* jmp cen receive a register or label*/
     {
         isReg = validJRegister(str, vars); /*check if a register and returns*/
-            if (isReg >= VALID_REGISTER) { /*a valid reg number is 0-31*/
-            JwithReg = regJCommand(str+1, vars, currentWord);
+        if (isReg >= VALID_REGISTER) { /*a valid reg number is 0-31*/
+            JwithReg = regJCommand(str + 1, vars, currentWord);
             if (JwithReg == False)return False;
             /*than True it's a valid register*/
             return True;
@@ -504,7 +477,7 @@ Bool validJOperandLine(char *str, int instructionNum,globalVariables *vars, Word
             JwithLabel = labelJCommand(str, vars, currentWord);
             if (JwithLabel == False) /* not a register and not a label by syntax - operand error*/
             {
-                foundError(vars,InvalidOperand,str);
+                foundError(vars, InvalidOperand, str);
                 return False;
             } else { return True; /*it's a valid label by syntax*/}
         }
@@ -513,25 +486,25 @@ Bool validJOperandLine(char *str, int instructionNum,globalVariables *vars, Word
             JwithLabel = labelJCommand(str, vars, currentWord);
             if (JwithLabel == False) /* not a register and not a label by syntax - operand error*/
             {
-                foundError(vars,InvalidOperand,str);
+                foundError(vars, InvalidOperand, str);
                 return False;
             }
         } else {
             if (instructionNum == STOP) { /*stop doesn't get any operands*/
-                if(strcmp(str,"")!=0) /*we found text after stop command*/
+                if (strcmp(str, "") != 0) /*we found text after stop command*/
                 {
-                    foundError(vars,InvalidTextAfterStop,str);
+                    foundError(vars, InvalidTextAfterStop, str);
                     return False;
                 }
-                currentWord->word.instruction.jWord.reg=0;
-                currentWord->word.instruction.jWord.address =0;
+                currentWord->word.instruction.jWord.reg = 0;
+                currentWord->word.instruction.jWord.address = 0;
                 return True;
             }
         }
     }
-
 }
 
+/*This function returns True im the J command -jmp receive e valid register.False - otherwise */
 Bool regJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
 {
     int regNum;
@@ -543,7 +516,7 @@ Bool regJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
     return True;
 }
 
-
+/*This function return True if the label J command gets as operand is a valid label- in the first pass- false otherwise*/
 Bool labelJCommand(char *str,globalVariables *vars, WordNodePtr currentWord)
 {
     int isLabel;

@@ -6,6 +6,10 @@
 
 #include "firstPass.h"
 
+void firstPassAnalysis(globalVariables *,char *,char *, char * , char *,char *);
+void getToNextLine(FILE *f);
+Bool getLine(char *,char *,globalVariables *);
+
 
 void firstPass(globalVariables *vars) {
 
@@ -16,22 +20,16 @@ void firstPass(globalVariables *vars) {
     char lineCpyAfterLabel[LINE_LENGTH] = {0};
     char label[LABEL_LENGTH] = {0};
 
-   // char fileName[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH]={0};
-   // strcpy(vars->filename, fileName);
-
-
     Bool validLineLength;
     int  lineAnalyzed;
 
     while (!feof(vars->file)) {
 
-
         resetStrings(line,lineCpy,before,after,lineCpyAfterLabel,label);
 
-        fgets(line, LINE_LENGTH, vars->file); /*vars->file*/
+        fgets(line, LINE_LENGTH, vars->file); /*get a new line from the file*/
 
-        validLineLength=getLine(line,lineCpy,vars);
-
+        validLineLength=getLine(line,lineCpy,vars); /*check if the line is in the valid length - 80 chars*/
         if (validLineLength==False)
         {
            vars->currentLine++;
@@ -84,7 +82,6 @@ void firstPass(globalVariables *vars) {
 
 void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *after , char *label,char *lineCpyAfterLabel)
 {
-    setbuf(stdout,0);
     Bool hasLabel;
     WordType word;
     int instructionNum;
@@ -110,7 +107,7 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
     word = directiveOrInstruction(lineCpyAfterLabel, before, after, vars); /*check if Directive or Instruction or none*/
 
     if (word == Directive) {
-        isDirectiveFirstPass(before, after,label ,vars, hasLabel, currentLabel, currentWord);
+        isDirectiveFirstPass(before, after,label ,vars, hasLabel, currentLabel);
     }
     else {
         if (word == Instruction) {
@@ -128,8 +125,6 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
     free(currentWord);
 
 }
-
-
 
 
 

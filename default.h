@@ -52,10 +52,14 @@
 
 #define REGISTER_ERROR -1
 #define VALID_REGISTER 0
-#define REG_MAX_LENGTH 3 /*the max register is $31*/
+#define REG_MAX_LENGTH 4 /*the max register is $31*/
+
+#define VALID_IMMEDIATE 1
+#define IMMEDIATE_ERROR 40000 /*out of 16 bits range [-2^15...2^15-1]=[-32768,32767] */
 
 
-
+#define IMM_MIN_VALUE -32768 /*immediate is 16 bits - the range is [-2^15...2^15-1]=[-32768,32767] */
+#define IMM_MAX_VALUE 32767 /*immediate is 16 bits - the range is [-2^15...2^15-1]=[-32768,32767] */
 #define VALID_BIT_RANGE 1
 #define INVALID_BIT_RANGE -1
 

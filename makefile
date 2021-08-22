@@ -1,8 +1,8 @@
 
-main:main.o firstPass.o secondPass.o inputAnalyzed.o instructionAnalyzed.o directiveAnalyzed.o EntryAndExtern.o lableList.o WordList.o
-	gcc -g main.o firsPass.o secondPass.o inputAnalyzed.o instructionAnalyzed.o directiveAnalyzed.o EntryAndExtern.o lableList.o WordList.o -o main
-main.o: main.c main.h default.h firstPass.h secondPass.h createOutput.h
-	gcc -c -g main.c -ansi -Wall -pedantic -o main.o
+assembler:assembler.o firstPass.o secondPass.o inputAnalyzed.o instructionAnalyzed.o directiveAnalyzed.o EntryAndExtern.o labelList.o WordList.o
+	gcc -g main.o firsPass.o secondPass.o inputAnalyzed.o instructionAnalyzed.o directiveAnalyzed.o EntryAndExtern.o labelList.o WordList.o -o assembler
+assembler.o: assembler.c assembler.h default.h firstPass.h secondPass.h createOutput.h
+	gcc -c -g main.c -ansi -Wall -pedantic -o assembler.o
 
 firstPass.o: firstPass.c firstPass.h default.h labelList.h WordList.h inputAnalyzed.h instructionAnalyzed.h directiveAnalysis.h printErrors.h
 	gcc -c -g main.c -ansi -Wall -pedantic -o firstPass.o
