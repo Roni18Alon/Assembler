@@ -491,9 +491,10 @@ int opcodeInstruction(int instructionNum)
 
 /*this function returns True if the operands of J command is valid - false otherwise*/
 Bool validJOperandLine(char *str, int instructionNum, globalVariables *vars, WordNodePtr currentWord) {
-    strip(str);
+
     int isReg;
     Bool JwithReg, JwithLabel;
+    strip(str);
     if (instructionNum == JMP) /* jmp cen receive a register or label*/
     {
         isReg = validJRegister(str, vars); /*check if a register and returns*/
