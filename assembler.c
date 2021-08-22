@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
             printf("%s: Cannot open file!\n", filename);
             continue;
         }
+           printf("Opened File :%s\n",filename);
 
         /* check that the file isn't empty */
         fseek(vars->file, 0, SEEK_END);
