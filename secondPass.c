@@ -54,6 +54,7 @@ void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *
     Bool hasLabel,directiveSecondPass;
     WordType word;
     int instructionNum;
+    InstructionWordType commandType;
 
     /*add bool function to check if we have a label*/
     hasLabel = foundLabel(lineCpy, before, after, vars);
@@ -76,7 +77,7 @@ void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *
     } else { /*if it is not a directive it must be an instruction*/
 
         instructionNum = instructionValidName(before); /*get the instruction number*/
-        InstructionWordType commandType = commandGroup(instructionNum);
+         commandType = commandGroup(instructionNum);
         isInstructionSecondPass(after, commandType, instructionNum, vars);
         vars->IC += 4;
     }

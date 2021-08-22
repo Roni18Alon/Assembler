@@ -9,7 +9,8 @@
 /*add a label node to the label list*/
 void addLabelToList(labelListPtr *head, labelListPtr labelToAdd) {
 
-    labelListPtr temp = *head;
+    labelListPtr temp;
+    temp = *head;
     if(temp == NULL) {
         *head = labelToAdd;
         return;
@@ -26,7 +27,8 @@ void addLabelToList(labelListPtr *head, labelListPtr labelToAdd) {
 /*This function create an external label by given params - label name and address (value)*/
 void createLabelNode(labelListPtr labelToAdd, globalVariables *vars)
 {
-    labelListPtr labelCpy = (labelListPtr) calloc(1, sizeof(labelList));
+    labelListPtr labelCpy;
+    labelCpy = (labelListPtr) calloc(1, sizeof(labelList));
     if(!labelCpy)
     {
         exit(0);
@@ -42,8 +44,10 @@ void createLabelNode(labelListPtr labelToAdd, globalVariables *vars)
 /*to identify if we already have this label in this label table*/
 int labelNameCompare(labelListPtr *head,char *labelName,globalVariables *vars)
 {
-    labelListPtr temp = *head;
+    labelListPtr temp;
     int res;
+
+    temp= *head;
     while (temp)
     {
         res= strcmp(temp->labelName,labelName);
@@ -60,8 +64,10 @@ int labelNameCompare(labelListPtr *head,char *labelName,globalVariables *vars)
 /*this function search for a given operand label name the value (address) of the label in the list*/
 long findLabel(labelListPtr *head, char *str,globalVariables *vars, InstructionWordType commandType)
 {
-    labelListPtr temp = *head;
+    labelListPtr temp;
     int res;
+
+    temp= *head;
     while (temp != NULL)
     {
         res= strcmp(temp->labelName,str);
@@ -86,8 +92,9 @@ long findLabel(labelListPtr *head, char *str,globalVariables *vars, InstructionW
 /*This function return False if  the external label we want to add is already exists without external attribute , True otherwise*/
 Bool isLabelExternal(labelListPtr *head, char *labelName,globalVariables *vars)
 {
-    labelListPtr temp = *head;
+    labelListPtr temp;
     int res;
+    temp= *head;
     while (temp != NULL )
     {
         res= strcmp(temp->labelName,labelName);
@@ -107,8 +114,10 @@ Bool isLabelExternal(labelListPtr *head, char *labelName,globalVariables *vars)
 /*This function return False if given I branch operand label is External Label -  an I Branch cannot be an external,True otherwise*/
 Bool existsLabelExternalIBranch(labelListPtr *head, char *str,globalVariables *vars)
 {
-    labelListPtr temp = *head;
+    labelListPtr temp;
     int res;
+    temp= *head;
+
     while (temp != NULL )
     {
         res= strcmp(temp->labelName,str);
@@ -128,8 +137,9 @@ Bool existsLabelExternalIBranch(labelListPtr *head, char *str,globalVariables *v
 /*this function returns True- if the J label is external ,otherwise False*/
 Bool existsLabelExternalJ(labelListPtr *head, char *str,globalVariables *vars)
 {
-    labelListPtr temp = *head;
+    labelListPtr temp;
     int res;
+    temp = *head;
     while (temp != NULL )
     {
         res= strcmp(temp->labelName,str);
@@ -149,9 +159,12 @@ Bool existsLabelExternalJ(labelListPtr *head, char *str,globalVariables *vars)
 /*This function checks if an entry label exists in the label table and add 'Entry' to the attribute*/
 Bool isLabelEntry(labelListPtr *head, char *after,globalVariables *vars)
 {
+
+    labelListPtr temp;
+    int res,flag;
+    temp = *head;
+    flag=0;
     strip(after);
-    labelListPtr temp = *head;
-    int res,flag=0;
     while (temp != NULL)
     {
         res= strcmp(temp->labelName,after);
@@ -186,8 +199,8 @@ void updateLabel(labelListPtr currentLabel,int address,Location DataOrCode,Label
 /*this function updates the data labels with final IC value after the first pass*/
 void  updateLabelTableICF(labelListPtr *head,globalVariables *vars)
 {
-    labelListPtr temp = *head;
-
+    labelListPtr temp;
+    temp = *head;
     while(temp) {
         if(temp->codeOrData==Data) {
             temp->address+=vars->ICF;
@@ -200,8 +213,9 @@ void  updateLabelTableICF(labelListPtr *head,globalVariables *vars)
 
 long EntryValueAfterSecondPass(labelListPtr *head, char *str)
 {
-    labelListPtr temp = *head;
+    labelListPtr temp;
     int res;
+    temp = *head;
     while (temp != NULL)
     {
         res= strcmp(temp->labelName,str);
@@ -218,7 +232,8 @@ long EntryValueAfterSecondPass(labelListPtr *head, char *str)
 /*free label list*/
 void freeLabelList (labelListPtr *head)
 {
-    labelListPtr temp = *head;
+    labelListPtr temp;
+    temp = *head;
     while(temp)
     {
         temp = (temp)->next;
