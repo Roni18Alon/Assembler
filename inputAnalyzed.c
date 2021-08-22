@@ -87,10 +87,8 @@ int isLegalLabel(char *str, globalVariables *vars) {
 
 /*This function checks if a given line is empty - only white chars or a comment line - starts with ;*/
 int isEmptyOrCommentLine(char *str) {
-    if (str[0] == ';'||isspace(str[0])!=0 )
-        return EMPTY_OR_COMMENT;
-    if(strlen(str)==0)
-        return EMPTY_OR_COMMENT;
+    if (str[0] == ';'||isspace(str[0])!=0 )return EMPTY_OR_COMMENT;
+    if(strlen(str)==0) return EMPTY_OR_COMMENT;
     else return NOT_EMPTY_OR_COMMENT;
 }
 /*check if the directive number is valid by syntax*/
