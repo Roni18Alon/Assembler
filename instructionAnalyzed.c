@@ -11,6 +11,7 @@ void isInstructionFirstPass(char *before, char *after,char *label,globalVariable
 
 
     Bool labelBeforeInstruction;
+    InstructionWordType commandType;
 
     currentWord->word.wordType = Instruction;
 
@@ -31,7 +32,7 @@ void isInstructionFirstPass(char *before, char *after,char *label,globalVariable
     }
 
     strip(before);
-    InstructionWordType commandType = commandGroup(instructionNum);
+    commandType = commandGroup(instructionNum);
     if (commandType == R_WORD) {
         RCommandFirstPass(before,after,commandType,instructionNum,vars,currentWord);
     }

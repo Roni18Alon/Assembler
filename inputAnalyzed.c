@@ -112,8 +112,8 @@ Bool ValidNumberDirective(char *str,globalVariables *vars)
         return False;/*error- not an integer*/
     }
 
-    if(num<0)sign = NEGATIVE_NUM;/*negative num*/
-    if(num>=0)sign = POSITIVE_NUM;/*negative num*/
+    if(number<0)sign = NEGATIVE_NUM;/*negative num*/
+    if(number>=0)sign = POSITIVE_NUM;/*negative num*/
 
     if((isdigit((int)(str[0]))==0)) /*doesnt start with a digit*/
     {
@@ -360,7 +360,7 @@ int isValidImmediate(char *str,globalVariables *vars) {
 
 Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars) {
 
-    int labelDelimiter, validLabel;
+    int labelDelimiter;
     labelDelimiter = split(lineCpy, ":", before, after);
     if (labelDelimiter == VALID_SPLIT)/*we found a ':' - Label*/
     {
