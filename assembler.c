@@ -14,13 +14,13 @@ int main(int argc, char *argv[]) {
         char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
         char shortFileName[FILE_NAME_LENGTH];
         vars = (globalVariables *) calloc(1, sizeof(globalVariables));
-        setbuf(stdout,0);
-        sprintf(shortFileName, "%s", argv[i]);
 
+        sprintf(shortFileName, "%s", argv[i]);
         sprintf(filename, "%s.as", argv[i]);
+
         strcpy(vars->filename, shortFileName);
 
-        vars->file = fopen(filename, "r");
+        vars->file = fopen(filename, "r"); /*open .as file*/
 
         if (!vars->file) {
             printf("%s: Cannot open file!\n", filename);
@@ -30,8 +30,6 @@ int main(int argc, char *argv[]) {
 
         /* check that the file isn't empty */
         fseek(vars->file, 0, SEEK_END);
-
-
 
         if (ftell(vars->file) == 0)
             continue; /*to the next file*/
