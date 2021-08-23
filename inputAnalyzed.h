@@ -20,7 +20,6 @@ long directiveNumber(char *);
 Bool ValidNumberDirective(char *,globalVariables *);
 WordType directiveOrInstruction(char *,char *,char *,globalVariables *);
 long validNumByDirective(int,long,char *,globalVariables *);
-void ascizStr(char *);
 int isValidString(char *,globalVariables*);
 int Rfunct(int );
 int instructionValidName(char *);
@@ -29,7 +28,7 @@ int isValidRegisterNum(char *,globalVariables *);
 int isValidRegister(char *,globalVariables *);
 int isValidImmediate(char *,globalVariables *);
 InstructionWordType commandGroup (int );
-Bool foundLabel(char *,char *,char *,globalVariables *);
+Bool foundLabel(char *,char *,char *);
 int validJRegister(char *str,globalVariables *vars);
 void resetStrings(char *,char *,char * , char *, char *,char *);
 

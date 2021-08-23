@@ -45,7 +45,6 @@ void firstPass(globalVariables *vars) {
         }
 
         /*analyze if its a directive or instruction*/
-
         firstPassAnalysis(vars,lineCpy,before,after,label,lineCpyAfterLabel);
 
         if(vars->type != NoError)
@@ -79,7 +78,6 @@ void firstPass(globalVariables *vars) {
 }
 
 
-
 void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *after , char *label,char *lineCpyAfterLabel)
 {
     Bool hasLabel,found_Label;
@@ -103,9 +101,9 @@ void firstPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *a
     }
 
 
-   hasLabel=False;
+    hasLabel=False;
     /*add bool function to check if we have a label*/
-    found_Label = foundLabel(lineCpy, before, after, vars); /*look for a label and the checks if it's a valid label*/
+    found_Label = foundLabel(lineCpy, before, after); /*look for a label and the checks if it's a valid label*/
     if(found_Label==True) /*if we found a label - check if a valid label*/
     {
         validLabel = isLegalLabel(before, vars);

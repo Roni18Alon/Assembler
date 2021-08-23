@@ -1,3 +1,8 @@
+/* Name: assembler.c
+ * Author: Roni Alon & Noa Even
+ * Description: Gets the file and run the assembler process.
+*/
+
 #include "assembler.h"
 
 

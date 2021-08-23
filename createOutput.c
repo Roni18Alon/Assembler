@@ -10,17 +10,17 @@ void outputInstruction(InstructionWord ,FILE *);
 void outputDirective(DirectiveWord ,FILE *);
 void outputByte(char,unsigned long,FILE *);
 
+/*print the word list - first instructions- code and than the directives - data*/
 void outputObject(globalVariables *vars) {
 
     char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
     FILE *file;
     WordNodePtr temp;
     /* create object file with the title the lengths */
+    temp = vars->headWordList;
+
     sprintf(filename, "%s.ob", vars->filename);
-
     file = fopen(filename, "w");
-
-     temp = vars->headWordList;
 
     fprintf(file,"      %02d  %02d \n", (vars->ICF-IC_START),vars->DCF);
 
@@ -41,21 +41,21 @@ void outputObject(globalVariables *vars) {
         temp=temp->next;
     }
 }
-
+/*print a word from instruction type*/
 void outputInstruction(InstructionWord wordToPrint,FILE *file)
 {
     unsigned long mask= 0xff;
     unsigned long result;
     int i;
     fprintf(file,"%04lu  ", wordToPrint.address);
-    for ( i = 0; i <4 ; i++) {
-        result= (wordToPrint.code.bytes & mask) >> (8*i);
+    for ( i = 0; i <NUM_OF_BYTES ; i++) {
+        result=((wordToPrint.code.bytes & mask) >> (BITS_IN_BYTE*i));
         fprintf(file,"%02lX  ", result);
-        mask<<=8;                       /*mask=maks<<8*/
+        mask<<=BITS_IN_BYTE;                       /*mask=maks<<8*/
     }
     fprintf(file,"\n");
 }
-
+/*print a word from directive type*/
 void outputDirective(DirectiveWord wordToPrint,FILE *file) {
     long mask=0xFF;
     long wordToPrintValue,shifted;
@@ -70,9 +70,9 @@ void outputDirective(DirectiveWord wordToPrint,FILE *file) {
     } else {
         if (wordToPrint.wordType == D_WORD) {
             mask = 0xFF;
-            for (i = 0; i < 4; i++) {
+            for (i = 0; i < NUM_OF_BYTES; i++) {
                 wordToPrintValue = wordToPrint.data.dw;
-                shifted = wordToPrintValue >> i*8;
+                shifted = wordToPrintValue >> (i*BITS_IN_BYTE);
                  result = mask & shifted;
                 outputByte(result, wordToPrint.address+i, file);
             }
@@ -82,6 +82,7 @@ void outputDirective(DirectiveWord wordToPrint,FILE *file) {
     }
 }
 
+/*print a single byte in hexa*/
 void outputByte(char byte,unsigned long address,FILE *file)
 {
 
@@ -90,44 +91,47 @@ void outputByte(char byte,unsigned long address,FILE *file)
         fprintf(file,"%04lu  ",address);
     }
     fprintf(file,"%02X  ",byte&0xFF);
-    if((address+1)%4==0)
+    if((address+1)%NUM_OF_BYTES==0)
     {
         fprintf(file,"\n");
     }
 }
+/*This function print the entry labels if we have*/
+void outputEntries(globalVariables *vars) {
 
-    void outputEntries(globalVariables *vars) {
+    char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
+    FILE *file;
+    entryListPtr entryLabel;
 
-       char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
-       FILE *file;
-        entryListPtr entryLabel;
-       /* create object file with the title the lengths */
-       sprintf(filename, "%s.ent", vars->filename);
+    entryLabel = vars->headEntryList;
+    if (entryLabel == NULL) return; /* don't create output file*/
 
-       file = fopen(filename, "w");
-        entryLabel = vars->headEntryList;
-        while (entryLabel)
-        {
+    /* create object file with the title the lengths */
+    sprintf(filename, "%s.ent", vars->filename);
+    file = fopen(filename, "w");
 
-            fprintf( file,"%s %04lu\n", entryLabel->labelName, entryLabel->value);
-            entryLabel=entryLabel->next;
-        }
-
-        fclose(file);
-
+    while (entryLabel) {
+        fprintf(file, "%s %04lu\n", entryLabel->labelName, entryLabel->value);
+        entryLabel = entryLabel->next;
     }
 
+    fclose(file);
 
+}
+
+/*This function print the external labels if we have*/
 void outputExternals(globalVariables *vars) {
 
    char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
    FILE *file;
     externalListPtr externalLabel ;
+    externalLabel = vars->headExternList;
+    if (externalLabel==NULL) return; /* don't create output file*/
     /* create object file with the title the lengths */
    sprintf(filename, "%s.ext", vars->filename);
 
    file = fopen(filename, "w");
-     externalLabel = vars->headExternList;
+
     while (externalLabel)
     {
         fprintf( file,"%s %04lu\n", externalLabel->labelName, externalLabel->value);
@@ -137,7 +141,7 @@ void outputExternals(globalVariables *vars) {
     fclose(file);
 }
 
-
+/*create output files*/
 void createOutput(globalVariables *vars) {
     outputObject(vars);
     outputEntries(vars);

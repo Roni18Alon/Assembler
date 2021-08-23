@@ -434,6 +434,7 @@ Bool validIOperandLine(char *str, char *before, char *after, int type, globalVar
 void JCommandFirstPass(char *after,int instructionNum,globalVariables *vars,WordNodePtr currentWord)
 {
     Bool validICommand;
+    currentWord->word.wordType=Instruction;
     currentWord->word.wordUnion.instruction.wordType = J_WORD;
     strip(after);
     validICommand = J_commandAnalyzed(after, instructionNum, vars, currentWord);
@@ -465,8 +466,8 @@ Bool J_commandAnalyzed(char *str, int instructionNum,globalVariables *vars, Word
 
 int opcodeInstruction(int instructionNum)
 {
-   if(ADD<=instructionNum && instructionNum<=NOR) return OP_R_ARI_LOG; /*OPCODE=0*/
-   if(MOVE<=instructionNum && instructionNum<=MVLO)return OP_R_COPY;  /*OPCODE=1*/
+    if(ADD<=instructionNum && instructionNum<=NOR) return OP_R_ARI_LOG; /*OPCODE=0*/
+    if(MOVE<=instructionNum && instructionNum<=MVLO)return OP_R_COPY;  /*OPCODE=1*/
     if(instructionNum==ADDI)  return OP_ADDI; /*OPCODE=10*/
     if(instructionNum==SUBI)  return OP_SUBI; /*OPCODE=11*/
     if(instructionNum==ANDI)  return OP_ANDI; /*OPCODE=12*/
@@ -494,6 +495,7 @@ Bool validJOperandLine(char *str, int instructionNum, globalVariables *vars, Wor
 
     int isReg;
     Bool JwithReg, JwithLabel;
+
     strip(str);
     if (instructionNum == JMP) /* jmp cen receive a register or label*/
     {
@@ -526,12 +528,13 @@ Bool validJOperandLine(char *str, int instructionNum, globalVariables *vars, Wor
                     foundError(vars, InvalidTextAfterStop, str);
                     return False;
                 }
-                currentWord->word.wordUnion.instruction.code.jWord.reg = 0;
-                currentWord->word.wordUnion.instruction.code.jWord.address = 0;
+                currentWord->word.wordUnion.instruction.code.jWord.reg = J_WITH_LABEL;
+                currentWord->word.wordUnion.instruction.code.jWord.address = STOP_ADDRESS;
                 return True;
             }
         }
     }
+    return True;
 }
 
 /*This function returns True im the J command -jmp receive e valid register.False - otherwise */
@@ -582,6 +585,7 @@ void secondPassJ(char *str,globalVariables *vars, InstructionWordType commandTyp
         }
     }
 
+
 }
 
 
@@ -591,10 +595,11 @@ void secondPassI(char *str,globalVariables *vars, InstructionWordType commandTyp
     long currentLabelAddress;
     Bool isExternal;
     /*in I-Branch the label is the third operand*/
-    strip(str);
+
     char before[LINE_LENGTH] = {0};
     char after[LINE_LENGTH] = {0};
     char operandLine[LINE_LENGTH] = {0};
+    strip(str);
 
     firstSplit = split(str, ",", before, after);
     if (firstSplit == INVALID_SPLIT) {
@@ -710,7 +715,7 @@ int Rfunct(int instructionNum)
     if(instructionNum==MOVE)return MOVE_FUNCT; /*command move funct 1*/
     if(instructionNum==MVHI) return MVHI_FUNCT;/*command mvhi funct 2*/
     if(instructionNum==MVLO) return MVLO_FUNCT; /*command mvlo funct 3*/
-
+    else return  INSTRUCTION_ERROR;
 
 }
 /*by given instruction number returns the instruction word type*/

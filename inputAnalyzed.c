@@ -141,7 +141,7 @@ Bool ValidNumberDirective(char *str,globalVariables *vars)
 
     if(sign==POSITIVE_NUM)
     {
-        if(number==D_WORD_MAX_VALUE && strcmp(num,"2147483647")!=0) /*strtol returns INT_MAX= 2147483647 but the num string is not equal so we ot a bigger number from INT_MAX*/
+        if(number==INT_MAX && strcmp(num,"2147483647")!=0) /*strtol returns INT_MAX= 2147483647 but the num string is not equal so we ot a bigger number from INT_MAX*/
         {
             foundError(vars,ParamNotInBitRange,num);
             return False;/*error- not an integer*/
@@ -149,7 +149,7 @@ Bool ValidNumberDirective(char *str,globalVariables *vars)
     }
     if(sign==NEGATIVE_NUM)
     {
-        if(number==D_WORD_MIN_VALUE && strcmp(str,"-2147483648")!=0) /*strtol returns INT_MIN= -2147483648 but the num string is not equal so we ot a smaller number from INT_MIN */
+        if(number==INT_MIN && strcmp(str,"-2147483648")!=0) /*strtol returns INT_MIN= -2147483648 but the num string is not equal so we ot a smaller number from INT_MIN */
         {
             foundError(vars,ParamNotInBitRange,str);
             return False;/*error- not an integer*/
@@ -175,7 +175,7 @@ long directiveNumber(char *str)
 /*by given integer and directive return if the num is in the bit range */
 long validNumByDirective(int directive,long num,char *str,globalVariables *vars)
 {
-    long minValue,maxValue;
+    int minValue,maxValue;
 
     if(directive==DIRECTIVE_BYTE)
     {
@@ -189,11 +189,9 @@ long validNumByDirective(int directive,long num,char *str,globalVariables *vars)
     }
     if(directive==DIRECTIVE_WORD)
     {
-        minValue=D_WORD_MIN_VALUE;  /*-2147483648*/
-        maxValue=D_WORD_MAX_VALUE;  /* 2147483647*/
+        minValue=INT_MIN;  /*-2147483648*/
+        maxValue=INT_MAX;  /* 2147483647*/
     }
-
-
     if(minValue<=num && num<=maxValue) /* range of nums [-2^(bitnum-1)....(2^bitnum)-1] */
     {
         return VALID_BIT_RANGE;
@@ -202,7 +200,6 @@ long validNumByDirective(int directive,long num,char *str,globalVariables *vars)
         foundError(vars,ParamNotInBitRange,str);
         return INVALID_BIT_RANGE;
     }
-
 }
 
 /*to check if a given string is valid, between "" and only graphic characters*/
@@ -228,17 +225,6 @@ int isValidString(char *str,globalVariables *vars)
     return VALID_STRING;
 }
 
-/*this function set a given valid asciz operand with " " , to be a string without " ".*/
-void ascizStr(char *str)
-{
-    int first=1;
-    int last=strlen(str)-1;
-    char newStr[LINE_LENGTH]={0};
-    strncpy(newStr, str + first, last - first );
-    memset(str, 0, LINE_LENGTH);
-    strcpy(str, newStr);
-
-}
 
 /*a valid register stars with $ and between 0-31*/
 int isValidRegister(char *str,globalVariables *vars)
@@ -357,8 +343,8 @@ int isValidImmediate(char *str,globalVariables *vars) {
         return validNum;
     }
 }
-
-Bool foundLabel(char *lineCpy,char *before,char *after,globalVariables *vars) {
+/*this function returns True if we found a label - by :*/
+Bool foundLabel(char *lineCpy,char *before,char *after) {
 
     int labelDelimiter;
     labelDelimiter = split(lineCpy, ":", before, after);

@@ -20,24 +20,6 @@ C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 inputAnalyzed.h
 C:/Users/ronia/CLionProjects/AssemblerProj/inputAnalyzed.h
 
-C:/Users/ronia/CLionProjects/AssemblerProj/assembler.c
-assembler.h
-C:/Users/ronia/CLionProjects/AssemblerProj/assembler.h
-
-C:/Users/ronia/CLionProjects/AssemblerProj/assembler.h
-default.h
-C:/Users/ronia/CLionProjects/AssemblerProj/default.h
-firstPass.h
-C:/Users/ronia/CLionProjects/AssemblerProj/firstPass.h
-secondPass.h
-C:/Users/ronia/CLionProjects/AssemblerProj/secondPass.h
-createOutput.h
-C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.h
-
-C:/Users/ronia/CLionProjects/AssemblerProj/createOutput.h
-default.h
-C:/Users/ronia/CLionProjects/AssemblerProj/default.h
-
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 stdio.h
 -
@@ -47,7 +29,7 @@ string.h
 -
 ctype.h
 -
-math.h
+limits.h
 -
 
 C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
@@ -83,6 +65,10 @@ default.h
 C:/Users/ronia/CLionProjects/AssemblerProj/default.h
 directiveAnalysis.h
 C:/Users/ronia/CLionProjects/AssemblerProj/directiveAnalysis.h
+
+C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.c
+instructionAnalyzed.h
+C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
 
 C:/Users/ronia/CLionProjects/AssemblerProj/instructionAnalyzed.h
 inputAnalyzed.h

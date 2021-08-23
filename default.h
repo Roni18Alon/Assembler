@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
+#include <limits.h>
 
 #define LINE_LENGTH 82
 #define LAST_CHAR_IN_LINE 80
@@ -43,9 +43,6 @@
 #define D_BYTE_MAX_VALUE  127 /*1 byte=8 bits the range is [-2^7...2^7-1]=[-128,127]*/
 #define D_HALF_MIN_VALUE -32768 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
 #define D_HALF_MAX_VALUE  32767 /*2 byte=16 bits the range is [-2^15...2^15-1]=[-32768,32767]*/
-#define D_WORD_MAX_VALUE 2147483647  /*4 byte=32 bits the range is [-2^31...2^31-1]=[-2147483648,2147483647]*/
-#define D_WORD_MIN_VALUE -2147483648 /*4 byte=32 bits the range is [-2^31...2^31-1]=[-2147483648,2147483647]*/
-
 
 #define STRING_ERROR -1
 #define VALID_STRING 1
@@ -61,10 +58,7 @@
 #define VALID_REGISTER 0
 #define REG_MAX_LENGTH 4 /*the max register is $31*/
 
-
-#define VALID_IMMEDIATE 1
 #define IMMEDIATE_ERROR 40000 /*out of 16 bits range [-2^15...2^15-1]=[-32768,32767] */
-
 
 #define IMM_MIN_VALUE -32768 /*immediate is 16 bits - the range is [-2^15...2^15-1]=[-32768,32767] */
 #define IMM_MAX_VALUE 32767 /*immediate is 16 bits - the range is [-2^15...2^15-1]=[-32768,32767] */
@@ -137,6 +131,8 @@
 #define R_UNUSED 0 /*the unused is 0 to all R commands*/
 #define J_WITH_REG 1
 #define J_WITH_LABEL 0
+#define STOP_ADDRESS 0
+
 
 #define THREE_REGISTERS 3
 #define TWO_REGISTERS 2
@@ -147,6 +143,8 @@
 #define REG_OR_LABEL 1
 #define ONE_LABEL 1
 #define NONE 0
+#define BITS_IN_BYTE 8
+#define NUM_OF_BYTES 4
 
 #define MAX_MEMORY 33554432 /*we have 2^25 volume of memory*/
 

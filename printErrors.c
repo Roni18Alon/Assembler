@@ -7,7 +7,7 @@
 #include "printErrors.h"
 
 
-
+/*save the error in vars to print in the end of row analysis*/
 void foundError(globalVariables *vars,errorType type,char *str)
 {
     memset(vars->error,0,LINE_LENGTH);
@@ -18,10 +18,9 @@ void foundError(globalVariables *vars,errorType type,char *str)
 
 
 
-
+/*print the errors - if found*/
 void printErrors(globalVariables *vars)
 {
-    setbuf(stdout, 0);
     if(vars->type==LineTooLong)
     {
         printf("\n%s:Line %d:Error - line is too long, line has 80 characters maximum \n", vars->filename, vars->currentLine);

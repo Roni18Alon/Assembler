@@ -1,3 +1,9 @@
+/* Name: assembler.h
+ * Author: Roni Alon & Noa Even
+ * Description: Gets the file and run the assembler process.
+*/
+
+
 #ifndef RONIPROJ_MAIN_H
 #define RONIPROJ_MAIN_H
 

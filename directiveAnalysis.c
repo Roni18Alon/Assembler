@@ -249,9 +249,7 @@ Bool labelBeforeDirectiveCommand(char *labelName, globalVariables *vars, labelLi
 /*This function checks the operand label in directive extern command*/
 Bool externDirectiveFirstPass(char *after ,globalVariables *vars,labelListPtr currentLabel)
 {
-    int ValidLabelName;
     Bool labelWithExtern,externLabel;
-
     strip(after);
     externLabel = isLegalLabel(after, vars); /*check if  the operand label is valid label by syntax*/
 
@@ -288,4 +286,16 @@ void entryDirectiveSecondPass(globalVariables *vars,char *str)
             createEntryNode(str,entryValue,vars);/*add to entry list*/
         }
     }
+}
+
+/*this function set a given valid asciz operand with " " , to be a string without " ".*/
+void ascizStr(char *str)
+{
+    int first=1;
+    int last=strlen(str)-1;
+    char newStr[LINE_LENGTH]={0};
+    strncpy(newStr, str + first, last - first );
+    memset(str, 0, LINE_LENGTH);
+    strcpy(str, newStr);
+
 }
