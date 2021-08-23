@@ -6,10 +6,9 @@
 #include "assembler.h"
 
 
-
 int main(int argc, char *argv[]) {
     int i;
-       for (i = 1; i < argc; i++) {
+    for (i = 1; i < argc; i++) {
         globalVariables *vars;
         char filename[FILE_NAME_LENGTH + AS_EXTENSION_LENGTH];
         char shortFileName[FILE_NAME_LENGTH];
@@ -26,7 +25,7 @@ int main(int argc, char *argv[]) {
             printf("%s: Cannot open file!\n", filename);
             continue;
         }
-           printf("Opened File :%s\n",filename);
+        printf("Opened File :%s\n", filename);
 
         /* check that the file isn't empty */
         fseek(vars->file, 0, SEEK_END);
@@ -61,6 +60,7 @@ int main(int argc, char *argv[]) {
     }
     return 0;
 }
+
 /*reset the global vars*/
 void resetVars(globalVariables *vars) {
     vars->IC = IC_START;
@@ -79,8 +79,7 @@ void freeVars(globalVariables *vars) {
 }
 
 /*free all lists and the memory we allocated*/
-void freeLists(globalVariables *vars)
-{
+void freeLists(globalVariables *vars) {
     freeExternList(&vars->headExternList);
     freeEntryList(&vars->headEntryList);
     freeWordList(&vars->headWordList);
