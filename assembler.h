@@ -4,16 +4,16 @@
 */
 
 
-#ifndef RONIPROJ_MAIN_H
-#define RONIPROJ_MAIN_H
+#ifndef ASSEMBLERPROJ_H
+#define ASSEMBLERPROJ_H
 
 #include "default.h"
 #include "firstPass.h"
 #include "secondPass.h"
 #include "createOutput.h"
 
-void resetVars(globalVariables *);
-void freeVars(globalVariables *);
-void freeLists(globalVariables *vars);
+void resetVars(globalVariables *); /*reset global vars*/
+void freeVars(globalVariables *);  /*free global vars*/
+void freeLists(globalVariables *vars);  /*free lists - word,label,extern,entry */
 
 #endif

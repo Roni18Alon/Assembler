@@ -86,7 +86,7 @@ void outputDirective(DirectiveWord wordToPrint,FILE *file) {
 void outputByte(char byte,unsigned long address,FILE *file)
 {
 
-    if(address%4==0)
+    if(address%NUM_OF_BYTES==0)
     {
         fprintf(file,"%04lu  ",address);
     }

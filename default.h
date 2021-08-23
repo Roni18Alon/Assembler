@@ -156,7 +156,7 @@ typedef enum {False = 0, True = 1} Bool;
 typedef enum {Code, Data,NoCodeOrData } Location;
 typedef enum {Entry, Extern, NoEntryExtern} LabelType;
 typedef enum {NoError,LineTooLong,IllegalCharInLabel,TooLongLabel,firstCharInLabelNotAlphabet,
-              CommaBeforeFirstParam,CommaBetweenParams,ParamNotInBitRange,labelBeforeEntry,labelBeforeExtern,notDirectiveOrInstruction,labelExistsInTable,
+              CommaBeforeFirstParam,CommaBetweenParams,ParamNotInBitRange,notDirectiveOrInstruction,labelExistsInTable,
               IllegalInstruction,IllegalOperandNoComma,RegisterLength,RegisterSign,RegisterNegative,RegisterNotAnInt,RegisterNotInRange,ExtraneousComma,ExtraneousText,
               ExtraneousOperand,MissingOperand,ImmediateNotAnInt,ImmediateNotValid,ImmediateNotInRange,InvalidOperand,ExtraneousImmediate,DirectiveOperandNotAnInt,StringNotValid,
               LabelExistsWithoutExternal,LabelExistsInTable,InvalidTextAfterStop,EntryLabelDontExists,JCommandLabelDontExists,IBranchLabelIsExternal,IBranchLabelDontExists
@@ -193,7 +193,7 @@ typedef struct Jfunc {
     J_cmd jWord;
     unsigned int bytes:32;
 };
-
+/*Instruction word struct*/
 typedef struct InstructionWord {
     InstructionWordType wordType;
     unsigned long address;
@@ -206,7 +206,7 @@ union directiveWord {
     int dw:32;
     char asciz;
 };
-
+/*directive word struct*/
 typedef struct DirectiveWord {
     DirectiveWordType wordType;
     unsigned long address;
@@ -217,17 +217,21 @@ union WordUnion{
     InstructionWord instruction;
     DirectiveWord directive;
 };
+
 typedef struct Word {
     WordType wordType;
    union WordUnion wordUnion;
 } Word;
 
+
+/* word list struct*/
 typedef struct WordNode *WordNodePtr;
 typedef struct WordNode {
     Word word;
     WordNodePtr next;
 } WordNode;
 
+/*label list struct*/
 typedef struct labelList *labelListPtr;
 typedef struct labelList{
     char labelName[LABEL_LENGTH];
@@ -237,7 +241,7 @@ typedef struct labelList{
     labelListPtr next;
 }labelList;
 
-
+/*extern list struct*/
 typedef struct externalList *externalListPtr;
 typedef struct externalList{
     char labelName[LABEL_LENGTH];
@@ -245,7 +249,7 @@ typedef struct externalList{
     externalListPtr next;
 }externalList;
 
-
+/*entry list struct*/
 typedef struct entryList *entryListPtr;
 typedef struct entryList{
     char labelName[LABEL_LENGTH];
@@ -253,6 +257,7 @@ typedef struct entryList{
     entryListPtr next;
 }entryList;
 
+/*global struct*/
 typedef struct globalVariables{
     Bool errorFound;
     errorType type;
