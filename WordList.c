@@ -19,6 +19,7 @@ void addWordToList(WordNodePtr *head, WordNodePtr nodeToAdd) {
     temp->next = nodeToAdd;
 }
 
+/*create a copy fore a given word node - Instruction*/
 void createWordNode(WordNodePtr nodeToAdd,globalVariables *vars)
 {
     WordNodePtr wordCpy = (WordNodePtr) calloc(1, sizeof(WordNode));
@@ -71,13 +72,13 @@ void addDirectiveByteToWordList( long validInput[LINE_LENGTH], WordNodePtr *head
     int i;
     WordNodePtr newNode;
     if (givenWordType == D_BYTE) {
-        for (i = 0; i < counter ; i++) {
+        for (i = 0; i < counter; i++) {
             newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
             newNode->word.wordType = Directive;
             newNode->word.wordUnion.directive.wordType = givenWordType;
             newNode->word.wordUnion.directive.address = vars->DC;
             newNode->word.wordUnion.directive.data.db = validInput[i];
-            vars->DC+=D_B_BYTE_NUM;
+            vars->DC += D_B_BYTE_NUM;
             addWordToList(head, newNode);
         }
 
@@ -85,16 +86,15 @@ void addDirectiveByteToWordList( long validInput[LINE_LENGTH], WordNodePtr *head
         if (givenWordType == D_HALF) {
             {
                 for (i = 0; i < counter; i++) {
-                     newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
-                    if(!newNode)
-                    {
+                    newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+                    if (!newNode) {
                         exit(0);
                     }
                     newNode->word.wordType = Directive;
                     newNode->word.wordUnion.directive.wordType = givenWordType;
                     newNode->word.wordUnion.directive.address = vars->DC;
-                    newNode->word.wordUnion.directive.data.dh =validInput[i];
-                    vars->DC+=D_H_BYTE_NUM;
+                    newNode->word.wordUnion.directive.data.dh = validInput[i];
+                    vars->DC += D_H_BYTE_NUM;
                     addWordToList(head, newNode);
                 }
 
@@ -102,16 +102,15 @@ void addDirectiveByteToWordList( long validInput[LINE_LENGTH], WordNodePtr *head
         } else {
             /* givenWordType==D_WORD WORD=4 Bytes */
             for (i = 0; i < counter; i++) {
-                 newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
-                if(!newNode)
-                {
+                newNode = (WordNodePtr) calloc(1, sizeof(WordNode)); /*creat new node*/
+                if (!newNode) {
                     exit(0);
                 }
                 newNode->word.wordType = Directive;
                 newNode->word.wordUnion.directive.wordType = givenWordType;
-                newNode->word.wordUnion.directive.address= vars->DC;
+                newNode->word.wordUnion.directive.address = vars->DC;
                 newNode->word.wordUnion.directive.data.dw = validInput[i];
-                vars->DC+=D_W_BYTE_NUM;
+                vars->DC += D_W_BYTE_NUM;
                 addWordToList(head, newNode);
             }
 
@@ -173,22 +172,19 @@ void addLabelAddress(WordNodePtr *head,globalVariables *vars,long labelAddress,I
 {
     long finalIAddress;
     WordNodePtr temp = *head;
-    while (temp != NULL)
-    {
-        if(temp->word.wordUnion.instruction.address == vars->IC) /*find the right node */
+    while (temp != NULL) {
+        if (temp->word.wordUnion.instruction.address == vars->IC) /*find the right node */
         {
-            if(commandType==J_WORD)  /*if it's a J - just update the address from label list*/
+            if (commandType == J_WORD)  /*if it's a J - just update the address from label list*/
             {
-                if(isExtern==True)
+                if (isExtern == True) {
+                    temp->word.wordUnion.instruction.code.jWord.address = 0;
+                } else { temp->word.wordUnion.instruction.code.jWord.address = labelAddress; }
+            } else {
+                if (commandType == I_WORD) /*if it's an I-Branch update the immed */
                 {
-                    temp->word.wordUnion.instruction.code.jWord.address=0;
-                }
-                else {temp->word.wordUnion.instruction.code.jWord.address=labelAddress;}
-            }
-            else{ if(commandType==I_WORD) /*if it's an I-Branch update the immed */
-                {
-                    finalIAddress= labelAddress- (temp->word.wordUnion.instruction.address); /*the final address (Immediate value) will be the sub between address from label list and current address*/
-                    temp->word.wordUnion.instruction.code.iWord.immed=finalIAddress;
+                    finalIAddress = labelAddress -(temp->word.wordUnion.instruction.address); /*the final address (Immediate value) will be the sub between address from label list and current address*/
+                    temp->word.wordUnion.instruction.code.iWord.immed = finalIAddress;
                 }
             }
             return;

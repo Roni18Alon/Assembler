@@ -6,7 +6,7 @@
 
 
 
-#include "default.h"
+#include "EntryAndExtern.h"
 
 /*This function add an external label to the external label list*/
 void addExternalToList(externalListPtr *head, externalListPtr externalToAdd) {

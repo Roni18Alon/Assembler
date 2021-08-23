@@ -94,24 +94,22 @@ Bool isLabelExternal(labelListPtr *head, char *labelName,globalVariables *vars)
 {
     labelListPtr temp;
     int res;
-    temp= *head;
-    while (temp != NULL )
-    {
-        res= strcmp(temp->labelName,labelName);
-        if(res==0) /*we already have this label name*/
+    temp = *head;
+    while (temp != NULL) {
+        res = strcmp(temp->labelName, labelName);
+        if (res == 0) /*we already have this label name*/
         {
-            if(temp->entryOrExtern==NoEntryExtern) /*check if the existed label is an extern*/
+            if (temp->entryOrExtern == NoEntryExtern) /*check if the existed label is an extern*/
             {
-                foundError(vars,LabelExistsWithoutExternal,labelName);
+                foundError(vars, LabelExistsWithoutExternal, labelName);
                 return False;
             }
-            if(temp->entryOrExtern==Entry) /*check if the existed label is an extern*/
+            if (temp->entryOrExtern == Entry) /*check if the existed label is an extern*/
             {
-                foundError(vars,EntryAndExternalTogether,labelName); /*if we want to add an external but it's an entry - error*/
+                foundError(vars, EntryAndExternalTogether,
+                           labelName); /*if we want to add an external but it's an entry - error*/
                 return False;
             }
-
-
         }
         temp = temp->next;
     }
@@ -168,29 +166,28 @@ Bool isLabelEntry(labelListPtr *head, char *after,globalVariables *vars)
 {
 
     labelListPtr temp;
-    int res,flag;
+    int res, flag;
     temp = *head;
-    flag=0;
+    flag = 0;
     strip(after);
-    while (temp != NULL)
-    {
-        res= strcmp(temp->labelName,after);
-        if(res==0) /*we already have this label name*/
+    while (temp != NULL) {
+        res = strcmp(temp->labelName, after);
+        if (res == 0) /*we already have this label name*/
         {
-           if(temp->entryOrExtern==Extern) /*entry can't be external*/
-           {
-               foundError(vars,EntryAndExternalTogether,after);
-               return False;
-           }
-            temp->entryOrExtern=Entry;
-            flag=1;
+            if (temp->entryOrExtern == Extern) /*entry can't be external*/
+            {
+                foundError(vars, EntryAndExternalTogether, after);
+                return False;
+            }
+            temp->entryOrExtern = Entry;
+            flag = 1;
         }
         temp = temp->next;
     }
 
-    if(flag==0)/*we couldn't find this label*/
+    if (flag == 0)/*we couldn't find this label*/
     {
-        foundError(vars,EntryLabelDontExists,after);
+        foundError(vars, EntryLabelDontExists, after);
         return False;
     }
     return True;
@@ -205,9 +202,6 @@ void updateLabel(labelListPtr currentLabel,int address,Location DataOrCode,Label
 }
 
 
-
-
-
 /*this function updates the data labels with final IC value after the first pass*/
 void  updateLabelTableICF(labelListPtr *head,globalVariables *vars)
 {
@@ -219,7 +213,6 @@ void  updateLabelTableICF(labelListPtr *head,globalVariables *vars)
         }
         temp = temp->next;
     }
-
 }
 
 

@@ -27,11 +27,12 @@ void secondPass(globalVariables *vars) {
 
         resetStrings(line, lineCpy, before, after, lineCpyAfterLabel, label);
 
-        fgets(line, LINE_LENGTH, vars->file);
+        fgets(line, LINE_LENGTH, vars->file); /*get a line*/
 
         strcpy(lineCpy, line);
         strip(lineCpy); /*strip white chars*/
-        lineAnalyzed = isEmptyOrCommentLine(lineCpy);
+
+        lineAnalyzed = isEmptyOrCommentLine(lineCpy);/*analyzed if empty or command*/
         if (lineAnalyzed == EMPTY_OR_COMMENT) {
             vars->currentLine++;
             continue; /*if the line is an empty line or command line - the assembler ignores*/
@@ -58,7 +59,7 @@ void secondPassAnalysis(globalVariables *vars,char *lineCpy,char *before, char *
     InstructionWordType commandType;
 
     /*add bool function to check if we have a label*/
-    hasLabel = foundLabel(lineCpy, before, after, vars);
+    hasLabel = foundLabel(lineCpy, before, after);
 
     if (hasLabel == True) { /*we found a label*/
         strcpy(label, before);
